@@ -29,8 +29,9 @@ public class PlayersManager : MonoBehaviour
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
-            Image image = imageObj.GetComponent<Image>();
-            image.GetComponentInChildren<TextMeshProUGUI>().text = name;
+            AvatarImageReference imageRef = imageObj.GetComponent<AvatarImageReference>();
+            Image image = imageRef.imageAvatar;
+            imageRef.name.text = name;
             image.sprite = Sprite.Create(avatar, new Rect(0, 0, avatar.width, avatar.height), new Vector2(1.0f, 1.0f));
             _playersAvatar.Add(clientId, image);
         }

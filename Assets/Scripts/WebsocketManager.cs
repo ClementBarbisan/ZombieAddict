@@ -24,6 +24,12 @@ public class WebsocketManager : MonoBehaviour
     }
     
     [Serializable]
+    struct Position
+    {
+        public float x;
+        public float y;
+    }
+    [Serializable]
     struct Input
     {
         public Joystick joystick;
@@ -38,9 +44,19 @@ public class WebsocketManager : MonoBehaviour
         public string ready;
         public Input input;
     }
+
+    [Serializable]
+    struct InputZombie
+    {
+        public string type;
+        public string clientId;
+        public string role;
+        public Position position;
+        public string troupes;
+    }
     
     [Serializable]
-    struct InputWebSocket
+    struct InputSurvivor
     {
         public string type;
         public string clientId;
@@ -85,6 +101,7 @@ public class WebsocketManager : MonoBehaviour
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
     private Dictionary<string, Player> _playersAbstract = new Dictionary<string, Player>();
     private PlayersManager _playersManager;
+    private ZombieManager _zombieManager;
     private bool _gameLaunched;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
@@ -114,13 +131,7 @@ public class WebsocketManager : MonoBehaviour
             string message = System.Text.Encoding.UTF8.GetString(bytes);
             //Debug.Log("Received: " + message);
             
-            if (message.Contains("player_joined"))
-            {
-                JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
-                //if (!_players.ContainsKey(player.player.clientId) && player.player.nickname != "Unity")
-                //    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
-            }
-            else if (message.Contains("player_left"))
+            if (message.Contains("player_left"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 if (_players.ContainsKey(player.player.clientId))
@@ -129,24 +140,21 @@ public class WebsocketManager : MonoBehaviour
                     _playersManager.DeletePlayer(player.player.clientId);
                 }
             }
-            else if (message.Contains("input"))
+            else if (message.Contains("input_survivor"))
             {
-                //bool allReady = true;
-                InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
+                InputSurvivor player = JsonUtility.FromJson<InputSurvivor>(message);
                 _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
                     player.buttons.a, player.buttons.b);
-                //if (allReady)
-                //{
-                //    StartCoroutine(WaitToStart());
-                //}
+            }
+            else if (message.Contains("input_zombie"))
+            {
+                InputZombie zombie = JsonUtility.FromJson<InputZombie>(message);
+                _zombieManager.SpawnZombie(new Vector2(zombie.position.x, zombie.position.y), zombie.troupes);
             }
             else if (message.Contains("player_updated"))
             {
+                Debug.Log("Received: " + message);
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
-                //if (!_players.ContainsKey(player.player.clientId))
-                //{
-                //    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, "New player"));
-                //}
                 string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
                 byte[] tmpBytes = Convert.FromBase64String(base64);
                 Texture2D imgTexture = new Texture2D(64, 64);
@@ -170,7 +178,7 @@ public class WebsocketManager : MonoBehaviour
 
     private void Update()
     {
-        if (_gameLaunched)
+        if (_gameLaunched || _playersAbstract.Count == 0)
             return;
         bool allReady = true;
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
