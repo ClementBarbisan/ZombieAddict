@@ -41,9 +41,9 @@ public class WebsocketManager : MonoBehaviour
     struct InputWebSocket
     {
         public string type;
-        public string phase;
-        public PlayerInput[] players;
-        public string t;
+        public string clientId;
+        public Joystick joystick;
+        public Buttons buttons;
     }
     
     [Serializable]
@@ -110,34 +110,25 @@ public class WebsocketManager : MonoBehaviour
             string message = System.Text.Encoding.UTF8.GetString(bytes);
             Debug.Log("Received: " + message);
             
-            /*if (message.Contains("player_joined"))
+            if (message.Contains("player_joined"))
             {
                 JoinMessage player = JsonUtility.FromJson<JoinMessage>(message);
-                _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.nickname));
+                _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
             }
-            else*/
-            if (message.Contains("inputs_snapshot"))
+            else if (message.Contains("input"))
             {
-                bool allReady = true;
+                //bool allReady = true;
                 InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
-                foreach (PlayerInput playerInput in player.players)
+                if (!_players.ContainsKey(player.clientId))
                 {
-                    if (!_players.ContainsKey(playerInput.clientId))
-                    {
-                        _players.Add(playerInput.clientId, _playersManager.CreateNewPlayer(playerInput.nickname));
-                    }
-                    _players[playerInput.clientId].HandleInputs(new Vector2(playerInput.input.joystick.x, playerInput.input.joystick.y),
-                        playerInput.input.buttons.a, playerInput.input.buttons.b);
-                    if (!bool.Parse(playerInput.ready))
-                    {
-                        allReady = false;
-                    }
+                    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
                 }
-
-                if (allReady)
-                {
-                    StartCoroutine(WaitToStart());
-                }
+                _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
+                    player.buttons.a, player.buttons.b);
+                //if (allReady)
+                //{
+                //    StartCoroutine(WaitToStart());
+                //}
             }
         };
 
