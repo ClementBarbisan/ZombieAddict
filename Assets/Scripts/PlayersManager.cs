@@ -18,6 +18,7 @@ public class PlayersManager : MonoBehaviour
         PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
             Quaternion.identity);
         _players.Add(clientId, newPlayer);
+        _players[clientId].OnHit.AddListener(() => _playersAvatar[clientId].GetComponent<HitEffect>().OnHit());
         newPlayer.Init(name);
         return newPlayer;
     }
@@ -30,7 +31,6 @@ public class PlayersManager : MonoBehaviour
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
-            _players[clientId].OnHit.AddListener(() => imageObj.GetComponent<HitEffect>().OnHit());
             AvatarImageReference imageRef = imageObj.GetComponent<AvatarImageReference>();
             Image image = imageRef.imageAvatar;
             imageRef.name.text = name;
@@ -42,7 +42,6 @@ public class PlayersManager : MonoBehaviour
             _playersAvatar[clientId].imageAvatar.sprite = Sprite.Create(avatar, new Rect(0, 0, avatar.width, avatar.height),
                 new Vector2(1.0f, 1.0f));
             _playersAvatar[clientId].name.text = name;
-            _players[clientId].OnHit.AddListener(() => _playersAvatar[clientId].GetComponent<HitEffect>().OnHit());
         }
     }
 
