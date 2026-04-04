@@ -83,7 +83,6 @@ public class WebsocketManager : MonoBehaviour
     private Dictionary<string, bool> _playersReady = new Dictionary<string, bool>();
     private PlayersManager _playersManager;
     private GameManager _gameManager;
-    private bool _gameLaunched;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
@@ -132,10 +131,10 @@ public class WebsocketManager : MonoBehaviour
             {
                 //bool allReady = true;
                 InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
-                //if (!_players.ContainsKey(player.clientId))
-                //{
-                //    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
-                //}
+                if (!_players.ContainsKey(player.clientId))
+                {
+                    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
+                }
                 _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
                     player.buttons.a, player.buttons.b);
                 //if (allReady)
@@ -147,10 +146,10 @@ public class WebsocketManager : MonoBehaviour
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
-                byte[] tmpBytes = Convert.FromBase64String(player.player.avatar);
+                byte[] tmpBytes = Convert.FromBase64String(base64);
                 Texture2D imgTexture = new Texture2D(64, 64);
                 imgTexture.LoadImage(tmpBytes);
-                _playersManager.SetupAvatar(imgTexture, player.player.clientId);
+                _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
                 if (!_playersReady.ContainsKey(player.player.clientId))
                 {
                     _playersReady.Add(player.player.clientId, bool.Parse(player.player.ready));
@@ -167,12 +166,6 @@ public class WebsocketManager : MonoBehaviour
         await _websocket.Connect();
     }
 
-    private IEnumerator WaitToStart()
-    {
-        yield return new WaitForSeconds(_timeToStart);
-        _gameManager.StartGame();
-    }
-
     async void SendWebSocketMessage()
     {
         if (_websocket.State == WebSocketState.Open)
@@ -185,23 +178,5 @@ public class WebsocketManager : MonoBehaviour
     private async void OnApplicationQuit()
     {
         await _websocket.Close();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        bool allReady = true;
-        foreach (var ready in _playersReady)
-        {
-            if (!ready.Value)
-            {
-                allReady = false;
-            }
-        }
-
-        if (allReady)
-        {
-            _gameLaunched = true;
-            StartCoroutine(WaitToStart());
-        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,12 +20,13 @@ public class PlayersManager : MonoBehaviour
         return newPlayer;
     }
 
-    public void SetupAvatar(Texture2D avatar, string clientId)
+    public void SetupAvatar(Texture2D avatar, string name, string clientId)
     {
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
             Image image = imageObj.GetComponent<Image>();
+            image.GetComponentInChildren<TextMeshProUGUI>().text = name;
             image.sprite = Sprite.Create(avatar, new Rect(0, 0, avatar.width, avatar.height), new Vector2(1.0f, 1.0f));
             _playersAvatar.Add(clientId, image);
         }
@@ -34,6 +36,11 @@ public class PlayersManager : MonoBehaviour
     {
         if (_players.ContainsKey(clientId))
         {
+            if (_playersAvatar.ContainsKey(clientId))
+            {
+                Destroy(_playersAvatar[clientId].gameObject);
+                _playersAvatar.Remove(clientId);
+            }
             Destroy(_players[clientId].gameObject);
             _players.Remove(clientId);
         }
