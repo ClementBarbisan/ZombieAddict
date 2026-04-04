@@ -70,7 +70,11 @@ public class PlayerController : MonoBehaviour
     private void HandleAction(InputAction.CallbackContext ctx)
     {
         if (ctx.action.name == "Move")
+        {
             _move = ctx.ReadValue<Vector2>();
+            Debug.Log(_move);
+        }
+            
     }
     #endregion
 }
