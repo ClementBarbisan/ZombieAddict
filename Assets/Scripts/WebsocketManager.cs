@@ -155,7 +155,7 @@ public class WebsocketManager : MonoBehaviour
                     try
                     {
                         byte[] tmpBytes = Convert.FromBase64String(base64);
-                        Texture2D imgTexture = new Texture2D(64, 64);
+                        Texture2D imgTexture = new Texture2D(256, 256);
                         imgTexture.LoadImage(tmpBytes);
                         _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
                         if (player.player.nickname != "Unity")
@@ -202,7 +202,7 @@ public class WebsocketManager : MonoBehaviour
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
                 byte[] tmpBytes = Convert.FromBase64String(base64);
-                Texture2D imgTexture = new Texture2D(64, 64);
+                Texture2D imgTexture = new Texture2D(256, 256);
                 imgTexture.LoadImage(tmpBytes);
                 _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
                 if (player.player.nickname != "Unity")
