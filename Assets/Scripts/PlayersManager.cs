@@ -18,7 +18,7 @@ public class PlayersManager : MonoBehaviour
         PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
             Quaternion.identity);
         _players.Add(clientId, newPlayer);
-        _players[clientId].OnHit.AddListener(() => _playersAvatar[clientId].GetComponent<HitEffect>().OnHit());
+        //_players[clientId].OnHit.AddListener(() => _playersAvatar[clientId].GetComponent<HitEffect>().OnHit());
         newPlayer.Init(name);
         return newPlayer;
     }

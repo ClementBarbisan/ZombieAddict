@@ -108,7 +108,7 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private string _port = "8080";
     [SerializeField] private float _timeToStart = 5;
     [SerializeField] private string _sceneName = "Game";
-    [SerializeField] private Material _fog;
+    //[SerializeField] private Material _fog;
     private GraphicsBuffer _bufferPos;
     private WebSocket _websocket;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
