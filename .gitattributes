@@ -1,0 +1,41 @@
+##############################
+# Unity YAML Files
+##############################
+
+*.cs diff=csharp
+
+*.unity text merge=unityyamlmerge eol=lf
+*.prefab text merge=unityyamlmerge eol=lf
+*.asset text merge=unityyamlmerge eol=lf
+*.anim text merge=unityyamlmerge eol=lf
+*.meta text merge=unityyamlmerge eol=lf
+*.mat text merge=unityyamlmerge eol=lf
+*.controller text merge=unityyamlmerge eol=lf
+*.overrideController text merge=unityyamlmerge eol=lf
+
+##############################
+# Treat large binary assets correctly
+##############################
+
+*.fbx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tga binary
+*.psd binary
+*.exr binary
+*.mp4 binary
+*.mov binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.ttf binary
+*.otf binary
+
+##############################
+# Shader files
+##############################
+
+*.shader text
+*.cginc text
+*.hlsl text
