@@ -260,7 +260,6 @@ public class WebsocketManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToStart);
         SceneManager.LoadScene(_sceneName);
         yield return new WaitForSeconds(1f);
-        _playersManager.ClearAvatar();
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
             string base64 = player.Value.avatar.Replace("data:image/jpeg;base64,", "");
