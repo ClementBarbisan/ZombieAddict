@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         _animator = GetComponentInChildren<Animator>();
         _mat = renderer.material;
         _agent.speed = speed;
+        _currentHealth = _maxHealth;
     }
 
     void Update()
@@ -52,6 +53,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     public void TakeDamage(float amount)
     {
+        Debug.Log(_currentHealth);
         if (_isDead) return;
         
         _mat.EnableKeyword("_EMISSION");
@@ -64,9 +66,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (_currentHealth <= 0f)
             Die();
         else
-            _animator.SetTrigger("Hit");
-        
-        
+            _animator.Play("BAKED_Spider_Hit");
     }
     
     public void Die()
@@ -76,8 +76,8 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         OnDeath?.Invoke();
         _agent.speed = 0f;
-        _animator.SetTrigger("Death");
-        Destroy(gameObject, 1f);
+        _animator.Play("BAKED_Spider_Death");
+        Destroy(gameObject, 1.2f);
     }
 
     public float GetHealthPercent() => _currentHealth / _maxHealth;
