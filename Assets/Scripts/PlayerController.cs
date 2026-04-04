@@ -1,0 +1,74 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerController : MonoBehaviour
+{
+    [Header("Movement Settings")]
+    public float moveSpeed = 5f;
+    
+    private Transform _grabbedObject;
+    private Rigidbody _rb;
+    private PlayerInput _playerInput;
+    private Vector2 _move;
+    private Transform _cam;
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _playerInput = GetComponent<PlayerInput>();
+        _cam = Camera.main.transform;
+    }
+
+    private void FixedUpdate()
+    {
+        //Camera
+        Vector3 camForward = _cam.forward;
+        Vector3 camRight = _cam.right;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        // Move
+        Vector3 move = camRight * _move.x + camForward * _move.y;
+        Vector3 velocity = new Vector3(move.x * moveSpeed, _rb.linearVelocity.y, move.z * moveSpeed);
+        _rb.linearVelocity = velocity;
+
+        // Rotation only if moving
+        Vector3 horizontalMove = new Vector3(move.x, 0f, move.z);
+        if (horizontalMove.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(horizontalMove);
+            _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, 0.2f));
+        }
+    }
+
+    public void HandleInputs(Vector2 move, bool button1, bool button2)
+    {
+        _move = move;
+        
+    }
+
+    private void Update()
+    {
+        
+    }
+    
+#region Input Callbacks (New Input System)
+    private void OnEnable()
+    {
+        _playerInput.onActionTriggered += HandleAction;
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.onActionTriggered -= HandleAction;
+    }
+
+    private void HandleAction(InputAction.CallbackContext ctx)
+    {
+        if (ctx.action.name == "Move")
+            _move = ctx.ReadValue<Vector2>();
+    }
+    #endregion
+}
