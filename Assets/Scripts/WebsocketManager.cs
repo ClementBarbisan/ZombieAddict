@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
+using UnityEditor.PackageManager;
 using UnityEngine.InputSystem;
 
 public class WebsocketManager : MonoBehaviour
@@ -82,7 +83,8 @@ public class WebsocketManager : MonoBehaviour
     private Dictionary<string, bool> _playersReady = new Dictionary<string, bool>();
     private PlayersManager _playersManager;
     private GameManager _gameManager;
-    
+    private bool _gameLaunched;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
     {
@@ -144,11 +146,19 @@ public class WebsocketManager : MonoBehaviour
             else if (message.Contains("player_updated"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
-                
+                string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
                 byte[] tmpBytes = Convert.FromBase64String(player.player.avatar);
                 Texture2D imgTexture = new Texture2D(64, 64);
                 imgTexture.LoadImage(tmpBytes);
                 _playersManager.SetupAvatar(imgTexture, player.player.clientId);
+                if (!_playersReady.ContainsKey(player.player.clientId))
+                {
+                    _playersReady.Add(player.player.clientId, bool.Parse(player.player.ready));
+                }
+                else
+                {
+                    _playersReady[player.player.clientId] = bool.Parse(player.player.ready);
+                }
             }
         };
 
@@ -179,6 +189,19 @@ public class WebsocketManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        bool allReady = true;
+        foreach (var ready in _playersReady)
+        {
+            if (!ready.Value)
+            {
+                allReady = false;
+            }
+        }
+
+        if (allReady)
+        {
+            _gameLaunched = true;
+            StartCoroutine(WaitToStart());
+        }
     }
 }
