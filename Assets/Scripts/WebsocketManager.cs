@@ -262,15 +262,15 @@ public class WebsocketManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
+            if (player.Value.role == "survivor")
+            {
+                _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
+            }
             string base64 = player.Value.avatar.Replace("data:image/jpeg;base64,", "");
             byte[] tmpBytes = Convert.FromBase64String(base64);
             Texture2D imgTexture = new Texture2D(256, 256);
             imgTexture.LoadImage(tmpBytes);
             _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
-            if (player.Value.role == "survivor")
-            {
-                _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
-            }
         }
         /*_bufferPos = new GraphicsBuffer(GraphicsBuffer.Target.Structured, _players.Count, 3 * sizeof(float));
         _fog.SetBuffer("_posPlayers", _bufferPos);
