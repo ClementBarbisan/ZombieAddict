@@ -1,17 +1,24 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IDamageable
 {
-    
-
     [Header("Settings")] 
     public float speed = 3.5f;
-    public float life = 10f;
-    
+
     [Header("References")]
     public Transform target;
     [SerializeField] private Renderer renderer;
+    
+    [Header("Stats")]
+    [SerializeField] private float _maxHealth = 100f;
+    private float _currentHealth;
+    private bool _isDead = false;
+
+    [Header("Events")]
+    public UnityEvent<float> OnHit;       
+    public UnityEvent OnDeath;
 
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -42,10 +49,43 @@ public class EnemyController : MonoBehaviour
         bool isMoving = _agent.velocity.sqrMagnitude > 0.01f;
         _animator.SetBool(Move, isMoving);
     }
-
-    public void Hit()
+    
+    public void TakeDamage(float amount)
     {
-        life--;
+        if (_isDead) return;
+        
+        _mat.EnableKeyword("_EMISSION");
+        Invoke(nameof(ResetMaterial), .05f);
+
+        _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
+
+        OnHit?.Invoke(_currentHealth);
+
+        if (_currentHealth <= 0f)
+            Die();
+        else
+            _animator.SetTrigger("Hit");
+        
         
     }
+    
+    public void Die()
+    {
+        if (_isDead) return;
+        _isDead = true;
+
+        OnDeath?.Invoke();
+        _agent.speed = 0f;
+        _animator.SetTrigger("Death");
+        Destroy(gameObject, 1f);
+    }
+
+    public float GetHealthPercent() => _currentHealth / _maxHealth;
+    public bool IsDead() => _isDead;
+
+    private void ResetMaterial()
+    {
+        _mat.DisableKeyword("_EMISSION");
+    }
+    
 }
