@@ -110,7 +110,7 @@ public class WebsocketManager : MonoBehaviour
         Application.runInBackground = true; // Recommended for WebGL
         _playersManager = FindAnyObjectByType<PlayersManager>();
         _websocket = new WebSocket("ws://" + _ip + ":" + _port);
-
+        _zombieManager = FindAnyObjectByType<ZombieManager>();
         _websocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
@@ -129,13 +129,36 @@ public class WebsocketManager : MonoBehaviour
         _websocket.OnMessage += (bytes) =>
         {
             string message = System.Text.Encoding.UTF8.GetString(bytes);
-            //Debug.Log("Received: " + message);
+            Debug.Log("Received: " + message);
             if (message.Contains("player_joined"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 if (!_playersAbstract.ContainsKey(player.player.clientId) && player.player.nickname != "Unity")
                 {
                     _playersAbstract.Add(player.player.clientId, player.player);
+                    string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
+                    try
+                    {
+                        byte[] tmpBytes = Convert.FromBase64String(base64);
+                        Texture2D imgTexture = new Texture2D(64, 64);
+                        imgTexture.LoadImage(tmpBytes);
+                        _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
+                        if (player.player.nickname != "Unity")
+                        {
+                            if (!_playersAbstract.ContainsKey(player.player.clientId))
+                            {
+                                _playersAbstract.Add(player.player.clientId, player.player);
+                            }
+                            else
+                            {
+                                _playersAbstract[player.player.clientId] = player.player;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
             }
             else if (message.Contains("player_left"))
@@ -149,12 +172,14 @@ public class WebsocketManager : MonoBehaviour
             }
             else if (message.Contains("input_survivor"))
             {
+                Debug.Log("Input survivor");
                 InputSurvivor player = JsonUtility.FromJson<InputSurvivor>(message);
                 _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
                     player.buttons.a, player.buttons.b);
             }
             else if (message.Contains("input_zombie"))
             {
+                Debug.Log("ZombieZom");
                 InputZombie zombie = JsonUtility.FromJson<InputZombie>(message);
                 _zombieManager.SpawnZombie(new Vector2(zombie.position.x, zombie.position.y), zombie.troupes);
             }

@@ -504,6 +504,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: WebsocketManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: _listZombie.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: '_listZombie.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2000720230508551476, guid: f7c31c909a126ca4d99c435e6d0b2762, type: 3}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: _listNameZombies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: '_listNameZombies.Array.data[0]'
+      value: zombie_default
+      objectReference: {fileID: 0}
     - target: {fileID: 7377068152422722157, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
