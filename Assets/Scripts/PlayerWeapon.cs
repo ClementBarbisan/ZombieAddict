@@ -21,7 +21,6 @@ public class PlayerWeapon : MonoBehaviour
 
     public void HandleFire(bool isPressed)
     {
-        Debug.Log("isPress"+ isPressed);
         _isFiring = isPressed;
     }
 
@@ -31,7 +30,6 @@ public class PlayerWeapon : MonoBehaviour
 
         if (_isFiring && _cooldownTimer <= 0f)
         {
-            Debug.Log("FIRE");
             Shoot();
             _cooldownTimer = coolDownFire;
         }
@@ -58,6 +56,9 @@ public class PlayerWeapon : MonoBehaviour
             hitLine.SetPosition(0,weaponPos.position);
             hitLine.SetPosition(1,hit.point);
             _alphaLineHit = 1f;
+            
+            if (hit.transform.TryGetComponent<IDamageable>(out var target))
+                hit.transform.GetComponent<IDamageable>().TakeDamage(1f);
         }
     }
 }

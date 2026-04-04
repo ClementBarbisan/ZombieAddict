@@ -9,7 +9,7 @@ public class ZombieManager : MonoBehaviour
     
     public void SpawnZombie(Vector2 pos, string name)
     {
-        Instantiate(_listZombie[_listNameZombies.IndexOf(name)],
-            new Vector3(pos.x * _sizeSpawnZone.x, 0, pos.y * _sizeSpawnZone.y), Quaternion.identity);
+        GameObject obj = Instantiate(_listZombie[_listNameZombies.IndexOf(name)],
+            new Vector3(pos.x * _sizeSpawnZone.x - _sizeSpawnZone.x / 2, 0, pos.y * _sizeSpawnZone.y - _sizeSpawnZone.y / 2), Quaternion.identity);
     }
 }
