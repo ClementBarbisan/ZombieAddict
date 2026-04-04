@@ -172,14 +172,13 @@ public class WebsocketManager : MonoBehaviour
             }
             else if (message.Contains("input_survivor"))
             {
-                Debug.Log("Input survivor");
                 InputSurvivor player = JsonUtility.FromJson<InputSurvivor>(message);
-                _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
-                    player.buttons.a, player.buttons.b);
+                if (_players.ContainsKey(player.clientId))
+                    _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
+                        player.buttons.a, player.buttons.b);
             }
             else if (message.Contains("input_zombie"))
             {
-                Debug.Log("ZombieZom");
                 InputZombie zombie = JsonUtility.FromJson<InputZombie>(message);
                 _zombieManager.SpawnZombie(new Vector2(zombie.position.x, zombie.position.y), zombie.troupes);
             }
