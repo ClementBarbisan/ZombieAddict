@@ -94,7 +94,10 @@ public class PlayerController : MonoBehaviour
     public void HandleInputs(Vector2 move, bool button1, bool button2)
     {
         // MOVE
-        _move = move;
+        if (!button1)
+            _move = move;
+        else
+            _move = Vector2.zero;
 
         // ATTACK
         _playerWeapon.HandleFire(button1);

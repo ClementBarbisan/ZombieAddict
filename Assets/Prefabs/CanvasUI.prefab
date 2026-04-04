@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1798690009123593141}
   - component: {fileID: 8892644407855201148}
+  - component: {fileID: 8860791949184077546}
   m_Layer: 5
   m_Name: Avatars
   m_TagString: Untagged
@@ -62,6 +63,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8860791949184077546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4073991701602243612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d4f040e045141b2b99e8bd50c1a8bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Avatars
 --- !u!1 &5416129023889619325
 GameObject:
   m_ObjectHideFlags: 0

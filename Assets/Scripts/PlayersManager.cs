@@ -1,16 +1,18 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PlayersManager : MonoBehaviour
 {
     [SerializeField] private PlayerController playerPrefab;
     [SerializeField] private GameObject _prefabAvatar;
-    [SerializeField] private GameObject _avatars;
+    private GameObject _avatars;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
     private Dictionary<string, Image> _playersAvatar = new Dictionary<string, Image>();
+
     public PlayerController CreateNewPlayer( string clientId, string name)
     {
         PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
@@ -22,6 +24,8 @@ public class PlayersManager : MonoBehaviour
 
     public void SetupAvatar(Texture2D avatar, string name, string clientId)
     {
+        if(_avatars == null)
+            _avatars = FindAnyObjectByType<Avatars>().gameObject;
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
