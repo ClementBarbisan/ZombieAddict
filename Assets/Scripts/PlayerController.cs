@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 using TMPro;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     
     [Header("Debug")] 
     public bool useInputUnity;
+
+    public UnityEvent OnHit;
     
     private Transform _grabbedObject;
     private Rigidbody _rb;
