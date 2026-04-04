@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
     private PlayerInput _playerInput;
     private Vector2 _move;
     private Transform _cam;
-    private bool _btn1, _btn2;
     private bool _vfxWalkSmokePlaying;
     private PlayerWeapon _playerWeapon;
 
@@ -94,11 +93,14 @@ public class PlayerController : MonoBehaviour
 
     public void HandleInputs(Vector2 move, bool button1, bool button2)
     {
+        // MOVE
         _move = move;
-        _btn1 = button1;
-        _btn2 = button2;
+
+        // ATTACK
+        _playerWeapon.HandleFire(button1);
         
-        _playerWeapon.HandleFire(_btn1);
+        // INTERACT 
+        
     }
     
 #region Input Callbacks (New Input System)
@@ -110,6 +112,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.onActionTriggered -= HandleAction;
+
     }
 
     private void HandleAction(InputAction.CallbackContext ctx)
@@ -124,12 +127,17 @@ public class PlayerController : MonoBehaviour
 
         if (ctx.action.name == "Attack")
         {
-            _btn1 = ctx.ReadValue<bool>();
+            if(ctx.started)
+                _playerWeapon.HandleFire(true);
+        }
+        else
+        {
+            _playerWeapon.HandleFire(false);
         }
         
         if (ctx.action.name == "Interact")
         {
-            _btn2 = ctx.ReadValue<bool>();
+            
         }
     }
     #endregion
