@@ -15,18 +15,25 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
     private bool _isDead = false;
+    
+    [Header("Detection")]
+    [SerializeField] private float _detectionRange = 15f;
+    [SerializeField] private float _refreshRate    = 0.2f;
 
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent OnDeath;
-
+    
     private NavMeshAgent _agent;
     private Animator _animator;
     private static readonly int Move = Animator.StringToHash("Move");
     private Material _mat;
+    private float  _sqrDetectionRange;
 
     private void Start()
     {
+        _sqrDetectionRange = _detectionRange * _detectionRange;
+        InvokeRepeating(nameof(UpdateTarget), 0f, _refreshRate);
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
         _mat = renderer.material;
@@ -42,7 +49,7 @@ public class EnemyController : MonoBehaviour, IDamageable
             _agent.SetDestination(Vector3.zero);
 
         HandleAnimator();
-
+        target = GetClosestPlayer();
     }
 
     private void HandleAnimator()
@@ -88,4 +95,35 @@ public class EnemyController : MonoBehaviour, IDamageable
         _mat.DisableKeyword("_EMISSION");
     }
     
+    private void UpdateTarget()
+    {
+        target = GetClosestPlayer();
+    }
+    
+    private Transform GetClosestPlayer()
+    {
+        var players = PlayerTracker.Instance.Players;
+
+        Transform closest      = null;
+        float closestSqrDist   = _sqrDetectionRange;
+
+        foreach (var player in players)
+        {
+            if (player == null) continue;
+
+            float sqrDist = (transform.position - player.position).sqrMagnitude;
+
+            if (sqrDist < closestSqrDist)
+            {
+                closestSqrDist = sqrDist;
+                closest        = player;
+            }
+        }
+
+        return closest; 
+    }
 }
+
+
+
+
