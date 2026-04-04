@@ -109,7 +109,7 @@ public class WebsocketManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         Application.runInBackground = true; // Recommended for WebGL
         _playersManager = FindAnyObjectByType<PlayersManager>();
-        _websocket = new WebSocket("ws://" + _ip + ":" + _port);
+        _websocket = new WebSocket("wss://" + _ip + ":" + _port);
         _zombieManager = FindAnyObjectByType<ZombieManager>();
         _websocket.OnOpen += () =>
         {
