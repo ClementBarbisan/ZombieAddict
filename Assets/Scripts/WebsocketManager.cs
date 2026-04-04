@@ -57,14 +57,14 @@ public class WebsocketManager : MonoBehaviour
     }
     
     [Serializable]
-    struct JoinMessage
+    struct JoinLeaveMessage
     {
         public string type;
         public Player player;
         public string phase;
         public string t;
     }
-    
+
     [Serializable]
     struct HelloMessage
     {
@@ -79,6 +79,7 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private float _timeToStart = 5;
     private WebSocket _websocket;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
+    private Dictionary<string, bool> _playersReady = new Dictionary<string, bool>();
     private PlayersManager _playersManager;
     private GameManager _gameManager;
     
@@ -108,27 +109,46 @@ public class WebsocketManager : MonoBehaviour
         _websocket.OnMessage += (bytes) =>
         {
             string message = System.Text.Encoding.UTF8.GetString(bytes);
-            Debug.Log("Received: " + message);
+            //Debug.Log("Received: " + message);
             
             if (message.Contains("player_joined"))
             {
-                JoinMessage player = JsonUtility.FromJson<JoinMessage>(message);
-                _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
+                JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
+                if (!_players.ContainsKey(player.player.clientId))
+                    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
+            }
+            else if (message.Contains("player_left"))
+            {
+                JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
+                if (_players.ContainsKey(player.player.clientId))
+                {
+                    _players.Remove(player.player.clientId);
+                    _playersManager.DeletePlayer(player.player.clientId);
+                }
             }
             else if (message.Contains("input"))
             {
                 //bool allReady = true;
                 InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
-                if (!_players.ContainsKey(player.clientId))
-                {
-                    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
-                }
+                //if (!_players.ContainsKey(player.clientId))
+                //{
+                //    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
+                //}
                 _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
                     player.buttons.a, player.buttons.b);
                 //if (allReady)
                 //{
                 //    StartCoroutine(WaitToStart());
                 //}
+            }
+            else if (message.Contains("player_updated"))
+            {
+                JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
+                
+                byte[] tmpBytes = Convert.FromBase64String(player.player.avatar);
+                Texture2D imgTexture = new Texture2D(64, 64);
+                imgTexture.LoadImage(tmpBytes);
+                _playersManager.SetupAvatar(imgTexture, player.player.clientId);
             }
         };
 
