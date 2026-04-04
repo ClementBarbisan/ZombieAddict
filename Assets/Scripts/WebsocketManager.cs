@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
@@ -75,14 +76,18 @@ public class WebsocketManager : MonoBehaviour
     
     [SerializeField] private string _ip = "192.168.1.127";
     [SerializeField] private string _port = "8080";
+    [SerializeField] private float _timeToStart = 5;
     private WebSocket _websocket;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
     private PlayersManager _playersManager;
+    private GameManager _gameManager;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
     {
         Application.runInBackground = true; // Recommended for WebGL
         _playersManager = FindAnyObjectByType<PlayersManager>();
+        _gameManager = FindAnyObjectByType<GameManager>();
         _websocket = new WebSocket("ws://" + _ip + ":" + _port);
 
         _websocket.OnOpen += () =>
@@ -113,6 +118,7 @@ public class WebsocketManager : MonoBehaviour
             else*/
             if (message.Contains("inputs_snapshot"))
             {
+                bool allReady = true;
                 InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
                 foreach (PlayerInput playerInput in player.players)
                 {
@@ -122,6 +128,15 @@ public class WebsocketManager : MonoBehaviour
                     }
                     _players[playerInput.clientId].HandleInputs(new Vector2(playerInput.input.joystick.x, playerInput.input.joystick.y),
                         playerInput.input.buttons.a, playerInput.input.buttons.b);
+                    if (!bool.Parse(playerInput.ready))
+                    {
+                        allReady = false;
+                    }
+                }
+
+                if (allReady)
+                {
+                    StartCoroutine(WaitToStart());
                 }
             }
         };
@@ -129,6 +144,12 @@ public class WebsocketManager : MonoBehaviour
         //InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
 
         await _websocket.Connect();
+    }
+
+    private IEnumerator WaitToStart()
+    {
+        yield return new WaitForSeconds(_timeToStart);
+        _gameManager.StartGame();
     }
 
     async void SendWebSocketMessage()
