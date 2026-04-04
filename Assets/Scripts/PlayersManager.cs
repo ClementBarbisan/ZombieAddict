@@ -6,7 +6,7 @@ public class PlayersManager : MonoBehaviour
 {
     [SerializeField] private PlayerController playerPrefab;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
-    public PlayerController CreateNewPlayer(string name, string clientId)
+    public PlayerController CreateNewPlayer( string clientId, string name)
     {
         PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
             Quaternion.identity);
