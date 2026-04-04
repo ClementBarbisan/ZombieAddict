@@ -14,11 +14,14 @@ public class PlayerWeapon : MonoBehaviour
     {
         Debug.Log(valueInput);
         if (valueInput && _canShoot)
-            Fire();
+            _canShoot = true;
     }
 
-    private void Fire()
+    private void Update()
     {
+        if (!_canShoot)
+            return;
+        
         _timerCooldown += Time.deltaTime;
         
         if (_timerCooldown > coolDownFire)
@@ -26,8 +29,12 @@ public class PlayerWeapon : MonoBehaviour
             _timerCooldown = 0f;
             if (Physics.Raycast(weaponPos.position, weaponPos.forward, out RaycastHit hit))
             {
+                _canShoot = false;
                 hitVFX.transform.position = hit.point;
-                hitVFX.Play();
+                hitVFX.Emit(1);
+                
+                Debug.Log("Fire");
+                Debug.DrawRay(weaponPos.position, weaponPos.forward * hit.distance, Color.red);
             }
         }
     }
