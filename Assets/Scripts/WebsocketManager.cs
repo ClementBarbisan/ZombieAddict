@@ -5,6 +5,7 @@ using UnityEngine;
 using NativeWebSocket;
 using UnityEditor.PackageManager;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class WebsocketManager : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class WebsocketManager : MonoBehaviour
         public string nickname;
         public string avatar;
         public string ready;
+        public string role;
     }
     
     [Serializable]
@@ -78,18 +80,18 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private string _ip = "192.168.1.127";
     [SerializeField] private string _port = "8080";
     [SerializeField] private float _timeToStart = 5;
+    [SerializeField] private string _sceneName = "Game";
     private WebSocket _websocket;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
-    private Dictionary<string, bool> _playersReady = new Dictionary<string, bool>();
+    private Dictionary<string, Player> _playersAbstract = new Dictionary<string, Player>();
     private PlayersManager _playersManager;
-    private GameManager _gameManager;
-
+    private bool _gameLaunched;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         Application.runInBackground = true; // Recommended for WebGL
         _playersManager = FindAnyObjectByType<PlayersManager>();
-        _gameManager = FindAnyObjectByType<GameManager>();
         _websocket = new WebSocket("ws://" + _ip + ":" + _port);
 
         _websocket.OnOpen += () =>
@@ -115,8 +117,8 @@ public class WebsocketManager : MonoBehaviour
             if (message.Contains("player_joined"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
-                if (!_players.ContainsKey(player.player.clientId))
-                    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
+                //if (!_players.ContainsKey(player.player.clientId) && player.player.nickname != "Unity")
+                //    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
             }
             else if (message.Contains("player_left"))
             {
@@ -131,10 +133,6 @@ public class WebsocketManager : MonoBehaviour
             {
                 //bool allReady = true;
                 InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
-                if (!_players.ContainsKey(player.clientId))
-                {
-                    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
-                }
                 _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
                     player.buttons.a, player.buttons.b);
                 //if (allReady)
@@ -145,18 +143,22 @@ public class WebsocketManager : MonoBehaviour
             else if (message.Contains("player_updated"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
+                //if (!_players.ContainsKey(player.player.clientId))
+                //{
+                //    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, "New player"));
+                //}
                 string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
                 byte[] tmpBytes = Convert.FromBase64String(base64);
                 Texture2D imgTexture = new Texture2D(64, 64);
                 imgTexture.LoadImage(tmpBytes);
                 _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
-                if (!_playersReady.ContainsKey(player.player.clientId))
+                if (!_playersAbstract.ContainsKey(player.player.clientId))
                 {
-                    _playersReady.Add(player.player.clientId, bool.Parse(player.player.ready));
+                    _playersAbstract.Add(player.player.clientId, player.player);
                 }
                 else
                 {
-                    _playersReady[player.player.clientId] = bool.Parse(player.player.ready);
+                    _playersAbstract[player.player.clientId] = player.player;
                 }
             }
         };
@@ -164,6 +166,44 @@ public class WebsocketManager : MonoBehaviour
         //InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
 
         await _websocket.Connect();
+    }
+
+    private void Update()
+    {
+        if (_gameLaunched)
+            return;
+        bool allReady = true;
+        foreach (KeyValuePair<string, Player> player in _playersAbstract)
+        {
+            if (!bool.Parse(player.Value.ready))
+            {
+                allReady = false;
+            }
+        }
+
+        if (allReady)
+        {
+            _gameLaunched = true;
+            StartCoroutine(WaitToLaunch());
+        }
+    }
+
+    private IEnumerator WaitToLaunch()
+    {
+        yield return new WaitForSeconds(_timeToStart);
+        SceneManager.LoadScene(_sceneName);
+        foreach (KeyValuePair<string, Player> player in _playersAbstract)
+        {
+            if (player.Value.role == "survivor")
+            {
+                _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
+            }
+            string base64 = player.Value.avatar.Replace("data:image/jpeg;base64,", "");
+            byte[] tmpBytes = Convert.FromBase64String(base64);
+            Texture2D imgTexture = new Texture2D(64, 64);
+            imgTexture.LoadImage(tmpBytes);
+            _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
+        }
     }
 
     async void SendWebSocketMessage()
