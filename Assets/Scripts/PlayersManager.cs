@@ -36,6 +36,11 @@ public class PlayersManager : MonoBehaviour
             _playersAvatar.Add(clientId, image);
         }
     }
+
+    public void ClearAvatar()
+    {
+        _playersAvatar.Clear();
+    }
     
     public void DeletePlayer(string clientId)
     {

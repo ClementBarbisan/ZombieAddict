@@ -130,8 +130,15 @@ public class WebsocketManager : MonoBehaviour
         {
             string message = System.Text.Encoding.UTF8.GetString(bytes);
             //Debug.Log("Received: " + message);
-            
-            if (message.Contains("player_left"))
+            if (message.Contains("player_joined"))
+            {
+                JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
+                if (!_playersAbstract.ContainsKey(player.player.clientId) && player.player.nickname != "Unity")
+                {
+                    _playersAbstract.Add(player.player.clientId, player.player);
+                }
+            }
+            else if (message.Contains("player_left"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 if (_players.ContainsKey(player.player.clientId))
@@ -153,20 +160,22 @@ public class WebsocketManager : MonoBehaviour
             }
             else if (message.Contains("player_updated"))
             {
-                Debug.Log("Received: " + message);
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
                 byte[] tmpBytes = Convert.FromBase64String(base64);
                 Texture2D imgTexture = new Texture2D(64, 64);
                 imgTexture.LoadImage(tmpBytes);
                 _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
-                if (!_playersAbstract.ContainsKey(player.player.clientId))
+                if (player.player.nickname != "Unity")
                 {
-                    _playersAbstract.Add(player.player.clientId, player.player);
-                }
-                else
-                {
-                    _playersAbstract[player.player.clientId] = player.player;
+                    if (!_playersAbstract.ContainsKey(player.player.clientId))
+                    {
+                        _playersAbstract.Add(player.player.clientId, player.player);
+                    }
+                    else
+                    {
+                        _playersAbstract[player.player.clientId] = player.player;
+                    }
                 }
             }
         };
@@ -200,6 +209,8 @@ public class WebsocketManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeToStart);
         SceneManager.LoadScene(_sceneName);
+        yield return new WaitForSeconds(2.5f);
+        _playersManager.ClearAvatar();
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
             if (player.Value.role == "survivor")
