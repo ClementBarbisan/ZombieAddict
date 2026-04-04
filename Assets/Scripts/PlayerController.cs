@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private Transform _cam;
     private bool _vfxWalkSmokePlaying;
     private PlayerWeapon _playerWeapon;
-
+    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -94,10 +94,7 @@ public class PlayerController : MonoBehaviour
     public void HandleInputs(Vector2 move, bool button1, bool button2)
     {
         // MOVE
-        if (!button1)
-            _move = move;
-        else
-            _move = Vector2.zero;
+        _move = move;
 
         // ATTACK
         _playerWeapon.HandleFire(button1);
@@ -106,16 +103,17 @@ public class PlayerController : MonoBehaviour
         
     }
     
-#region Input Callbacks (New Input System)
+    #region Input Callbacks (New Input System)
     private void OnEnable()
     {
         _playerInput.onActionTriggered += HandleAction;
+        PlayerTracker.Instance.Register(transform);
     }
 
     private void OnDisable()
     {
         _playerInput.onActionTriggered -= HandleAction;
-
+        PlayerTracker.Instance.Unregister(transform);
     }
 
     private void HandleAction(InputAction.CallbackContext ctx)
