@@ -8,34 +8,46 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private Transform weaponPos;
     [SerializeField] private ParticleSystem hitVFX;
     
-    private float _timerCooldown;
-    private bool _canShoot = true;
-    public void HandleFire(bool valueInput)
+    private float _cooldownTimer;
+    private bool _isFiring;
+
+    public void HandleFire(bool isPressed)
     {
-        Debug.Log(valueInput);
-        if (valueInput && _canShoot)
-            _canShoot = true;
+        _isFiring = isPressed;
     }
 
     private void Update()
     {
-        if (!_canShoot)
-            return;
-        
-        _timerCooldown += Time.deltaTime;
-        
-        if (_timerCooldown > coolDownFire)
+        _cooldownTimer -= Time.deltaTime;
+
+        if (_isFiring && _cooldownTimer <= 0f)
         {
-            _timerCooldown = 0f;
-            if (Physics.Raycast(weaponPos.position, weaponPos.forward, out RaycastHit hit))
+            Shoot();
+            _cooldownTimer = coolDownFire;
+        }
+    }
+
+    private void Shoot()
+    {
+        if (Physics.Raycast(weaponPos.position, weaponPos.forward, out RaycastHit hit))
+        {
+            // VFX impact
+            if (hitVFX != null)
             {
-                _canShoot = false;
                 hitVFX.transform.position = hit.point;
+                hitVFX.transform.forward = hit.normal;
                 hitVFX.Emit(1);
-                
-                Debug.Log("Fire");
-                Debug.DrawRay(weaponPos.position, weaponPos.forward * hit.distance, Color.red);
             }
+
+            Debug.Log("Fire 🔫");
+
+            Debug.DrawRay(
+                weaponPos.position,
+                weaponPos.forward * hit.distance,
+                Color.red,
+                0.5f
+            );
         }
     }
 }
+
