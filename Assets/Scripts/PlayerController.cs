@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
+
+    [Header("VFX")] 
+    [SerializeField] private ParticleSystem vfxWalkSmoke;
+
+    [Header("Debug")] 
+    public bool useInputUnity;
     
     private Transform _grabbedObject;
     private Rigidbody _rb;
@@ -12,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _move;
     private Transform _cam;
     private bool _btn1, _btn2;
+    private bool _vfxWalkSmokePlaying;
 
     private void Awake()
     {
@@ -44,17 +53,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_move != Vector2.zero && !_vfxWalkSmokePlaying)
+        {
+            _vfxWalkSmokePlaying = true;
+            vfxWalkSmoke.Play();
+        }
+        else if (_move == Vector2.zero && _vfxWalkSmokePlaying)
+        {
+            _vfxWalkSmokePlaying = false;
+            vfxWalkSmoke.Stop();
+        }
+    }
+
     public void HandleInputs(Vector2 move, bool button1, bool button2)
     {
         _move = move;
         _btn1 = button1;
         _btn2 = button2;
     }
-
-    private void Update()
-    {
-
-    }
+    
     
 #region Input Callbacks (New Input System)
     private void OnEnable()
@@ -69,6 +88,9 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAction(InputAction.CallbackContext ctx)
     {
+        if (!useInputUnity)
+            return;
+        
         if (ctx.action.name == "Move")
         {
             _move = ctx.ReadValue<Vector2>();
