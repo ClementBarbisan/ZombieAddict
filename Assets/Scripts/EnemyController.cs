@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -30,6 +31,16 @@ public class EnemyController : MonoBehaviour, IDamageable
     private Material _mat;
     private float  _sqrDetectionRange;
 
+    private void OnEnable()
+    {
+        EnemiesTracker.Instance.Register(transform);
+    }
+
+    private void OnDisable()
+    {
+        EnemiesTracker.Instance.Unregister(transform);
+    }
+
     private void Start()
     {
         _sqrDetectionRange = _detectionRange * _detectionRange;
@@ -60,7 +71,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     public void TakeDamage(float amount)
     {
-        Debug.Log(_currentHealth);
         if (_isDead) return;
         
         _mat.EnableKeyword("_EMISSION");
