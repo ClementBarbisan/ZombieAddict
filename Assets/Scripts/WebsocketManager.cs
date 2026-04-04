@@ -217,6 +217,19 @@ public class WebsocketManager : MonoBehaviour
                     }
                 }
             }
+            else if (message.Contains("player_reconnected"))
+            {
+                JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
+                string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
+                byte[] tmpBytes = Convert.FromBase64String(base64);
+                Texture2D imgTexture = new Texture2D(256, 256);
+                imgTexture.LoadImage(tmpBytes);
+                _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
+                if (player.player.role == "survivor" && !_players.ContainsKey(player.player.clientId))
+                {
+                    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
+                }
+            }
         };
 
         //InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
