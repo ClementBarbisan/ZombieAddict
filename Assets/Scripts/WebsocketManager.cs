@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
-using UnityEditor.PackageManager;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class WebsocketManager : MonoBehaviour
@@ -92,14 +90,31 @@ public class WebsocketManager : MonoBehaviour
         public string nickname;
         public string clientType;
     }
+
+    [Serializable]
+    struct InfosPlayer
+    {
+        public string clientId;
+        public int damages;
+        public int enemyKilled;
+        public float walkDistance;
+        public int shootFired;
+        public int shootSuccessfull;
+        public float accuracy;
+    }
     
+    public static WebsocketManager Instance; 
     [SerializeField] private string _ip = "192.168.1.127";
     [SerializeField] private string _port = "8080";
     [SerializeField] private float _timeToStart = 5;
     [SerializeField] private string _sceneName = "Game";
+    [SerializeField] private Material _fog;
+    private GraphicsBuffer _bufferPos;
     private WebSocket _websocket;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
     private Dictionary<string, Player> _playersAbstract = new Dictionary<string, Player>();
+    private Dictionary<string, InfosPlayer> _playersInfos = new Dictionary<string, InfosPlayer>();
+    private Vector3[] _positionsPlayer;
     private PlayersManager _playersManager;
     private ZombieManager _zombieManager;
     private bool _gameLaunched;
@@ -211,6 +226,17 @@ public class WebsocketManager : MonoBehaviour
 
     private void Update()
     {
+        /*if (_bufferPos.IsValid())
+        {
+            int index = 0;
+            foreach (KeyValuePair<string, PlayerController> player in _players)
+            {
+                _positionsPlayer[index] = player.Value.transform.position;
+                index++;
+            }
+            _bufferPos.SetData(_positionsPlayer);
+        }*/
+        
         if (_gameLaunched || _playersAbstract.Count == 0)
             return;
         bool allReady = true;
@@ -237,16 +263,19 @@ public class WebsocketManager : MonoBehaviour
         _playersManager.ClearAvatar();
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
-            if (player.Value.role == "survivor")
-            {
-                _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
-            }
             string base64 = player.Value.avatar.Replace("data:image/jpeg;base64,", "");
             byte[] tmpBytes = Convert.FromBase64String(base64);
             Texture2D imgTexture = new Texture2D(64, 64);
             imgTexture.LoadImage(tmpBytes);
             _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
+            if (player.Value.role == "survivor")
+            {
+                _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
+            }
         }
+        /*_bufferPos = new GraphicsBuffer(GraphicsBuffer.Target.Structured, _players.Count, 3 * sizeof(float));
+        _fog.SetBuffer("_posPlayers", _bufferPos);
+        _positionsPlayer = new Vector3[_players.Count];*/
     }
 
     async void SendWebSocketMessage()
