@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-[ExecuteAlways]
 public class PaletteColorAssigner : MonoBehaviour
 {
     [Tooltip("The TextMeshPro component to colorize. Leave empty to search on this GameObject.")]
@@ -28,14 +27,30 @@ public class PaletteColorAssigner : MonoBehaviour
         HexToColor("A81631"),
     };
 
-    void OnEnable() => Apply();
-    void OnValidate() => Apply();
+    void Awake()
+    {
+        if (!Application.isPlaying) return;
 
-    [ContextMenu("Apply Palette Color")]
+        if (targetText == null)
+            targetText = GetComponent<TMP_Text>();
+
+        if (targetImage == null)
+            targetImage = GetComponent<Image>();
+    }
+
+    void Start()
+    {
+        if (!Application.isPlaying) return;
+
+        Apply();
+    }
+
     public void Apply()
     {
-        // Resolve sibling index source
+        if (!Application.isPlaying) return;
+
         Transform source = colorSourceParent != null ? colorSourceParent : transform;
+
         if (source.parent == null)
         {
             Debug.LogWarning($"[PaletteColorAssigner] '{source.name}' has no parent — can't determine sibling index.", this);
@@ -47,37 +62,28 @@ public class PaletteColorAssigner : MonoBehaviour
 
         bool applied = false;
 
-        // --- TMP_Text ---
-        TMP_Text tmp = targetText != null ? targetText : GetComponent<TMP_Text>();
-        if (tmp != null)
+        if (targetText != null)
         {
-            tmp.color = color;
+            targetText.color = color;
             applied = true;
-            Debug.Log($"[PaletteColorAssigner] TMP_Text '{tmp.name}' → index {index} → #{ColorToHex(color)}");
         }
 
-        // --- Image ---
-        Image img = targetImage != null ? targetImage : GetComponent<Image>();
-        if (img != null)
+        if (targetImage != null)
         {
-            img.color = color;
+            targetImage.color = color;
             applied = true;
-            Debug.Log($"[PaletteColorAssigner] Image '{img.name}' → index {index} → #{ColorToHex(color)}");
         }
 
         if (!applied)
-            Debug.LogWarning($"[PaletteColorAssigner] No TMP_Text or Image found on '{name}'. Assign targets manually or add a supported component.", this);
+        {
+            Debug.LogWarning($"[PaletteColorAssigner] No TMP_Text or Image found on '{name}'.", this);
+        }
     }
 
     static Color HexToColor(string hex)
     {
         if (ColorUtility.TryParseHtmlString("#" + hex, out Color c)) return c;
-        Debug.LogError($"[PaletteColorAssigner] Invalid hex: {hex}");
+        Debug.LogError($"Invalid hex: {hex}");
         return Color.magenta;
     }
-
-    static string ColorToHex(Color c) =>
-        ((Color32)c).r.ToString("X2") +
-        ((Color32)c).g.ToString("X2") +
-        ((Color32)c).b.ToString("X2");
 }
