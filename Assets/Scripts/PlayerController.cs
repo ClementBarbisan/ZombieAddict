@@ -72,9 +72,17 @@ public class PlayerController : MonoBehaviour
         if (ctx.action.name == "Move")
         {
             _move = ctx.ReadValue<Vector2>();
-            Debug.Log(_move);
         }
-            
+
+        if (ctx.action.name == "Attack")
+        {
+            _btn1 = ctx.ReadValue<bool>();
+        }
+        
+        if (ctx.action.name == "Interact")
+        {
+            _btn2 = ctx.ReadValue<bool>();
+        }
     }
     #endregion
 }
