@@ -1,12 +1,17 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
+
+    [Header("ColorRender")] 
+    [SerializeField] private Renderer rendererBodyColor;
+    [SerializeField] private SpriteRenderer UIPlayerColor;
+    [SerializeField] private TMP_Text namePlayer;
 
     [Header("VFX")] 
     [SerializeField] private ParticleSystem vfxWalkSmoke;
@@ -27,6 +32,18 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
         _cam = Camera.main.transform;
+        namePlayer.transform.SetParent(null);
+        
+        Init("PLAYER_0");
+    }
+
+    public void Init(string name)
+    {
+        namePlayer.text = name;
+        Color c = Random.ColorHSV();
+        namePlayer.color = c;
+        rendererBodyColor.material.color = c;
+        UIPlayerColor.color = c;
     }
 
     private void FixedUpdate()
@@ -65,6 +82,14 @@ public class PlayerController : MonoBehaviour
             _vfxWalkSmokePlaying = false;
             vfxWalkSmoke.Stop();
         }
+
+        TextNamePosition();
+    }
+
+    private void TextNamePosition()
+    {
+        Vector3 p = transform.position + new Vector3(0f, 10f, -4f);
+        namePlayer.transform.position = Vector3.Lerp(namePlayer.transform.position, p, Time.deltaTime * 17f);
     }
 
     public void HandleInputs(Vector2 move, bool button1, bool button2)
@@ -73,7 +98,6 @@ public class PlayerController : MonoBehaviour
         _btn1 = button1;
         _btn2 = button2;
     }
-    
     
 #region Input Callbacks (New Input System)
     private void OnEnable()
