@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 10
-  vfxWalkSmoke: {fileID: 0}
-  useInputUnity: 0
+  vfxWalkSmoke: {fileID: 3735603988578559221}
+  useInputUnity: 1
 --- !u!114 &2592370072973616592
 MonoBehaviour:
   m_ObjectHideFlags: 0
