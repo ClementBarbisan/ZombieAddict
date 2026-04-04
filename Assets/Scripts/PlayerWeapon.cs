@@ -12,6 +12,7 @@ public class PlayerWeapon : MonoBehaviour
     private bool _canShoot = true;
     public void HandleFire(bool valueInput)
     {
+        Debug.Log(valueInput);
         if (valueInput && _canShoot)
             Fire();
     }

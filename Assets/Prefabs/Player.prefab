@@ -289,7 +289,7 @@ MonoBehaviour:
   UIPlayerColor: {fileID: 7164428450225556702}
   namePlayer: {fileID: 6478469076235155081}
   vfxWalkSmoke: {fileID: 3735603988578559221}
-  useInputUnity: 0
+  useInputUnity: 1
 --- !u!114 &2592370072973616592
 MonoBehaviour:
   m_ObjectHideFlags: 0
