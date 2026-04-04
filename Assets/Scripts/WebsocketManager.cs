@@ -21,20 +21,56 @@ public class WebsocketManager : MonoBehaviour
     }
     
     [Serializable]
-    struct InputWebSocket
+    struct Input
     {
-        public string input;
-        public string clientId;
-        public string nickName;
         public Joystick joystick;
         public Buttons buttons;
     }
+    
+    [Serializable]
+    struct PlayerInput
+    {
+        public string clientId;
+        public string nickname;
+        public string ready;
+        public Input input;
+    }
+    
+    [Serializable]
+    struct InputWebSocket
+    {
+        public string type;
+        public string phase;
+        public PlayerInput[] players;
+        public string t;
+    }
+    
+    [Serializable]
+    struct Player
+    {
+        public string clientId;
+        public string clientType;
+        public string nickname;
+        public string avatar;
+        public string ready;
+    }
+    
+    [Serializable]
+    struct JoinMessage
+    {
+        public string type;
+        public Player player;
+        public string phase;
+        public string t;
+    }
+    
     [Serializable]
     struct HelloMessage
     {
         public string type;
         public string clientId;
         public string nickname;
+        public string clientType;
     }
     
     [SerializeField] private string _ip = "192.168.1.127";
@@ -46,7 +82,7 @@ public class WebsocketManager : MonoBehaviour
     async void Start()
     {
         Application.runInBackground = true; // Recommended for WebGL
-
+        _playersManager = FindAnyObjectByType<PlayersManager>();
         _websocket = new WebSocket("ws://" + _ip + ":" + _port);
 
         _websocket.OnOpen += () =>
@@ -56,7 +92,8 @@ public class WebsocketManager : MonoBehaviour
             {
                 type = "hello",
                 clientId = "unity-client",
-                nickname = "Unity"
+                nickname = "Unity",
+                clientType = "unity"
             });
             _websocket.SendText(hello);
         };
@@ -67,15 +104,25 @@ public class WebsocketManager : MonoBehaviour
         {
             string message = System.Text.Encoding.UTF8.GetString(bytes);
             Debug.Log("Received: " + message);
-            InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
-            if (_players.ContainsKey(player.clientId))
+            
+            /*if (message.Contains("player_joined"))
             {
-                _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.nickName));
+                JoinMessage player = JsonUtility.FromJson<JoinMessage>(message);
+                _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.nickname));
             }
-            else
+            else*/
+            if (message.Contains("inputs_snapshot"))
             {
-                _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
-                    player.buttons.a, player.buttons.b);
+                InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
+                foreach (PlayerInput playerInput in player.players)
+                {
+                    if (!_players.ContainsKey(playerInput.clientId))
+                    {
+                        _players.Add(playerInput.clientId, _playersManager.CreateNewPlayer(playerInput.nickname));
+                    }
+                    _players[playerInput.clientId].HandleInputs(new Vector2(playerInput.input.joystick.x, playerInput.input.joystick.y),
+                        playerInput.input.buttons.a, playerInput.input.buttons.b);
+                }
             }
         };
 
