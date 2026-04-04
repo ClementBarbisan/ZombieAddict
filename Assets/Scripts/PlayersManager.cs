@@ -27,6 +27,7 @@ public class PlayersManager : MonoBehaviour
     {
         if(_avatars == null)
             _avatars = FindAnyObjectByType<Avatars>().gameObject;
+        _players[clientId].OnHit.RemoveAllListeners();
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
