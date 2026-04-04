@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -19,7 +20,6 @@ public class PlayerController : MonoBehaviour
     
     [Header("Debug")] 
     public bool useInputUnity;
-
     public UnityEvent OnHit;
     
     private Transform _grabbedObject;
@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
         _playerWeapon = GetComponent<PlayerWeapon>();
         namePlayer.transform.SetParent(null);
     }
-
     public void Init(string name)
     {
         namePlayer.text = name;
@@ -47,7 +46,6 @@ public class PlayerController : MonoBehaviour
         rendererBodyColor.material.color = c;
         UIPlayerColor.color = c;
     }
-
     private void FixedUpdate()
     {
         //Camera
@@ -65,13 +63,22 @@ public class PlayerController : MonoBehaviour
 
         // Rotation only if moving
         Vector3 horizontalMove = new Vector3(move.x, 0f, move.z);
-        if (horizontalMove.sqrMagnitude > 0.01f)
+
+        Debug.Log(_playerWeapon.target);
+        if (_playerWeapon.target == null)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(horizontalMove);
+            if (horizontalMove.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(horizontalMove);
+                _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, 0.2f));
+            }
+        }
+        else
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_playerWeapon.target.position);
             _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, 0.2f));
         }
     }
-
     private void Update()
     {
         if (_move != Vector2.zero && !_vfxWalkSmokePlaying)
@@ -87,13 +94,11 @@ public class PlayerController : MonoBehaviour
 
         TextNamePosition();
     }
-
     private void TextNamePosition()
     {
         Vector3 p = transform.position + new Vector3(0f, 10f, -4f);
         namePlayer.transform.position = Vector3.Lerp(namePlayer.transform.position, p, Time.deltaTime * 17f);
     }
-
     public void HandleInputs(Vector2 move, bool button1, bool button2)
     {
         // MOVE
@@ -112,13 +117,11 @@ public class PlayerController : MonoBehaviour
         _playerInput.onActionTriggered += HandleAction;
         PlayerTracker.Instance.Register(transform);
     }
-
     private void OnDisable()
     {
         _playerInput.onActionTriggered -= HandleAction;
         PlayerTracker.Instance.Unregister(transform);
     }
-
     private void HandleAction(InputAction.CallbackContext ctx)
     {
         if (!useInputUnity)
