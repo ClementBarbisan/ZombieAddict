@@ -132,10 +132,10 @@ public class WebsocketManager : MonoBehaviour
             {
                 //bool allReady = true;
                 InputWebSocket player = JsonUtility.FromJson<InputWebSocket>(message);
-                //if (!_players.ContainsKey(player.clientId))
-                //{
-                //    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
-                //}
+                if (!_players.ContainsKey(player.clientId))
+                {
+                    _players.Add(player.clientId, _playersManager.CreateNewPlayer(player.clientId, "New player"));
+                }
                 _players[player.clientId].HandleInputs(new Vector2(player.joystick.x, player.joystick.y),
                     player.buttons.a, player.buttons.b);
                 //if (allReady)
@@ -147,7 +147,7 @@ public class WebsocketManager : MonoBehaviour
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
-                byte[] tmpBytes = Convert.FromBase64String(player.player.avatar);
+                byte[] tmpBytes = Convert.FromBase64String(base64);
                 Texture2D imgTexture = new Texture2D(64, 64);
                 imgTexture.LoadImage(tmpBytes);
                 _playersManager.SetupAvatar(imgTexture, player.player.clientId);
