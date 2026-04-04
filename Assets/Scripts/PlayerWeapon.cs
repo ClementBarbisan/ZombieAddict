@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
     [Header("Settings")] 
     public float coolDownFire = .2f;
+    public float hitDamage = 1f;
     [SerializeField] private Transform weaponPos;
     [SerializeField] private ParticleSystem hitVFX;
     [SerializeField] private LineRenderer hitLine;
@@ -58,7 +60,7 @@ public class PlayerWeapon : MonoBehaviour
             _alphaLineHit = 1f;
             
             if (hit.transform.TryGetComponent<IDamageable>(out var target))
-                hit.transform.GetComponent<IDamageable>().TakeDamage(1f);
+                hit.transform.GetComponent<IDamageable>().TakeDamage(hitDamage);
         }
     }
 }
