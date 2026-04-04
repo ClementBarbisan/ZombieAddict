@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4148783373380116809}
   - component: {fileID: 5454259339162652786}
   - component: {fileID: 1573694125190768988}
-  - component: {fileID: 6175330834320327272}
   m_Layer: 0
   m_Name: Enemy_1
   m_TagString: Enemy
@@ -92,7 +91,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea2cd7476808c44e8d033c596a1454a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  speed: 3.5
   target: {fileID: 0}
+  renderer: {fileID: 7179248261474531038}
+  _maxHealth: 100
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &1573694125190768988
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -120,18 +128,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6175330834320327272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000720230508551476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c17e28a7af46654439415e1a44f3c106, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Hit
 --- !u!1001 &4815967186391939776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,3 +236,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!137 &7179248261474531038 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2410570265434229790, guid: 45a5064cd1e7f194184851d1da2e5785, type: 3}
+  m_PrefabInstance: {fileID: 4815967186391939776}
+  m_PrefabAsset: {fileID: 0}
