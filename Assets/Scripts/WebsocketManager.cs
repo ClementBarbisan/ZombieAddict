@@ -233,7 +233,7 @@ public class WebsocketManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeToStart);
         SceneManager.LoadScene(_sceneName);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1f);
         _playersManager.ClearAvatar();
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
