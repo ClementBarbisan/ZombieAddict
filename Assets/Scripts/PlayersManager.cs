@@ -11,7 +11,7 @@ public class PlayersManager : MonoBehaviour
     [SerializeField] private GameObject _prefabAvatar;
     private GameObject _avatars;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
-    private Dictionary<string, Image> _playersAvatar = new Dictionary<string, Image>();
+    private Dictionary<string, AvatarImageReference> _playersAvatar = new Dictionary<string, AvatarImageReference>();
 
     public PlayerController CreateNewPlayer( string clientId, string name)
     {
@@ -33,7 +33,13 @@ public class PlayersManager : MonoBehaviour
             Image image = imageRef.imageAvatar;
             imageRef.name.text = name;
             image.sprite = Sprite.Create(avatar, new Rect(0, 0, avatar.width, avatar.height), new Vector2(1.0f, 1.0f));
-            _playersAvatar.Add(clientId, image);
+            _playersAvatar.Add(clientId, imageRef);
+        }
+        else
+        {
+            _playersAvatar[clientId].imageAvatar.sprite = Sprite.Create(avatar, new Rect(0, 0, avatar.width, avatar.height),
+                new Vector2(1.0f, 1.0f));
+            _playersAvatar[clientId].name.text = name;
         }
     }
 
