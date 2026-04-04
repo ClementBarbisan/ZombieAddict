@@ -505,6 +505,14 @@ PrefabInstance:
       value: WebsocketManager
       objectReference: {fileID: 0}
     - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: _sizeSpawnZone.x
+      value: 53
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: _sizeSpawnZone.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
       propertyPath: _listZombie.Array.size
       value: 1
       objectReference: {fileID: 0}
