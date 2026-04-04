@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("VFX")] 
     [SerializeField] private ParticleSystem vfxWalkSmoke;
-
+    
     [Header("Debug")] 
     public bool useInputUnity;
     
@@ -26,15 +26,15 @@ public class PlayerController : MonoBehaviour
     private Transform _cam;
     private bool _btn1, _btn2;
     private bool _vfxWalkSmokePlaying;
+    private PlayerWeapon _playerWeapon;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
         _cam = Camera.main.transform;
+        _playerWeapon = GetComponent<PlayerWeapon>();
         namePlayer.transform.SetParent(null);
-        
-        Init("PLAYER_0");
     }
 
     public void Init(string name)
@@ -97,6 +97,8 @@ public class PlayerController : MonoBehaviour
         _move = move;
         _btn1 = button1;
         _btn2 = button2;
+        
+        _playerWeapon.HandleFire(_btn1);
     }
     
 #region Input Callbacks (New Input System)
