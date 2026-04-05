@@ -164,6 +164,7 @@ public class WebsocketManager : MonoBehaviour
     private bool _gameLaunched;
     private bool _endGame;
     private float _elapsedTime;
+    private bool _zombieWin, _humansWin;
 
     private void Awake()
     {
@@ -343,11 +344,14 @@ public class WebsocketManager : MonoBehaviour
                     break;
                 }
             }
+            if (_endGame)
+                _zombieWin = true;
         }
         _elapsedTime += Time.deltaTime;
         if (_elapsedTime > _timeToWin)
         {
             _endGame = true;
+            _humansWin = true;
         }
         if (_endGame)
         {
