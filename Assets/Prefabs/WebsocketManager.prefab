@@ -107,10 +107,13 @@ MonoBehaviour:
   listZombie:
   - {fileID: 2000720230508551476, guid: f7c31c909a126ca4d99c435e6d0b2762, type: 3}
   - {fileID: 1188509156255901999, guid: c67096092fe7a49b5bb322df89005c66, type: 3}
+  - {fileID: 8153946081774680316, guid: a263a3dbbd2cb814398d5fa11f278833, type: 3}
   _listNameZombies:
   - zombie_default
   - robot_big
-  _maxZombie: 1400000014000000
+  - robot_petit
+  _maxZombie: 140000001400000014000000
+  fog: {fileID: 0}
 --- !u!1001 &4657371703326298958
 PrefabInstance:
   m_ObjectHideFlags: 0
