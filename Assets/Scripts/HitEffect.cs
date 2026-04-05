@@ -72,7 +72,11 @@ public class HitEffect : MonoBehaviour
     }
 
     // Call this from your damage / combat system
-    public void OnHit() => PlayHit();
+    public void OnHit(float damages, Slider health)
+    { 
+        PlayHit();
+        health.value -= damages;
+    } 
 
     void OnDestroy() => _hitSequence?.Kill();
 }

@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         _playerWeapon = GetComponent<PlayerWeapon>();
         _playerWeapon.OnHitEnemy?.AddListener((int x) => HitEnemy(x));
         namePlayer.transform.SetParent(null);
+        _currentHealth = _maxHealth;
     }
     public void Init(string name)
     {
@@ -206,6 +207,8 @@ public class PlayerController : MonoBehaviour, IDamageable
             Die();
         else
             animator.Play("BAKED_Hit");
+        
+        
     }
 
     public void Die()
