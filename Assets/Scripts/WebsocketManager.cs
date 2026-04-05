@@ -303,7 +303,7 @@ public class WebsocketManager : MonoBehaviour
                     }
                 }
             }
-            else if (message.Contains("lobby_state"))
+            else if (message.Contains("lobby_state") && !_gameLaunched)
             {
                 LobbyState lobby = JsonUtility.FromJson<LobbyState>(message);
                 if (lobby.playerCount == lobby.readyCount && lobby.playerCount > 0)
