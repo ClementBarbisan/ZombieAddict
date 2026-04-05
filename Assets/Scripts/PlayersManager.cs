@@ -33,6 +33,9 @@ public class PlayersManager : MonoBehaviour
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
+            CircleLayoutManager managerLayout = _avatars.GetComponent<CircleLayoutManager>();
+            if (managerLayout != null)
+                managerLayout.AddItem(imageObj.GetComponent<RectTransform>());
             AvatarImageReference imageRef = imageObj.GetComponent<AvatarImageReference>();
             Image image = imageRef.imageAvatar;
             imageRef.name.text = name;
