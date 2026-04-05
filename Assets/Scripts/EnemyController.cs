@@ -23,6 +23,9 @@ public class EnemyController : MonoBehaviour, IDamageable
     [Header("Detection")]
     [SerializeField] private float _detectionRange = 15f;
 
+    [Header("Audios")] 
+    [SerializeField] private AudioClip[] clipsHit;
+    
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent<EnemyController> OnDeath;
@@ -67,13 +70,12 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (target != null && sqrDist < attackRange)
         {
             Attack();
-            _agent.isStopped = true;
-            _agent.velocity = Vector3.zero;
+            _agent.enabled = false;
         }
         else
         {
             _cooldownAttackTimer = 0f;
-            _agent.isStopped = false;
+            _agent.enabled = true;
         }
     }
     private void HandleAnimator()
@@ -104,6 +106,8 @@ public class EnemyController : MonoBehaviour, IDamageable
             Invoke(nameof(ResetMove), .1f);
             _animator.Play("BAKED_Hit");
         }
+        
+        AudioSource.PlayClipAtPoint(clipsHit[Random.Range(0, clipsHit.Length)], transform.position);
     }
     private void ResetMove()
     {
