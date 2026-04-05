@@ -103,7 +103,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (_isDead) return;
         _isDead = true;
-
+        WebsocketManager.Instance.zombiePlayerInfos.nbZombieDead++;
         OnDeath?.Invoke(this);
         _agent.speed = 0f;
         _animator.Play("BAKED_Death");
