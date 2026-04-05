@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerWeapon : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private ParticleSystem hitVFX;
     [SerializeField] private LineRenderer hitLine;
     [SerializeField] private LayerMask layer;
+
+    public UnityEvent<int> OnHitEnemy = new UnityEvent<int>();
     
     private float _cooldownTimer;
     private bool _isFiring;
@@ -20,7 +23,6 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Start()
     {
-        
         _hitLineMat = hitLine.material;
     }
 
@@ -62,9 +64,12 @@ public class PlayerWeapon : MonoBehaviour
             hitLine.SetPosition(0,weaponPos.position);
             hitLine.SetPosition(1,hit.point);
             _alphaLineHit = 1f;
-            
+
             if (hit.transform.TryGetComponent<IDamageable>(out var target))
+            {
                 hit.transform.GetComponent<IDamageable>().TakeDamage(hitDamage);
+                OnHitEnemy?.Invoke((int)hitDamage);
+            }
         }
     }
     

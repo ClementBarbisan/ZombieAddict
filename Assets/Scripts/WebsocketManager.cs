@@ -92,10 +92,11 @@ public class WebsocketManager : MonoBehaviour
     }
 
     [Serializable]
-    struct InfosPlayer
+    public struct InfosPlayer
     {
         public string clientId;
         public int damages;
+        public int damagesEnemy;
         public int enemyKilled;
         public float walkDistance;
         public int shootFired;
