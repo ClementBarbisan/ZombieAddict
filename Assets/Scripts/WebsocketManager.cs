@@ -156,6 +156,7 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private GameObject _prefabStats;
     [HideInInspector] public bool zombieWin, humansWin;
     //[SerializeField] private Material _fog;
+    private TextMeshProUGUI _timer;
     private GraphicsBuffer _bufferPos;
     private WebSocket _websocket;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
@@ -169,6 +170,7 @@ public class WebsocketManager : MonoBehaviour
     private bool _gameLaunched;
     private bool _endGame;
     private float _elapsedTime;
+    private bool _gameStart;
 
     private void Awake()
     {
@@ -354,11 +356,19 @@ public class WebsocketManager : MonoBehaviour
             if (_endGame)
                 zombieWin = true;
         }
-        _elapsedTime += Time.deltaTime;
-        if (_elapsedTime > _timeToWin)
+
+        if (_gameStart)
         {
-            _endGame = true;
-            humansWin = true;
+            _elapsedTime += Time.deltaTime;
+            if (_timer)
+            {
+                _timer.text = (_timeToWin - _elapsedTime).ToString();
+            }
+            if (_elapsedTime > _timeToWin)
+            {
+                _endGame = true;
+                humansWin = true;
+            }
         }
         if (_endGame)
         {
@@ -400,6 +410,8 @@ public class WebsocketManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToStart);
         SceneManager.LoadScene(_sceneName);
         yield return new WaitForSeconds(1f);
+        _gameStart = true;
+        _timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<TextMeshProUGUI>();
         _playersManager.ClearAvatar();
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
@@ -407,7 +419,6 @@ public class WebsocketManager : MonoBehaviour
             byte[] tmpBytes = Convert.FromBase64String(base64);
             Texture2D imgTexture = new Texture2D(256, 256);
             imgTexture.LoadImage(tmpBytes);
-            Debug.LogWarning("Name player = " + player.Value.nickname + ", player ID = " + player.Value.clientId);
             _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
             if (player.Value.role == "survivor" && !_players.ContainsKey(player.Value.clientId))
             {
