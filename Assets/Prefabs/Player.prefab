@@ -303,6 +303,7 @@ MonoBehaviour:
   UIPlayerColor: {fileID: 7164428450225556702}
   namePlayer: {fileID: 6478469076235155081}
   vfxWalkSmoke: {fileID: 3735603988578559221}
+  _lightPoint: {fileID: 5549830263333237780}
   audioRun: {fileID: 615026568078609846}
   clipHit: {fileID: 8300000, guid: 4479f70007c3e6f48901a4427a797871, type: 3}
   useInputUnity: 1
@@ -10373,6 +10374,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4112760366619371621}
     m_Modifications:
+    - target: {fileID: -2199826804139026323, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 870e6d1f611019e4685ed0a5a592d887, type: 2}
+    - target: {fileID: 3362622858428018442, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 159e2bd6681956a4cafe805736455dd7, type: 2}
+    - target: {fileID: 4580151855181743720, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2223b8d054b2d1a49aa5fa51c22c77b1, type: 2}
+    - target: {fileID: 6164996480583612547, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a36df51c5250354d9029471f2b3b1b4, type: 2}
+    - target: {fileID: 7439002737948722077, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7fe8212d145052847b520d7744c27998, type: 2}
     - target: {fileID: -8679921383154817045, guid: 84de877803412a34a8808ca8f02c11f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10413,26 +10434,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -2199826804139026323, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 870e6d1f611019e4685ed0a5a592d887, type: 2}
-    - target: {fileID: 3362622858428018442, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 159e2bd6681956a4cafe805736455dd7, type: 2}
-    - target: {fileID: 4580151855181743720, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2223b8d054b2d1a49aa5fa51c22c77b1, type: 2}
-    - target: {fileID: 6164996480583612547, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 6a36df51c5250354d9029471f2b3b1b4, type: 2}
-    - target: {fileID: 7439002737948722077, guid: 9523732c61d1c104d825c4029b7f547d, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 7fe8212d145052847b520d7744c27998, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

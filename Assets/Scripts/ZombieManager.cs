@@ -11,6 +11,7 @@ public class ZombieManager : MonoBehaviour
     [SerializeField] private List<int> _maxZombie = new List<int>();
     private int[] _nbZombie;
     private List<List<EnemyController>> _zombies = new List<List<EnemyController>>();
+    [FormerlySerializedAs("_fog")] public ParticleSystem fog;
 
     private void Start()
     {
@@ -20,6 +21,11 @@ public class ZombieManager : MonoBehaviour
         {
             _zombies.Add(new List<EnemyController>());
         }
+    }
+
+    public void LaunchFog()
+    {
+        fog.Play();
     }
 
     public void SpawnZombie(Vector2 pos, string name)
