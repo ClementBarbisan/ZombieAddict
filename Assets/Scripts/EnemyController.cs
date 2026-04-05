@@ -112,8 +112,8 @@ public class EnemyController : MonoBehaviour, IDamageable
             Invoke(nameof(ResetMove), .1f);
             _animator.Play("BAKED_Hit");
         }
-        
-        AudioSource.PlayClipAtPoint(clipsHit[Random.Range(0, clipsHit.Length)], transform.position);
+        if(clipsHit.Length > 0)
+            AudioSource.PlayClipAtPoint(clipsHit[Random.Range(0, clipsHit.Length)], transform.position);
     }
     private void ResetMove()
     {
@@ -128,7 +128,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         OnDeath?.Invoke(this);
         _agent.enabled = false;
         _animator.Play("BAKED_Death");
-        AudioSource.PlayClipAtPoint(clipDeath, transform.position);
+        if(clipDeath != null)
+            AudioSource.PlayClipAtPoint(clipDeath, transform.position);
         Destroy(gameObject, 1.2f);
     }
     public float GetHealthPercent() => _currentHealth / _maxHealth;
@@ -148,7 +149,8 @@ public class EnemyController : MonoBehaviour, IDamageable
                 target.GetComponent<IDamageable>().TakeDamage(1f, null);
                 _animator.SetTrigger(Shoot);
                 vfxAttack.Play();
-                AudioSource.PlayClipAtPoint(clipsAttack[Random.Range(0, clipsAttack.Length)], transform.position);
+                if(clipsAttack.Length > 0)
+                    AudioSource.PlayClipAtPoint(clipsAttack[Random.Range(0, clipsAttack.Length)], transform.position);
             }
         }
     }
