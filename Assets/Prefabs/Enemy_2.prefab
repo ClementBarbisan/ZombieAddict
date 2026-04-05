@@ -224,23 +224,24 @@ MonoBehaviour:
   animateHit: 1
   target: {fileID: 0}
   renderer: {fileID: 2356967146371323114}
-  vfxAttack: {fileID: 0}
+  vfxAttack: {fileID: 27372083802209749}
   _maxHealth: 100
   _detectionRange: 15
-  clipsHit: []
+  clipsHit:
+  - {fileID: 8300000, guid: a8b2f70c041fae24cac3bae5aeb57096, type: 3}
+  - {fileID: 8300000, guid: 2fe3861d92aaa19468172c10e27ff529, type: 3}
   clipsAttack:
   - {fileID: 8300000, guid: 4479f70007c3e6f48901a4427a797871, type: 3}
   - {fileID: 8300000, guid: 74fe2102b7de87b4d94e6bf8e5542cb1, type: 3}
   - {fileID: 8300000, guid: e0c14df3c3cda1640a98983a6da9ba15, type: 3}
-  - {fileID: 8300000, guid: 5def54986ce3f2b47bf8684dda5c25fd, type: 3}
-  - {fileID: 8300000, guid: a15e41494bbfd2a45b03481d142b3eea, type: 3}
-  clipDeath: {fileID: 0}
+  clipDeath: {fileID: 8300000, guid: 873c9e1fdf1dc23408975c8a6ba45953, type: 3}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  nameEnemy: 
 --- !u!54 &26323036690819150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -468,6 +469,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f91edac4d13fc4343ba96bb6a843ad05, type: 3}
+--- !u!198 &27372083802209749 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1110556030845387871, guid: f91edac4d13fc4343ba96bb6a843ad05, type: 3}
+  m_PrefabInstance: {fileID: 1083188349461592458}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &193373805763784167 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 983828037429990509, guid: f91edac4d13fc4343ba96bb6a843ad05, type: 3}

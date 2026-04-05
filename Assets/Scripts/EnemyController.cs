@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     public Transform target;
     [SerializeField] private Renderer renderer;
     [SerializeField] private ParticleSystem vfxAttack;
+    [SerializeField] private ParticleSystem vfxDeath;
     
     [Header("Stats")]
     [SerializeField] private float _maxHealth = 100f;
@@ -129,9 +130,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         OnDeath?.Invoke(this);
         _agent.enabled = false;
         _animator.Play("BAKED_Death");
+        if (vfxDeath != null)
+            vfxDeath.Play();
         if(clipDeath != null)
             AudioSource.PlayClipAtPoint(clipDeath, transform.position);
-        Destroy(gameObject, 1.2f);
+        Destroy(gameObject, 1.06f);
     }
     public float GetHealthPercent() => _currentHealth / _maxHealth;
     public bool IsDead() => _isDead;
@@ -149,7 +152,8 @@ public class EnemyController : MonoBehaviour, IDamageable
                 _cooldownAttackTimer = 1.1f;
                 target.GetComponent<IDamageable>().TakeDamage(1f, null);
                 _animator.SetTrigger(Shoot);
-                vfxAttack.Play();
+                if(vfxAttack != null)
+                    vfxAttack.Play();
                 if(clipsAttack.Length > 0)
                     AudioSource.PlayClipAtPoint(clipsAttack[Random.Range(0, clipsAttack.Length)], transform.position);
             }
