@@ -299,12 +299,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84ea8a9912df1343b834679cb66446e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathEffect
-  targetImage: {fileID: 2612525343432268177}
+  targetImage: {fileID: 1859051490895200002}
+  photoImage: {fileID: 2612525343432268177}
   jumpHeight: 40
   jumpDuration: 0.3
   deathColor: {r: 0, g: 0, b: 0, a: 1}
   colorDuration: 0.15
   tintStrength: 0.5
+  rotateDegrees: 180
+  rotateDuration: 0.35
+  rotateEase: 6
+  squishScale: {x: 0.6, y: 1.4, z: 1}
+  squishDuration: 0.15
+  squishEase: 6
 --- !u!114 &6992308954942645400
 MonoBehaviour:
   m_ObjectHideFlags: 0
