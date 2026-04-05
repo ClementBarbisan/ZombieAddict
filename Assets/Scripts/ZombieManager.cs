@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ZombieManager : MonoBehaviour
 {
     [SerializeField] private Vector2 _sizeSpawnZone = new Vector2(5.3f, 3f);
-    [SerializeField] private List<GameObject> _listZombie = new List<GameObject>();
+    [FormerlySerializedAs("_listZombie")] public List<GameObject> listZombie = new List<GameObject>();
     [SerializeField] private List<string> _listNameZombies = new List<string>();
     [SerializeField] private List<int> _maxZombie = new List<int>();
     private int[] _nbZombie;
@@ -13,9 +14,9 @@ public class ZombieManager : MonoBehaviour
 
     private void Start()
     {
-        _nbZombie = new int[_listZombie.Count];
+        _nbZombie = new int[listZombie.Count];
         _zombies = new List<List<EnemyController>>();
-        for (int i = 0; i < _listZombie.Count; i++)
+        for (int i = 0; i < listZombie.Count; i++)
         {
             _zombies.Add(new List<EnemyController>());
         }
@@ -23,7 +24,7 @@ public class ZombieManager : MonoBehaviour
 
     public void SpawnZombie(Vector2 pos, string name)
     {
-        GameObject obj = Instantiate(_listZombie[_listNameZombies.IndexOf(name)],
+        GameObject obj = Instantiate(listZombie[_listNameZombies.IndexOf(name)],
             new Vector3(pos.x * _sizeSpawnZone.x - _sizeSpawnZone.x / 2, 0, (1f - pos.y) * _sizeSpawnZone.y - _sizeSpawnZone.y / 2), Quaternion.identity);
         EnemyController enemy = obj.GetComponent<EnemyController>();
         enemy.OnDeath.AddListener((EnemyController x) => DeleteZombie(x));
@@ -34,6 +35,7 @@ public class ZombieManager : MonoBehaviour
         infos.maxZombie = _maxZombie[_listNameZombies.IndexOf(name)];
         infos.nbZombie = _nbZombie[_listNameZombies.IndexOf(name)];
         WebsocketManager.Instance.SendZombieMessage(infos);
+        WebsocketManager.Instance.zombiePlayerInfos.nbZombieSpawn[_listNameZombies.IndexOf(name)]++;
     }
 
     private void DeleteZombie(EnemyController enemy)

@@ -164,6 +164,7 @@ GameObject:
   - component: {fileID: 8028797782513983210}
   - component: {fileID: 6641904460215715854}
   - component: {fileID: 1192463776712397275}
+  - component: {fileID: 7554970831697232807}
   - component: {fileID: 6992308954942645400}
   - component: {fileID: 8504991219155957791}
   m_Layer: 5
@@ -286,6 +287,24 @@ MonoBehaviour:
   imageAvatar: {fileID: 2612525343432268177}
   name: {fileID: 4035486519306367801}
   healthPlayer: {fileID: 2961099649366960471}
+--- !u!114 &7554970831697232807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2161771520180312552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84ea8a9912df1343b834679cb66446e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathEffect
+  targetImage: {fileID: 2612525343432268177}
+  jumpHeight: 40
+  jumpDuration: 0.3
+  deathColor: {r: 0, g: 0, b: 0, a: 1}
+  colorDuration: 0.15
+  tintStrength: 0.5
 --- !u!114 &6992308954942645400
 MonoBehaviour:
   m_ObjectHideFlags: 0
