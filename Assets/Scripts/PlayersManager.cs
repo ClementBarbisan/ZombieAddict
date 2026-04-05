@@ -40,7 +40,12 @@ public class PlayersManager : MonoBehaviour
     {
         PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
             Quaternion.identity);
-        _players.Add(clientId, newPlayer);
+        if (_players.ContainsKey(clientId))
+            _players.Add(clientId, newPlayer);
+        else
+        {
+            _players[clientId] = newPlayer;
+        }
         _players[clientId].OnHit.AddListener((float x) => _playersAvatar[clientId].GetComponent<HitEffect>()
             .OnHit(x, _playersAvatar[clientId].healthPlayer));
         _players[clientId].OnKillEnemy.AddListener(() => _playersAvatar[clientId].GetComponent<KillEffect>()
