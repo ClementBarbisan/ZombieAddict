@@ -12,6 +12,29 @@ public class PlayersManager : MonoBehaviour
     private GameObject _avatars;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
     private Dictionary<string, AvatarImageReference> _playersAvatar = new Dictionary<string, AvatarImageReference>();
+    
+    #region COLOR
+    private int _index;
+    private static readonly Color[] Palette = new Color[]
+    {
+        HexToColor("EF476F"),
+        HexToColor("FFD166"),
+        HexToColor("06D6A0"),
+        HexToColor("118AB2"),
+        HexToColor("073B4C"),
+        HexToColor("7742A3"),
+        HexToColor("E37140"),
+        HexToColor("EF91CC"),
+        HexToColor("895E3E"),
+        HexToColor("A81631"),
+    };
+    static Color HexToColor(string hex)
+    {
+        if (ColorUtility.TryParseHtmlString("#" + hex, out Color c)) return c;
+        Debug.LogError($"Invalid hex: {hex}");
+        return Color.magenta;
+    }
+    #endregion
 
     public PlayerController CreateNewPlayer( string clientId, string name)
     {
@@ -22,7 +45,7 @@ public class PlayersManager : MonoBehaviour
             .OnHit(x, _playersAvatar[clientId].healthPlayer));
         _players[clientId].OnDeath.AddListener(() => _playersAvatar[clientId].GetComponent<KillEffect>()
             .OnKill());
-        newPlayer.Init(name);
+        newPlayer.Init(name, Palette[_index]);
         return newPlayer;
     }
 
