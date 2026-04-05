@@ -85,7 +85,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         _animator.SetBool(Move, isMoving);
     }
     
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, PlayerController player)
     {
         _mat.EnableKeyword("_EMISSION");
         Invoke(nameof(ResetMaterial), .05f);
@@ -97,6 +97,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         OnHit?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0f)
+        {
             Die();
         else if (animateHit)
         {
@@ -117,7 +118,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (_isDead) return;
         _isDead = true;
-
+        WebsocketManager.Instance.zombiePlayerInfos.nbZombieDead++;
         OnDeath?.Invoke(this);
         _agent.isStopped = true;
         _agent.velocity = Vector3.zero;
@@ -141,7 +142,7 @@ public class EnemyController : MonoBehaviour, IDamageable
             if (_cooldownAttackTimer < 0f)
             {
                 _cooldownAttackTimer = 1.1f;
-                target.GetComponent<IDamageable>().TakeDamage(1f);
+                target.GetComponent<IDamageable>().TakeDamage(1f, null);
                 _animator.SetTrigger(Shoot);
                 vfxAttack.Play();
             }

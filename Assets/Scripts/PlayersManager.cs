@@ -43,8 +43,10 @@ public class PlayersManager : MonoBehaviour
         _players.Add(clientId, newPlayer);
         _players[clientId].OnHit.AddListener((float x) => _playersAvatar[clientId].GetComponent<HitEffect>()
             .OnHit(x, _playersAvatar[clientId].healthPlayer));
-        _players[clientId].OnDeath.AddListener(() => _playersAvatar[clientId].GetComponent<KillEffect>()
+        _players[clientId].OnKillEnemy.AddListener(() => _playersAvatar[clientId].GetComponent<KillEffect>()
             .OnKill());
+        _players[clientId].OnDeath.AddListener(() => _playersAvatar[clientId].GetComponent<DeathEffect>()
+            .OnDeath());
         newPlayer.Init(name, Palette[_index]);
         return newPlayer;
     }

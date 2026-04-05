@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Stats")]
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
-    private bool _isDead = false;
+    public bool isDead = false;
     public WebsocketManager.InfosPlayer infos = new WebsocketManager.InfosPlayer();
 
     [Header("ColorRender")] 
@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent OnDeath;
+    public UnityEvent OnKillEnemy;
     
     private static readonly int Move = Animator.StringToHash("Move");
     private Transform _grabbedObject;
@@ -184,6 +185,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     #endregion
 
+    public void KillEnemy()
+    {
+        OnKillEnemy?.Invoke();
+    }
+    
     public void HitEnemy(int damages)
     {
         infos.shootSuccessfull++;
@@ -191,12 +197,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         infos.damagesEnemy += damages;
     }
     
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, PlayerController player)
     {
         //_mat.EnableKeyword("_EMISSION");
         //Invoke(nameof(ResetMaterial), .05f);
         
-        if (_isDead) return;
+        if (isDead) return;
         
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
         infos.damages += (int)amount;
@@ -212,12 +218,13 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        if (_isDead) return;
-        _isDead = true;
+        if (isDead) return;
+        isDead = true;
 
         OnDeath?.Invoke();
         _canMove = false;
         animator.Play("BAKED_Death");
+        WebsocketManager.Instance.zombiePlayerInfos.nbPlayerDead++;
         //Destroy(gameObject, 1.2f);
     }
     
