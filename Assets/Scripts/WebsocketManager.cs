@@ -102,6 +102,14 @@ public class WebsocketManager : MonoBehaviour
         public int shootSuccessfull;
         public float accuracy;
     }
+
+    [Serializable]
+    public struct Zombies
+    {
+        public string type;
+        public int nbZombie;
+        public int maxZombie;
+    }
     
     public static WebsocketManager Instance; 
     [SerializeField] private string _ip = "192.168.1.127";
@@ -118,6 +126,20 @@ public class WebsocketManager : MonoBehaviour
     private PlayersManager _playersManager;
     private ZombieManager _zombieManager;
     private bool _gameLaunched;
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(this);
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
     {
@@ -297,12 +319,12 @@ public class WebsocketManager : MonoBehaviour
         _positionsPlayer = new Vector3[_players.Count];*/
     }
 
-    async void SendWebSocketMessage()
+    public async void SendZombieMessage(Zombies infos)
     {
         if (_websocket.State == WebSocketState.Open)
         {
-            //await websocket.Send(new byte[] { 10, 20, 30 });
-            await _websocket.SendText("plain text message");
+            string infosText = JsonUtility.ToJson(infos);
+            await _websocket.SendText(infosText);
         }
     }
     
