@@ -97,6 +97,7 @@ public class WebsocketManager : MonoBehaviour
     public struct InfosPlayer
     {
         public string clientId;
+        public string name;
         public int damages;
         public int damagesEnemy;
         public int enemyKilled;
@@ -152,6 +153,7 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private string _sceneName = "Game";
     [SerializeField] private string _sceneEndName = "EndGame";
     [SerializeField] private TextMeshProUGUI _countDown;
+    [SerializeField] private GameObject _prefabStats;
     [HideInInspector] public bool zombieWin, humansWin;
     //[SerializeField] private Material _fog;
     private GraphicsBuffer _bufferPos;
@@ -363,8 +365,13 @@ public class WebsocketManager : MonoBehaviour
             _statsEndGame = new StatsEndGame();
             _statsEndGame.type = "end_game";
             _statsEndGame.endGame = true;
+            GameObject layout = GameObject.FindGameObjectWithTag("Stats");
             foreach (KeyValuePair<string, InfosPlayer> infos in _playersInfos)
             {
+                GameObject stats = Instantiate(_prefabStats, layout.transform);
+                StatsPlayers playerStat = stats.GetComponent<StatsPlayers>();
+                playerStat.stats = infos.Value;
+                playerStat.nameText.text = infos.Value.name;
                 _statsEndGame.infosPlayer.Add(infos.Value);
             }
             _statsEndGame.zombiePlayerInfos = zombiePlayerInfos;
@@ -406,6 +413,9 @@ public class WebsocketManager : MonoBehaviour
             {
                 _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
                 _playersInfos.Add(player.Value.clientId, _players[player.Value.clientId].infos);
+                InfosPlayer playersInfo = _playersInfos[player.Value.clientId];
+                playersInfo.name = player.Value.nickname;
+                _playersInfos[player.Value.clientId] = playersInfo;
             }
         }
         /*_bufferPos = new GraphicsBuffer(GraphicsBuffer.Target.Structured, _players.Count, 3 * sizeof(float));
