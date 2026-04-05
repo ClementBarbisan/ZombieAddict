@@ -12,14 +12,42 @@ public class PlayersManager : MonoBehaviour
     private GameObject _avatars;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
     private Dictionary<string, AvatarImageReference> _playersAvatar = new Dictionary<string, AvatarImageReference>();
+    
+    #region COLOR
+    private int _index;
+    private static readonly Color[] Palette = new Color[]
+    {
+        HexToColor("EF476F"),
+        HexToColor("FFD166"),
+        HexToColor("06D6A0"),
+        HexToColor("118AB2"),
+        HexToColor("073B4C"),
+        HexToColor("7742A3"),
+        HexToColor("E37140"),
+        HexToColor("EF91CC"),
+        HexToColor("895E3E"),
+        HexToColor("A81631"),
+    };
+    static Color HexToColor(string hex)
+    {
+        if (ColorUtility.TryParseHtmlString("#" + hex, out Color c)) return c;
+        Debug.LogError($"Invalid hex: {hex}");
+        return Color.magenta;
+    }
+    #endregion
 
     public PlayerController CreateNewPlayer( string clientId, string name)
     {
         PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
             Quaternion.identity);
         _players.Add(clientId, newPlayer);
-        _players[clientId].OnHit.AddListener((float x) => _playersAvatar[clientId].GetComponent<HitEffect>().OnHit());
-        newPlayer.Init(name);
+        _players[clientId].OnHit.AddListener((float x) => _playersAvatar[clientId].GetComponent<HitEffect>()
+            .OnHit(x, _playersAvatar[clientId].healthPlayer));
+        _players[clientId].OnKillEnemy.AddListener(() => _playersAvatar[clientId].GetComponent<KillEffect>()
+            .OnKill());
+        _players[clientId].OnDeath.AddListener(() => _playersAvatar[clientId].GetComponent<DeathEffect>()
+            .OnDeath());
+        newPlayer.Init(name, Palette[_index]);
         return newPlayer;
     }
 
@@ -30,6 +58,9 @@ public class PlayersManager : MonoBehaviour
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
+            CircleLayoutManager managerLayout = _avatars.GetComponent<CircleLayoutManager>();
+            if (managerLayout != null)
+                managerLayout.AddItem(imageObj.GetComponent<RectTransform>());
             AvatarImageReference imageRef = imageObj.GetComponent<AvatarImageReference>();
             Image image = imageRef.imageAvatar;
             imageRef.name.text = name;

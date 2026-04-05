@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Stats")]
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
-    private bool _isDead = false;
+    public bool isDead = false;
+    public WebsocketManager.InfosPlayer infos = new WebsocketManager.InfosPlayer();
 
     [Header("ColorRender")] 
     [SerializeField] private Renderer rendererBodyColor;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent OnDeath;
+    public UnityEvent OnKillEnemy;
     
     private static readonly int Move = Animator.StringToHash("Move");
     private Transform _grabbedObject;
@@ -39,22 +41,25 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool _vfxWalkSmokePlaying;
     private PlayerWeapon _playerWeapon;
     private bool _canMove = true;
-    
+    private static readonly int Shoot = Animator.StringToHash("Shoot");
+    private Vector3 _oldPos;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
         _cam = Camera.main.transform;
         _playerWeapon = GetComponent<PlayerWeapon>();
+        _playerWeapon.OnHitEnemy?.AddListener((int x) => HitEnemy(x));
         namePlayer.transform.SetParent(null);
+        _currentHealth = _maxHealth;
     }
-    public void Init(string name)
+    public void Init(string name, Color color)
     {
         namePlayer.text = name;
-        Color c = Random.ColorHSV();
-        namePlayer.color = c;
-        rendererBodyColor.material.color = c;
-        UIPlayerColor.color = c;
+        namePlayer.color = color;
+        rendererBodyColor.material.color = color;
+        UIPlayerColor.color = color;
     }
     private void FixedUpdate()
     {
@@ -68,12 +73,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         camRight.y = 0;
         camForward.Normalize();
         camRight.Normalize();
-
+        Vector3 currentPos = transform.position;
         // Move
         Vector3 move = camRight * _move.x + camForward * _move.y;
         Vector3 velocity = new Vector3(move.x * moveSpeed, _rb.linearVelocity.y, move.z * moveSpeed);
         _rb.linearVelocity = velocity;
-
+        infos.walkDistance += Vector3.Distance(currentPos, _oldPos);
         // Rotation only if moving
         Vector3 horizontalMove = new Vector3(move.x, 0f, move.z);
         
@@ -95,6 +100,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (direction.sqrMagnitude > 0.001f)
                 _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, .2f));
         }
+        _oldPos = transform.position;
     }
     private void Update()
     {
@@ -130,6 +136,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         // ATTACK
         _playerWeapon.HandleFire(button1);
+        animator.SetTrigger(Shoot);
         
         // INTERACT 
         
@@ -158,8 +165,13 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (ctx.action.name == "Attack")
         {
-            if(ctx.started)
+            if (ctx.started)
+            {
+                animator.SetTrigger(Shoot);
                 _playerWeapon.HandleFire(true);
+                infos.shootFired++;
+            }
+                
         }
         else
         {
@@ -173,31 +185,46 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     #endregion
 
-    public void TakeDamage(float amount)
+    public void KillEnemy()
+    {
+        OnKillEnemy?.Invoke();
+    }
+    
+    public void HitEnemy(int damages)
+    {
+        infos.shootSuccessfull++;
+        infos.accuracy = infos.shootSuccessfull / infos.shootFired;
+        infos.damagesEnemy += damages;
+    }
+    
+    public void TakeDamage(float amount, PlayerController player)
     {
         //_mat.EnableKeyword("_EMISSION");
         //Invoke(nameof(ResetMaterial), .05f);
         
-        if (_isDead) return;
+        if (isDead) return;
         
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
-
+        infos.damages += (int)amount;
         OnHit?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0f)
             Die();
         else
             animator.Play("BAKED_Hit");
+        
+        
     }
 
     public void Die()
     {
-        if (_isDead) return;
-        _isDead = true;
+        if (isDead) return;
+        isDead = true;
 
         OnDeath?.Invoke();
         _canMove = false;
         animator.Play("BAKED_Death");
+        WebsocketManager.Instance.zombiePlayerInfos.nbPlayerDead++;
         //Destroy(gameObject, 1.2f);
     }
     

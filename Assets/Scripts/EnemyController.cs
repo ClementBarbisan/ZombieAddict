@@ -7,10 +7,13 @@ public class EnemyController : MonoBehaviour, IDamageable
 {
     [Header("Settings")] 
     public float speed = 3.5f;
+    [SerializeField] private float attackRange = 3.8f;
+    [SerializeField] private bool animateHit = true;
 
     [Header("References")]
     public Transform target;
     [SerializeField] private Renderer renderer;
+    [SerializeField] private ParticleSystem vfxAttack;
     
     [Header("Stats")]
     [SerializeField] private float _maxHealth = 100f;
@@ -19,17 +22,19 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     [Header("Detection")]
     [SerializeField] private float _detectionRange = 15f;
-    [SerializeField] private float _refreshRate    = 0.2f;
 
     [Header("Events")]
     public UnityEvent<float> OnHit;       
-    public UnityEvent OnDeath;
+    public UnityEvent<EnemyController> OnDeath;
     
     private NavMeshAgent _agent;
     private Animator _animator;
     private static readonly int Move = Animator.StringToHash("Move");
     private Material _mat;
     private float  _sqrDetectionRange;
+    private float _cooldownAttackTimer;
+    private static readonly int Shoot = Animator.StringToHash("Shoot");
+    private float _initSpeed;
 
     private void OnEnable()
     {
@@ -44,7 +49,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void Start()
     {
         _sqrDetectionRange = _detectionRange * _detectionRange;
-        InvokeRepeating(nameof(UpdateTarget), 0f, _refreshRate);
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
         _mat = renderer.material;
@@ -60,7 +64,19 @@ public class EnemyController : MonoBehaviour, IDamageable
             _agent.SetDestination(Vector3.zero);
 
         HandleAnimator();
-        target = GetClosestPlayer();
+        
+        target = GetClosestPlayer(out float sqrDist);
+        if (target != null && sqrDist < attackRange)
+        {
+            Attack();
+            _agent.isStopped = true;
+            _agent.velocity = Vector3.zero;
+        }
+        else
+        {
+            _cooldownAttackTimer = 0f;
+            _agent.isStopped = false;
+        }
     }
 
     private void HandleAnimator()
@@ -69,7 +85,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         _animator.SetBool(Move, isMoving);
     }
     
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, PlayerController player)
     {
         _mat.EnableKeyword("_EMISSION");
         Invoke(nameof(ResetMaterial), .05f);
@@ -81,19 +97,32 @@ public class EnemyController : MonoBehaviour, IDamageable
         OnHit?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0f)
+        {
             Die();
-        else
-            _animator.Play("BAKED_Spider_Hit");
+        else if (animateHit)
+        {
+            _agent.isStopped = true;
+            _agent.velocity = Vector3.zero;
+        
+            Invoke(nameof(ResetMove), .1f);
+            _animator.Play("BAKED_Hit");
+        }
+    }
+
+    private void ResetMove()
+    {
+        _agent.isStopped = false;
     }
     
     public void Die()
     {
         if (_isDead) return;
         _isDead = true;
-
-        OnDeath?.Invoke();
-        _agent.speed = 0f;
-        _animator.Play("BAKED_Spider_Death");
+        WebsocketManager.Instance.zombiePlayerInfos.nbZombieDead++;
+        OnDeath?.Invoke(this);
+        _agent.isStopped = true;
+        _agent.velocity = Vector3.zero;
+        _animator.Play("BAKED_Death");
         Destroy(gameObject, 1.2f);
     }
 
@@ -105,17 +134,28 @@ public class EnemyController : MonoBehaviour, IDamageable
         _mat.DisableKeyword("_EMISSION");
     }
     
-    private void UpdateTarget()
+    private void Attack()
     {
-        target = GetClosestPlayer();
+        if (target != null)
+        {
+            _cooldownAttackTimer -= Time.deltaTime;
+            if (_cooldownAttackTimer < 0f)
+            {
+                _cooldownAttackTimer = 1.1f;
+                target.GetComponent<IDamageable>().TakeDamage(1f, null);
+                _animator.SetTrigger(Shoot);
+                vfxAttack.Play();
+            }
+        }
     }
     
-    private Transform GetClosestPlayer()
+    private Transform GetClosestPlayer(out float sqrDistToClosest)
     {
         var players = PlayerTracker.Instance.Players;
 
         Transform closest      = null;
         float closestSqrDist   = _sqrDetectionRange;
+        sqrDistToClosest       = float.MaxValue; 
 
         foreach (var player in players)
         {
@@ -125,12 +165,12 @@ public class EnemyController : MonoBehaviour, IDamageable
 
             if (sqrDist < closestSqrDist)
             {
-                closestSqrDist = sqrDist;
-                closest        = player;
+                closestSqrDist   = sqrDist;
+                closest          = player;
+                sqrDistToClosest = sqrDist;
             }
         }
-
-        return closest; 
+        return closest;
     }
 }
 

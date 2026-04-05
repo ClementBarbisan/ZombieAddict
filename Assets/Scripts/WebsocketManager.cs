@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class WebsocketManager : MonoBehaviour
 {
@@ -92,15 +93,41 @@ public class WebsocketManager : MonoBehaviour
     }
 
     [Serializable]
-    struct InfosPlayer
+    public struct InfosPlayer
     {
         public string clientId;
         public int damages;
+        public int damagesEnemy;
         public int enemyKilled;
         public float walkDistance;
         public int shootFired;
         public int shootSuccessfull;
         public float accuracy;
+    }
+
+    [Serializable]
+    public struct ZombiePlayerInfos
+    {
+        public List<int> nbZombieSpawn;
+        public int nbZombieDead;
+        public int nbPlayerDead;
+    }
+    
+    [Serializable]
+    public struct Zombies
+    {
+        public string type;
+        public int nbZombie;
+        public int maxZombie;
+    }
+
+    [Serializable]
+    private struct StatsEndGame
+    {
+        public string type;
+        public bool endGame;
+        public List<InfosPlayer> infosPlayer;
+        [FormerlySerializedAs("zombiePlayer")] public ZombiePlayerInfos zombiePlayerInfos;
     }
     
     public static WebsocketManager Instance; 
@@ -117,7 +144,23 @@ public class WebsocketManager : MonoBehaviour
     private Vector3[] _positionsPlayer;
     private PlayersManager _playersManager;
     private ZombieManager _zombieManager;
+    private StatsEndGame _statsEndGame;
+    [FormerlySerializedAs("zombiePlayer")] public ZombiePlayerInfos zombiePlayerInfos;
     private bool _gameLaunched;
+    private bool _endGame;
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(this);
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
     {
@@ -126,6 +169,12 @@ public class WebsocketManager : MonoBehaviour
         _playersManager = FindAnyObjectByType<PlayersManager>();
         _websocket = new WebSocket("ws://" + _ip + ":" + _port);
         _zombieManager = FindAnyObjectByType<ZombieManager>();
+        zombiePlayerInfos = new ZombiePlayerInfos();
+        zombiePlayerInfos.nbZombieSpawn = new List<int>();
+        foreach (GameObject zombie in _zombieManager.listZombie)
+        {
+            zombiePlayerInfos.nbZombieSpawn.Add(0);
+        }
         _websocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
@@ -255,7 +304,30 @@ public class WebsocketManager : MonoBehaviour
             }
             _bufferPos.SetData(_positionsPlayer);
         }*/
-        
+        if (_players.Count > 0)
+        {
+            _endGame = true;
+            foreach (KeyValuePair<string, PlayerController> player in _players)
+            {
+                if (!player.Value.isDead)
+                {
+                    _endGame = false;
+                    break;
+                }
+            }
+            if (_endGame)
+            {
+                _statsEndGame = new StatsEndGame();
+                _statsEndGame.type = "end_game";
+                _statsEndGame.endGame = true;
+                foreach (KeyValuePair<string, InfosPlayer> infos in _playersInfos)
+                {
+                    _statsEndGame.infosPlayer.Add(infos.Value);
+                }
+                _statsEndGame.zombiePlayerInfos = zombiePlayerInfos;
+                SendStatsPlayers();
+            }
+        }
         if (_gameLaunched || _playersAbstract.Count == 0)
             return;
         bool allReady = true;
@@ -290,6 +362,7 @@ public class WebsocketManager : MonoBehaviour
             if (player.Value.role == "survivor")
             {
                 _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
+                _playersInfos.Add(player.Value.clientId, _players[player.Value.clientId].infos);
             }
         }
         /*_bufferPos = new GraphicsBuffer(GraphicsBuffer.Target.Structured, _players.Count, 3 * sizeof(float));
@@ -297,12 +370,22 @@ public class WebsocketManager : MonoBehaviour
         _positionsPlayer = new Vector3[_players.Count];*/
     }
 
-    async void SendWebSocketMessage()
+    
+    private async void SendStatsPlayers()
     {
         if (_websocket.State == WebSocketState.Open)
         {
-            //await websocket.Send(new byte[] { 10, 20, 30 });
-            await _websocket.SendText("plain text message");
+            string infosText = JsonUtility.ToJson(_statsEndGame);
+            await _websocket.SendText(infosText);
+        }
+    }
+    
+    public async void SendZombieMessage(Zombies infos)
+    {
+        if (_websocket.State == WebSocketState.Open)
+        {
+            string infosText = JsonUtility.ToJson(infos);
+            await _websocket.SendText(infosText);
         }
     }
     
