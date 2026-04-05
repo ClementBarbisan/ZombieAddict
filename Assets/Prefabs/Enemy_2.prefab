@@ -46,7 +46,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1188509156255901999}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.31
+  m_Radius: 2.01
   m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -78,7 +78,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 1.02
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &8551702124470263474
 MonoBehaviour:
@@ -280,11 +280,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4120136259019067538, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.51
       objectReference: {fileID: 0}
     - target: {fileID: 4120136259019067538, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4.84
       objectReference: {fileID: 0}
     - target: {fileID: 4120136259019067538, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
       propertyPath: m_LocalRotation.w
