@@ -3,7 +3,57 @@ guid: 37f6b380951895a469e261828cf6e5b5
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fence_S
+    second: {fileID: 2100000, guid: cac5b3032b3996445aaf923c3f481909, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor_00_02
+    second: {fileID: 2100000, guid: a8f6664568917a64090798dcc5d902e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor_01_03
+    second: {fileID: 2100000, guid: 9e21018416a41c944bdf2b7c9f7ca4b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor_04_05
+    second: {fileID: 2100000, guid: 658737530954cab43a16cc94de062cc5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Neon_01_Plumbing_01
+    second: {fileID: 2100000, guid: 624b8ce2807a18e48b15a7c546ba72ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plane
+    second: {fileID: 2100000, guid: f6a9488be79513c4caaa03f5f09a2afb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pole_S
+    second: {fileID: 2100000, guid: a6c3ee6bfcad5fe4481f2ab3d65ebc4a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall_01_Structure_01
+    second: {fileID: 2100000, guid: ff989f148c320264b87d1aa6766e8321, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall_02_Stairs_01
+    second: {fileID: 2100000, guid: a9be0218b00d9954dafa3b201abc1b0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall_03_Pole_05
+    second: {fileID: 2100000, guid: 881a68b83f8df644eb0ffaca28e588fd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
