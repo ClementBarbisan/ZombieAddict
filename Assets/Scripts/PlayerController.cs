@@ -1,14 +1,19 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 using TMPro;
 using UnityEngine.Events;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
+    [SerializeField] private Animator animator;
+    
+    [Header("Stats")]
+    [SerializeField] private float _maxHealth = 100f;
+    private float _currentHealth;
+    private bool _isDead = false;
 
     [Header("ColorRender")] 
     [SerializeField] private Renderer rendererBodyColor;
@@ -20,8 +25,12 @@ public class PlayerController : MonoBehaviour
     
     [Header("Debug")] 
     public bool useInputUnity;
-    public UnityEvent OnHit;
     
+    [Header("Events")]
+    public UnityEvent<float> OnHit;       
+    public UnityEvent OnDeath;
+    
+    private static readonly int Move = Animator.StringToHash("Move");
     private Transform _grabbedObject;
     private Rigidbody _rb;
     private PlayerInput _playerInput;
@@ -29,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private Transform _cam;
     private bool _vfxWalkSmokePlaying;
     private PlayerWeapon _playerWeapon;
+    private bool _canMove = true;
     
     private void Awake()
     {
@@ -48,6 +58,9 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (!_canMove)
+            return;
+        
         //Camera
         Vector3 camForward = _cam.forward;
         Vector3 camRight = _cam.right;
@@ -97,6 +110,13 @@ public class PlayerController : MonoBehaviour
         }
 
         TextNamePosition();
+        HandleAnimations();
+    }
+
+    private void HandleAnimations()
+    {
+        bool isMoving = _rb.linearVelocity.sqrMagnitude > 0.01f;
+        animator.SetBool(Move, isMoving);
     }
     private void TextNamePosition()
     {
@@ -152,4 +172,37 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+
+    public void TakeDamage(float amount)
+    {
+        //_mat.EnableKeyword("_EMISSION");
+        //Invoke(nameof(ResetMaterial), .05f);
+        
+        if (_isDead) return;
+        
+        _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
+
+        OnHit?.Invoke(_currentHealth);
+
+        if (_currentHealth <= 0f)
+            Die();
+        else
+            animator.Play("BAKED_Hit");
+    }
+
+    public void Die()
+    {
+        if (_isDead) return;
+        _isDead = true;
+
+        OnDeath?.Invoke();
+        _canMove = false;
+        animator.Play("BAKED_Death");
+        //Destroy(gameObject, 1.2f);
+    }
+    
+    private void ResetMaterial()
+    {
+        //_mat.DisableKeyword("_EMISSION");
+    }
 }

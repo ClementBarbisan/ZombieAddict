@@ -27,7 +27,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -60,8 +60,152 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask: []
-      maskType: 3
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Deagle
+        weight: 1
+      - path: Human
+        weight: 1
+      - path: Player_rig_deform
+        weight: 1
+      - path: Player_rig_deform/DEF-foot.L
+        weight: 1
+      - path: Player_rig_deform/DEF-foot.L/DEF-foot.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-foot.R
+        weight: 1
+      - path: Player_rig_deform/DEF-foot.R/DEF-foot.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.L
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.L/DEF-forearm.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.L.001
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.L.001/DEF-forearm.L.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.R
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.R/DEF-forearm.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.R.001
+        weight: 1
+      - path: Player_rig_deform/DEF-forearm.R.001/DEF-forearm.R.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-hand.L
+        weight: 1
+      - path: Player_rig_deform/DEF-hand.L/DEF-hand.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-hand.R
+        weight: 1
+      - path: Player_rig_deform/DEF-hand.R/DEF-hand.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-pelvis.L
+        weight: 1
+      - path: Player_rig_deform/DEF-pelvis.L/DEF-pelvis.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-pelvis.R
+        weight: 1
+      - path: Player_rig_deform/DEF-pelvis.R/DEF-pelvis.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.L
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.L/DEF-shin.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.L.001
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.L.001/DEF-shin.L.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.R
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.R/DEF-shin.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.R.001
+        weight: 1
+      - path: Player_rig_deform/DEF-shin.R.001/DEF-shin.R.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-shoulder.L
+        weight: 1
+      - path: Player_rig_deform/DEF-shoulder.L/DEF-shoulder.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-shoulder.R
+        weight: 1
+      - path: Player_rig_deform/DEF-shoulder.R/DEF-shoulder.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-spine
+        weight: 1
+      - path: Player_rig_deform/DEF-spine/DEF-spine_end
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.001
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.001/DEF-spine.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.002
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.002/DEF-spine.002_end
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.003
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.003/DEF-spine.003_end
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.004
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.004/DEF-spine.004_end
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.005
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.005/DEF-spine.005_end
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.006
+        weight: 1
+      - path: Player_rig_deform/DEF-spine.006/DEF-spine.006_end
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.L
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.L/DEF-thigh.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.L.001
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.L.001/DEF-thigh.L.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.R
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.R/DEF-thigh.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.R.001
+        weight: 1
+      - path: Player_rig_deform/DEF-thigh.R.001/DEF-thigh.R.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-toe.L
+        weight: 1
+      - path: Player_rig_deform/DEF-toe.L/DEF-toe.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-toe.R
+        weight: 1
+      - path: Player_rig_deform/DEF-toe.R/DEF-toe.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.L
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.L/DEF-upper_arm.L_end
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.L.001
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.L.001/DEF-upper_arm.L.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.R
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.R/DEF-upper_arm.R_end
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.R.001
+        weight: 1
+      - path: Player_rig_deform/DEF-upper_arm.R.001/DEF-upper_arm.R.001_end
+        weight: 1
+      - path: Player_rig_deform/DEF-weapon
+        weight: 1
+      - path: Player_rig_deform/DEF-weapon/DEF-weapon_end
+        weight: 1
+      maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
@@ -233,7 +377,367 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Human(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Deagle
+      parentName: Human(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.000000037748947, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Human
+      parentName: Human(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Player_rig_deform
+      parentName: Human(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: DEF-weapon
+      parentName: Player_rig_deform
+      position: {x: 0.0033215766, y: -0.0034412676, z: 0.006701276}
+      rotation: {x: 0.50000006, y: -0.49999997, z: 0.50000006, w: 0.5}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000004}
+    - name: DEF-weapon_end
+      parentName: DEF-weapon
+      position: {x: -0, y: 0.0043766918, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine
+      parentName: Player_rig_deform
+      position: {x: 0.000004245378, y: -0.000110634224, z: 0.0034245315}
+      rotation: {x: 0.7992151, y: -0.000000025012632, z: -0.000000044215753, w: 0.60104513}
+      scale: {x: 0.9999997, y: 1, z: 0.9999997}
+    - name: DEF-spine_end
+      parentName: DEF-spine
+      position: {x: -0, y: 0.0013694216, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.001
+      parentName: Player_rig_deform
+      position: {x: 0.00027383753, y: -0.00037843952, z: 0.0047401744}
+      rotation: {x: 0.7652833, y: -0.00000013465248, z: -0.00000016545181, w: 0.6436936}
+      scale: {x: 0.9999995, y: 0.99999994, z: 0.9999999}
+    - name: DEF-spine.001_end
+      parentName: DEF-spine.001
+      position: {x: -0, y: 0.0009806384, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.002
+      parentName: Player_rig_deform
+      position: {x: 0.00039302584, y: -0.0004968377, z: 0.005706315}
+      rotation: {x: 0.68572176, y: -0.00000010347331, z: -0.00000009444698, w: 0.7278638}
+      scale: {x: 1.0078268, y: 0.9845274, z: 1.0078268}
+    - name: DEF-spine.002_end
+      parentName: DEF-spine.002
+      position: {x: -0, y: 0.00092326035, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.003
+      parentName: Player_rig_deform
+      position: {x: 0.00035312393, y: -0.00045892748, z: 0.006613622}
+      rotation: {x: 0.6934176, y: -0.000000075064726, z: -0.000000057014596, w: 0.720536}
+      scale: {x: 1.004928, y: 0.990216, z: 1.0049279}
+    - name: DEF-spine.003_end
+      parentName: DEF-spine.003
+      position: {x: -0, y: 0.0014343773, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.004
+      parentName: Player_rig_deform
+      position: {x: 0.00074250303, y: -0.00037895265, z: 0.007977206}
+      rotation: {x: 0.89219433, y: -0.000000108346995, z: -0.00000019837827, w: 0.45165184}
+      scale: {x: 0.94289327, y: 1.124799, z: 0.9428935}
+    - name: DEF-spine.004_end
+      parentName: DEF-spine.004
+      position: {x: -0, y: 0.00038782027, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.005
+      parentName: Player_rig_deform
+      position: {x: 0.00096264214, y: -0.0006391844, z: 0.008249432}
+      rotation: {x: 0.792827, y: -0.00000014911991, z: -0.00000018804649, w: 0.6094468}
+      scale: {x: 0.9427486, y: 1.1251442, z: 0.9427489}
+    - name: DEF-spine.005_end
+      parentName: DEF-spine.005
+      position: {x: -0, y: 0.00039898165, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.006
+      parentName: Player_rig_deform
+      position: {x: 0.0011192706, y: -0.0008315596, z: 0.008623574}
+      rotation: {x: 0.69451654, y: 0.00000006886981, z: 0.000000062963906, w: 0.7194768}
+      scale: {x: 0.9999998, y: 1, z: 0.9999998}
+    - name: DEF-spine.006_end
+      parentName: DEF-spine.006
+      position: {x: -0, y: 0.007345196, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-pelvis.L
+      parentName: Player_rig_deform
+      position: {x: 0.000004245713, y: -0.00011063452, z: 0.0034245322}
+      rotation: {x: 0.31419843, y: 0.26025254, z: 0.80196935, w: 0.43634072}
+      scale: {x: 0.9999996, y: 0.99999976, z: 0.9999996}
+    - name: DEF-pelvis.L_end
+      parentName: DEF-pelvis.L
+      position: {x: -0, y: 0.0020733816, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-pelvis.R
+      parentName: Player_rig_deform
+      position: {x: 0.000004244819, y: -0.00011063445, z: 0.003424531}
+      rotation: {x: 0.31419846, y: -0.26025254, z: -0.80196935, w: 0.4363407}
+      scale: {x: 0.9999995, y: 0.99999905, z: 0.9999997}
+    - name: DEF-pelvis.R_end
+      parentName: DEF-pelvis.R
+      position: {x: -0, y: 0.0020733816, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-thigh.L
+      parentName: Player_rig_deform
+      position: {x: -0.00084182486, y: -0.001226693, z: 0.003858436}
+      rotation: {x: 0.7450402, y: -0.096128866, z: 0.011908513, w: -0.65994895}
+      scale: {x: 1.0108396, y: 0.9786691, z: 1.0108403}
+    - name: DEF-thigh.L_end
+      parentName: DEF-thigh.L
+      position: {x: -0, y: 0.0009882179, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-thigh.L.001
+      parentName: Player_rig_deform
+      position: {x: -0.00047962336, y: -0.001942275, z: 0.003317966}
+      rotation: {x: 0.7450402, y: -0.09612895, z: 0.011908592, w: -0.65994895}
+      scale: {x: 1.0108395, y: 0.97866833, z: 1.0108402}
+    - name: DEF-thigh.L.001_end
+      parentName: DEF-thigh.L.001
+      position: {x: -0, y: 0.0009882181, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-shin.L
+      parentName: Player_rig_deform
+      position: {x: -0.00011742189, y: -0.0026578566, z: 0.0027774966}
+      rotation: {x: 0.6177583, y: -0.09255085, z: 0.028582381, w: -0.78037953}
+      scale: {x: 1.014668, y: 0.9712971, z: 1.0146683}
+    - name: DEF-shin.L_end
+      parentName: DEF-shin.L
+      position: {x: -0, y: 0.000740029, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-shin.L.001
+      parentName: Player_rig_deform
+      position: {x: -0.0004635515, y: -0.0023750179, z: 0.0022145994}
+      rotation: {x: 0.61775815, y: -0.092550874, z: 0.028582487, w: -0.78037953}
+      scale: {x: 1.0146685, y: 0.97129744, z: 1.0146685}
+    - name: DEF-shin.L.001_end
+      parentName: DEF-shin.L.001
+      position: {x: -0, y: 0.0007400287, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-foot.L
+      parentName: Player_rig_deform
+      position: {x: -0.0008096812, y: -0.0020921794, z: 0.0016517033}
+      rotation: {x: 0.9202049, y: -0.000067673725, z: 0.00015907397, w: -0.39143708}
+      scale: {x: 1.0000037, y: 0.9999922, z: 1.0000044}
+    - name: DEF-foot.L_end
+      parentName: DEF-foot.L
+      position: {x: -0, y: 0.0020609563, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-toe.L
+      parentName: Player_rig_deform
+      position: {x: 0.00016236618, y: -0.0031401569, z: 0.00016699954}
+      rotation: {x: -0, y: -0.000000059604645, z: 0.9933072, w: 0.11550293}
+      scale: {x: 1.0000007, y: 0.99999964, z: 0.9999999}
+    - name: DEF-toe.L_end
+      parentName: DEF-toe.L
+      position: {x: -0, y: 0.00069042185, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-thigh.R
+      parentName: Player_rig_deform
+      position: {x: 0.0011146526, y: 0.0007428391, z: 0.0038584357}
+      rotation: {x: 0.74504024, y: 0.09612883, z: -0.011908498, w: -0.6599489}
+      scale: {x: 1.0108533, y: 0.97864246, z: 1.0108536}
+    - name: DEF-thigh.R_end
+      parentName: DEF-thigh.R
+      position: {x: -0, y: 0.0009882179, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-thigh.R.001
+      parentName: Player_rig_deform
+      position: {x: 0.0017961849, y: 0.0008042252, z: 0.0031750244}
+      rotation: {x: 0.7450401, y: 0.0961289, z: -0.0119086215, w: -0.659949}
+      scale: {x: 1.0108533, y: 0.97864217, z: 1.0108532}
+    - name: DEF-thigh.R.001_end
+      parentName: DEF-thigh.R.001
+      position: {x: -0, y: 0.0009882181, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-shin.R
+      parentName: Player_rig_deform
+      position: {x: 0.002477717, y: 0.0008656115, z: 0.002491613}
+      rotation: {x: 0.6177583, y: 0.092550926, z: -0.028582392, w: -0.78037953}
+      scale: {x: 1.0146934, y: 0.9712482, z: 1.0146931}
+    - name: DEF-shin.R_end
+      parentName: DEF-shin.R
+      position: {x: -0, y: 0.000740029, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-shin.R.001
+      parentName: Player_rig_deform
+      position: {x: 0.001982468, y: 0.0011737839, z: 0.0020716572}
+      rotation: {x: 0.6177583, y: 0.09255091, z: -0.028582478, w: -0.78037953}
+      scale: {x: 1.0146931, y: 0.9712489, z: 1.0146937}
+    - name: DEF-shin.R.001_end
+      parentName: DEF-shin.R.001
+      position: {x: -0, y: 0.0007400287, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-foot.R
+      parentName: Player_rig_deform
+      position: {x: 0.0014872194, y: 0.0014819563, z: 0.0016517016}
+      rotation: {x: 0.9202049, y: -0.000067483816, z: 0.00015863558, w: -0.39143714}
+      scale: {x: 1.0000035, y: 0.9999933, z: 1.0000038}
+    - name: DEF-foot.R_end
+      parentName: DEF-foot.R
+      position: {x: -0, y: 0.0020609563, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-toe.R
+      parentName: Player_rig_deform
+      position: {x: 0.002913485, y: 0.0013875641, z: 0.00016699835}
+      rotation: {x: -0, y: -0.000000059604645, z: 0.9933072, w: -0.11550291}
+      scale: {x: 1.0000014, y: 1, z: 1.0000005}
+    - name: DEF-toe.R_end
+      parentName: DEF-toe.R
+      position: {x: -0, y: 0.00069042185, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-shoulder.L
+      parentName: Player_rig_deform
+      position: {x: 0.0009958459, y: -0.0013229282, z: 0.007439893}
+      rotation: {x: -0.00023245813, y: -0.0001335144, z: 0.6058592, w: 0.79557186}
+      scale: {x: 0.99999976, y: 0.99999976, z: 0.99999994}
+    - name: DEF-shoulder.L_end
+      parentName: DEF-shoulder.L
+      position: {x: -0, y: 0.001881151, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-upper_arm.L
+      parentName: Player_rig_deform
+      position: {x: -0.000781112, y: -0.002353208, z: 0.007802733}
+      rotation: {x: 0.43744242, y: -0.60599935, z: 0.47873122, w: 0.46067926}
+      scale: {x: 1.0036935, y: 0.9926549, z: 1.0036933}
+    - name: DEF-upper_arm.L_end
+      parentName: DEF-upper_arm.L
+      position: {x: -0, y: 0.0008568618, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-upper_arm.L.001
+      parentName: Player_rig_deform
+      position: {x: -0.00023269981, y: -0.002832709, z: 0.007363657}
+      rotation: {x: 0.43744263, y: -0.60599923, z: 0.4787311, w: 0.46067938}
+      scale: {x: 1.0036933, y: 0.99265414, z: 1.0036933}
+    - name: DEF-upper_arm.L.001_end
+      parentName: DEF-upper_arm.L.001
+      position: {x: -0, y: 0.00085686205, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-forearm.L
+      parentName: Player_rig_deform
+      position: {x: 0.0003157133, y: -0.0033122103, z: 0.006924579}
+      rotation: {x: 0.49504793, y: -0.53663385, z: 0.555376, w: 0.39813226}
+      scale: {x: 1.004215, y: 0.9916239, z: 1.0042152}
+    - name: DEF-forearm.L_end
+      parentName: DEF-forearm.L
+      position: {x: -0, y: 0.000759438, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-forearm.L.001
+      parentName: Player_rig_deform
+      position: {x: 0.0010115227, y: -0.0035918986, z: 0.0068556825}
+      rotation: {x: 0.49504793, y: -0.5366338, z: 0.55537593, w: 0.39813226}
+      scale: {x: 1.0042149, y: 0.99162304, z: 1.0042145}
+    - name: DEF-forearm.L.001_end
+      parentName: DEF-forearm.L.001
+      position: {x: -0, y: 0.000759438, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-hand.L
+      parentName: Player_rig_deform
+      position: {x: 0.0017073327, y: -0.0038715873, z: 0.006786787}
+      rotation: {x: 0.4707309, y: -0.5653432, z: 0.53852177, w: 0.4108453}
+      scale: {x: 0.9999997, y: 0.99999964, z: 1}
+    - name: DEF-hand.L_end
+      parentName: DEF-hand.L
+      position: {x: -0, y: 0.0022079898, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-shoulder.R
+      parentName: Player_rig_deform
+      position: {x: 0.0013815837, y: -0.00091159117, z: 0.0073749884}
+      rotation: {x: -0.00023245813, y: 0.0001335144, z: -0.6058592, w: 0.79557186}
+      scale: {x: 0.99999976, y: 0.99999976, z: 0.9999998}
+    - name: DEF-shoulder.R_end
+      parentName: DEF-shoulder.R
+      position: {x: -0, y: 0.001881151, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-upper_arm.R
+      parentName: Player_rig_deform
+      position: {x: 0.0031424044, y: 0.0002035842, z: 0.007456219}
+      rotation: {x: 0.43744254, y: 0.6059994, z: -0.4787311, w: 0.4606793}
+      scale: {x: 1.0146179, y: 0.9713948, z: 1.0146176}
+    - name: DEF-upper_arm.R_end
+      parentName: DEF-upper_arm.R
+      position: {x: -0, y: 0.0008568619, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-upper_arm.R.001
+      parentName: Player_rig_deform
+      position: {x: 0.0036013045, y: 0.00062154955, z: 0.0069016707}
+      rotation: {x: 0.43744254, y: 0.60599935, z: -0.4787311, w: 0.46067923}
+      scale: {x: 1.0146173, y: 0.97139484, z: 1.0146176}
+    - name: DEF-upper_arm.R.001_end
+      parentName: DEF-upper_arm.R.001
+      position: {x: -0, y: 0.00085686235, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-forearm.R
+      parentName: Player_rig_deform
+      position: {x: 0.0040602046, y: 0.0010395152, z: 0.0063471217}
+      rotation: {x: 0.49504793, y: 0.53663385, z: -0.55537593, w: 0.3981323}
+      scale: {x: 1.0174471, y: 0.96599805, z: 1.017447}
+    - name: DEF-forearm.R_end
+      parentName: DEF-forearm.R
+      position: {x: -0, y: 0.000759438, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-forearm.R.001
+      parentName: Player_rig_deform
+      position: {x: 0.0039298455, y: 0.00034578424, z: 0.006147282}
+      rotation: {x: 0.49504796, y: 0.53663385, z: -0.5553758, w: 0.39813235}
+      scale: {x: 1.0174466, y: 0.96599805, z: 1.0174469}
+    - name: DEF-forearm.R.001_end
+      parentName: DEF-forearm.R.001
+      position: {x: -0, y: 0.000759438, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-hand.R
+      parentName: Player_rig_deform
+      position: {x: 0.0037994853, y: -0.0003479465, z: 0.005947443}
+      rotation: {x: 0.47073087, y: 0.56534326, z: -0.5385218, w: 0.41084525}
+      scale: {x: 1.0000002, y: 0.99999964, z: 1.0000002}
+    - name: DEF-hand.R_end
+      parentName: DEF-hand.R
+      position: {x: -0, y: 0.002207989, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -244,13 +748,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
