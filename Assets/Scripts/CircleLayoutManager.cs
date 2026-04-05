@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CircleLayoutManager : MonoBehaviour
 {
-    [Header("Circle")]
-	public float radiusX = 300f;
-	public float radiusY = 150f;
-    public float startAngleOffset = 90f; // 90 = first item at top
+    [Header("Ellipse")]
+    public float radiusX = 300f;
+    public float radiusY = 150f;
+    public float startAngleOffset = 180f; // 90 = first item at top
 
     [Header("Spawn")]
     public float scaleDuration = 0.35f;
@@ -31,16 +31,6 @@ public class CircleLayoutManager : MonoBehaviour
         RefreshLayout(animateAll: true, newItem: null);
     }
 
-    public void StartGame()
-{
-    foreach (var item in _items)
-    {
-        item.DOScale(Vector3.zero, scaleDuration)
-            .SetEase(Ease.InBack)
-            .OnComplete(() => item.gameObject.SetActive(false));
-    }
-}
-
     /// <summary>Call this to register and animate a newly instantiated item.</summary>
     public void AddItem(RectTransform item)
     {
@@ -56,6 +46,16 @@ public class CircleLayoutManager : MonoBehaviour
         item.DOScale(Vector3.one, scaleDuration)
             .SetEase(scaleEase);
     }
+
+public void StartGame()
+{
+    foreach (var item in _items)
+    {
+        item.DOScale(Vector3.zero, scaleDuration)
+            .SetEase(Ease.InBack)
+            .OnComplete(() => item.gameObject.SetActive(false));
+    }
+}
 
     void RefreshLayout(bool animateAll, RectTransform newItem)
     {

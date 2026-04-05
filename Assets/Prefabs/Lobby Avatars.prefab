@@ -62,8 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircleLayoutManager
   radiusX: 800
-  radiusY: 300
-  startAngleOffset: 90
+  radiusY: 400
+  startAngleOffset: 270
   scaleDuration: 0.35
   scaleEase: 27
   repositionDuration: 0.45

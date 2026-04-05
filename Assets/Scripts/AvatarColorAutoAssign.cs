@@ -10,6 +10,9 @@ public class PaletteColorAssigner : MonoBehaviour
     [Tooltip("The Image component to colorize. Leave empty to search on this GameObject.")]
     public Image targetImage;
 
+    [Tooltip("The Image component to colorize. Leave empty to search on this GameObject.")]
+    public Image healthImage;
+
     [Tooltip("Parent whose child index determines the color. Leave empty to use this object's own parent.")]
     public Transform colorSourceParent;
 
@@ -36,6 +39,9 @@ public class PaletteColorAssigner : MonoBehaviour
 
         if (targetImage == null)
             targetImage = GetComponent<Image>();
+
+        if (healthImage == null)
+            healthImage = GetComponent<Image>();
     }
 
     void Start()
@@ -71,6 +77,12 @@ public class PaletteColorAssigner : MonoBehaviour
         if (targetImage != null)
         {
             targetImage.color = color;
+            applied = true;
+        }
+
+           if (healthImage != null)
+        {
+            healthImage.color = color;
             applied = true;
         }
 
