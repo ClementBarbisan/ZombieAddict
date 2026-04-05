@@ -28,7 +28,7 @@ public class ZombieManager : MonoBehaviour
             new Vector3(pos.x * _sizeSpawnZone.x - _sizeSpawnZone.x / 2, 0, (1f - pos.y) * _sizeSpawnZone.y - _sizeSpawnZone.y / 2), Quaternion.identity);
         EnemyController enemy = obj.GetComponent<EnemyController>();
         enemy.nameEnemy = name;
-        enemy.OnDeath.AddListener((EnemyController x) => DeleteZombie(x));
+        //enemy.OnDeath.AddListener((EnemyController x) => DeleteZombie(x));
         _nbZombie[_listNameZombies.IndexOf(name)]++;
         _zombies[_listNameZombies.IndexOf(name)].Add(enemy);
         WebsocketManager.Zombies infos = new WebsocketManager.Zombies();
