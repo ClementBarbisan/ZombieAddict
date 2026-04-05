@@ -147,7 +147,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         // ATTACK
         animator.SetTrigger(Shoot);
         _playerWeapon.HandleFire(button1);
-        
+        infos.shootFired++;
+
         // INTERACT 
         
     }

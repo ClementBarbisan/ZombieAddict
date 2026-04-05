@@ -3,7 +3,17 @@ guid: 695716649657f5e458dc528ec812fe49
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Roboxer
+    second: {fileID: 2100000, guid: a3b6ff70f7519594a9f24696c2b6a8f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_RoboxerTransparent
+    second: {fileID: 2100000, guid: 43421218bfebcd24e86aaea088e9bd0f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

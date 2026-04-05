@@ -53,6 +53,7 @@ public class PlayersManager : MonoBehaviour
         _players[clientId].OnDeath.AddListener(() => _playersAvatar[clientId].GetComponent<DeathEffect>()
             .OnDeath());
         newPlayer.Init(name, Palette[_index]);
+        _index++;
         return newPlayer;
     }
 
