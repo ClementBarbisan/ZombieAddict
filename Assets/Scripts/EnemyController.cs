@@ -32,7 +32,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent<EnemyController> OnDeath;
-    
+
+    public string nameEnemy;
     private NavMeshAgent _agent;
     private Animator _animator;
     private static readonly int Move = Animator.StringToHash("Move");
