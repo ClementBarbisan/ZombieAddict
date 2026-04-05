@@ -95,7 +95,7 @@ public class PlayersManager : MonoBehaviour
         if (_players.ContainsKey(clientId))
         {
             Destroy(_players[clientId].gameObject);
-            //_players.Remove(clientId);
+            _players.Remove(clientId);
         }
     }
 }
