@@ -3,7 +3,17 @@ guid: fdae90829474f4f4b9445640c6c0a37f
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Spiderette
+    second: {fileID: 2100000, guid: 97f1deea5c3090e43bc66f598d5ecc3d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_SpideretteTransparent
+    second: {fileID: 2100000, guid: 97f1deea5c3090e43bc66f598d5ecc3d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
