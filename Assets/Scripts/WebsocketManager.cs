@@ -164,6 +164,7 @@ public class WebsocketManager : MonoBehaviour
     private bool _gameLaunched;
     private bool _endGame;
     private float _elapsedTime;
+    private bool _zombieWin, _humansWin;
 
     private void Awake()
     {
@@ -343,11 +344,14 @@ public class WebsocketManager : MonoBehaviour
                     break;
                 }
             }
+            if (_endGame)
+                _zombieWin = true;
         }
         _elapsedTime += Time.deltaTime;
         if (_elapsedTime > _timeToWin)
         {
             _endGame = true;
+            _humansWin = true;
         }
         if (_endGame)
         {
@@ -392,7 +396,7 @@ public class WebsocketManager : MonoBehaviour
             Texture2D imgTexture = new Texture2D(256, 256);
             imgTexture.LoadImage(tmpBytes);
             _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
-            if (player.Value.role == "survivor")
+            if (player.Value.role == "survivor" && !_players.ContainsKey(player.Value.clientId))
             {
                 _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
                 _playersInfos.Add(player.Value.clientId, _players[player.Value.clientId].infos);
