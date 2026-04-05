@@ -223,7 +223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   speed: 1.5
   attackRange: 6
-  animateHit: 1
+  animateHit: 0
+  exploseOnDeath: 0
   target: {fileID: 0}
   renderer: {fileID: 2356967146371323114}
   vfxAttack: {fileID: 27372083802209749}
