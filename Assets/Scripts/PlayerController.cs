@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Stats")]
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
-    private bool _isDead = false;
+    public bool isDead = false;
     public WebsocketManager.InfosPlayer infos = new WebsocketManager.InfosPlayer();
 
     [Header("ColorRender")] 
@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         //_mat.EnableKeyword("_EMISSION");
         //Invoke(nameof(ResetMaterial), .05f);
         
-        if (_isDead) return;
+        if (isDead) return;
         
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
         infos.damages += (int)amount;
@@ -212,12 +212,13 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        if (_isDead) return;
-        _isDead = true;
+        if (isDead) return;
+        isDead = true;
 
         OnDeath?.Invoke();
         _canMove = false;
         animator.Play("BAKED_Death");
+        WebsocketManager.Instance.zombiePlayerInfos.nbPlayerDead++;
         //Destroy(gameObject, 1.2f);
     }
     
