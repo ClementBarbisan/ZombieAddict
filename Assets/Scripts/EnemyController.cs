@@ -71,11 +71,11 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     public void TakeDamage(float amount)
     {
-        if (_isDead) return;
-        
         _mat.EnableKeyword("_EMISSION");
         Invoke(nameof(ResetMaterial), .05f);
-
+        
+        if (_isDead) return;
+        
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
 
         OnHit?.Invoke(_currentHealth);
