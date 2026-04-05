@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [Header("VFX")] 
     [SerializeField] private ParticleSystem vfxWalkSmoke;
+    [SerializeField] private Light _lightPoint;
 
     [Header("Audios")] 
     [SerializeField] private AudioSource audioRun;
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         namePlayer.color = color;
         rendererBodyColor.material.color = color;
         UIPlayerColor.color = color;
+        _lightPoint.color = color;
     }
     private void FixedUpdate()
     {

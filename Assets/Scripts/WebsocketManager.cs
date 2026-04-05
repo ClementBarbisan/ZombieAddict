@@ -269,7 +269,12 @@ public class WebsocketManager : MonoBehaviour
             else if (message.Contains("input_zombie"))
             {
                 InputZombie zombie = JsonUtility.FromJson<InputZombie>(message);
-                _zombieManager.SpawnZombie(new Vector2(zombie.position.x, zombie.position.y), zombie.troupes);
+                if (zombie.troupes != "prout")
+                    _zombieManager.SpawnZombie(new Vector2(zombie.position.x, zombie.position.y), zombie.troupes);
+                else
+                {
+                    _zombieManager.LaunchFog();
+                }
             }
             else if (message.Contains("player_updated"))
             {
@@ -412,6 +417,7 @@ public class WebsocketManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _gameStart = true;
         _timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<TextMeshProUGUI>();
+        _zombieManager.fog = GameObject.FindGameObjectWithTag("Fog").GetComponent<ParticleSystem>();
         _playersManager.ClearAvatar();
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
