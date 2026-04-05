@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent OnDeath;
+    public UnityEvent OnKillEnemy;
     
     private static readonly int Move = Animator.StringToHash("Move");
     private Transform _grabbedObject;
@@ -184,6 +185,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     #endregion
 
+    public void KillEnemy()
+    {
+        OnKillEnemy?.Invoke();
+    }
+    
     public void HitEnemy(int damages)
     {
         infos.shootSuccessfull++;
@@ -191,7 +197,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         infos.damagesEnemy += damages;
     }
     
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, PlayerController player)
     {
         //_mat.EnableKeyword("_EMISSION");
         //Invoke(nameof(ResetMaterial), .05f);

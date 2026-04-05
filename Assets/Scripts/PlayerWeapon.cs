@@ -20,10 +20,12 @@ public class PlayerWeapon : MonoBehaviour
     private Color _hitLineColor;
     private float _alphaLineHit;
     private float  _sqrDetectionRange;
+    private PlayerController _player;
 
     private void Start()
     {
         _hitLineMat = hitLine.material;
+        _player = GetComponent<PlayerController>();
     }
 
     public void HandleFire(bool isPressed)
@@ -67,7 +69,7 @@ public class PlayerWeapon : MonoBehaviour
 
             if (hit.transform.TryGetComponent<IDamageable>(out var target))
             {
-                hit.transform.GetComponent<IDamageable>().TakeDamage(hitDamage);
+                hit.transform.GetComponent<IDamageable>().TakeDamage(hitDamage, _player);
                 OnHitEnemy?.Invoke((int)hitDamage);
             }
         }
