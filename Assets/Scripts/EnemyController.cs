@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     [Header("References")]
     public Transform target;
     [SerializeField] private Renderer renderer;
+    [SerializeField] private ParticleSystem vfxAttack;
     
     [Header("Stats")]
     [SerializeField] private float _maxHealth = 100f;
@@ -128,6 +129,7 @@ public class EnemyController : MonoBehaviour, IDamageable
                 _cooldownAttackTimer = 1.1f;
                 target.GetComponent<IDamageable>().TakeDamage(1f);
                 _animator.SetTrigger(Shoot);
+                vfxAttack.Play();
             }
         }
     }

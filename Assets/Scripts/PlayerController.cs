@@ -53,13 +53,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         namePlayer.transform.SetParent(null);
         _currentHealth = _maxHealth;
     }
-    public void Init(string name)
+    public void Init(string name, Color color)
     {
         namePlayer.text = name;
-        Color c = Random.ColorHSV();
-        namePlayer.color = c;
-        rendererBodyColor.material.color = c;
-        UIPlayerColor.color = c;
+        namePlayer.color = color;
+        rendererBodyColor.material.color = color;
+        UIPlayerColor.color = color;
     }
     private void FixedUpdate()
     {
