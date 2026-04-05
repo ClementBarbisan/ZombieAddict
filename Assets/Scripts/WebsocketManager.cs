@@ -210,13 +210,13 @@ public class WebsocketManager : MonoBehaviour
         _websocket.OnMessage += (bytes) =>
         {
             string message = System.Text.Encoding.UTF8.GetString(bytes);
-            Debug.Log("Received: " + message);
+            //Debug.Log("Received: " + message);
             if (message.Contains("player_joined"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 if (!_playersAbstract.ContainsKey(player.player.clientId) && player.player.nickname != "Unity")
                 {
-                    _playersAbstract.Add(player.player.clientId, player.player);
+                    //_playersAbstract.Add(player.player.clientId, player.player);
                     string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
                     try
                     {
@@ -238,7 +238,7 @@ public class WebsocketManager : MonoBehaviour
                     }
                     catch
                     {
-                        
+                        Debug.LogError("Failed to get photo.");
                     }
                 }
             }
@@ -248,6 +248,7 @@ public class WebsocketManager : MonoBehaviour
                 if (_players.ContainsKey(player.player.clientId))
                 {
                     _players.Remove(player.player.clientId);
+                    _playersAbstract.Remove(player.player.clientId);
                     _playersManager.DeletePlayer(player.player.clientId);
                 }
             }
@@ -395,8 +396,9 @@ public class WebsocketManager : MonoBehaviour
             byte[] tmpBytes = Convert.FromBase64String(base64);
             Texture2D imgTexture = new Texture2D(256, 256);
             imgTexture.LoadImage(tmpBytes);
+            Debug.LogWarning("Name player = " + player.Value.nickname + ", player ID = " + player.Value.clientId);
             _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
-            if (player.Value.role == "survivor")
+            if (player.Value.role == "survivor" && !_players.ContainsKey(player.Value.clientId))
             {
                 _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
                 _playersInfos.Add(player.Value.clientId, _players[player.Value.clientId].infos);
