@@ -101,6 +101,11 @@ MonoBehaviour:
   vfxAttack: {fileID: 3491053534424729867}
   _maxHealth: 3
   _detectionRange: 15
+  clipsHit:
+  - {fileID: 8300000, guid: 8de2c242bd1f7c34d861d14f59bd5d55, type: 3}
+  - {fileID: 8300000, guid: 87ea0a5d6c107f44da33e63dd871a98d, type: 3}
+  - {fileID: 8300000, guid: fcc80c34bc1c98240b1260a29724ae09, type: 3}
+  clipDeath: {fileID: 8300000, guid: 873c9e1fdf1dc23408975c8a6ba45953, type: 3}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
