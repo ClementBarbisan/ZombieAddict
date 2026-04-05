@@ -210,7 +210,7 @@ public class WebsocketManager : MonoBehaviour
         _websocket.OnMessage += (bytes) =>
         {
             string message = System.Text.Encoding.UTF8.GetString(bytes);
-            //Debug.Log("Received: " + message);
+            Debug.Log("Received: " + message);
             if (message.Contains("player_joined"))
             {
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
