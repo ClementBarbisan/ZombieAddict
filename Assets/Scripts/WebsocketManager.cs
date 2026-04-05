@@ -301,7 +301,7 @@ public class WebsocketManager : MonoBehaviour
             else if (message.Contains("lobby_state"))
             {
                 LobbyState lobby = JsonUtility.FromJson<LobbyState>(message);
-                if (lobby.playerCount == lobby.playerCount)
+                if (lobby.playerCount == lobby.readyCount && lobby.playerCount > 0)
                 {
                     _gameLaunched = true;
                     StartCoroutine(WaitToLaunch());
