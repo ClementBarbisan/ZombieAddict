@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
     private bool _isDead = false;
+    public WebsocketManager.InfosPlayer infos = new WebsocketManager.InfosPlayer();
 
     [Header("ColorRender")] 
     [SerializeField] private Renderer rendererBodyColor;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private PlayerWeapon _playerWeapon;
     private bool _canMove = true;
     private static readonly int Shoot = Animator.StringToHash("Shoot");
+    private Vector3 _oldPos;
 
     private void Awake()
     {
@@ -47,7 +49,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         _playerInput = GetComponent<PlayerInput>();
         _cam = Camera.main.transform;
         _playerWeapon = GetComponent<PlayerWeapon>();
+        _playerWeapon.OnHitEnemy?.AddListener((int x) => HitEnemy(x));
         namePlayer.transform.SetParent(null);
+        _currentHealth = _maxHealth;
     }
     public void Init(string name)
     {
@@ -69,12 +73,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         camRight.y = 0;
         camForward.Normalize();
         camRight.Normalize();
-
+        Vector3 currentPos = transform.position;
         // Move
         Vector3 move = camRight * _move.x + camForward * _move.y;
         Vector3 velocity = new Vector3(move.x * moveSpeed, _rb.linearVelocity.y, move.z * moveSpeed);
         _rb.linearVelocity = velocity;
-
+        infos.walkDistance += Vector3.Distance(currentPos, _oldPos);
         // Rotation only if moving
         Vector3 horizontalMove = new Vector3(move.x, 0f, move.z);
         
@@ -96,6 +100,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (direction.sqrMagnitude > 0.001f)
                 _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, .2f));
         }
+        _oldPos = transform.position;
     }
     private void Update()
     {
@@ -164,6 +169,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 animator.SetTrigger(Shoot);
                 _playerWeapon.HandleFire(true);
+                infos.shootFired++;
             }
                 
         }
@@ -179,6 +185,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     #endregion
 
+    public void HitEnemy(int damages)
+    {
+        infos.shootSuccessfull++;
+        infos.accuracy = infos.shootSuccessfull / infos.shootFired;
+        infos.damagesEnemy += damages;
+    }
+    
     public void TakeDamage(float amount)
     {
         //_mat.EnableKeyword("_EMISSION");
@@ -187,12 +200,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (_isDead) return;
         
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
+        infos.damages += (int)amount;
         OnHit?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0f)
             Die();
         else
             animator.Play("BAKED_Hit");
+        
+        
     }
 
     public void Die()
