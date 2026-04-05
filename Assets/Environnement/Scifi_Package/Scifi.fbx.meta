@@ -7,6 +7,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Emissive
+    second: {fileID: 2100000, guid: d69e7e93fa76db54b8950b0dacdadf24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Emissive.001
+    second: {fileID: 2100000, guid: 559f3f0763a9c694ea72ced6dded9095, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Fence_S
     second: {fileID: 2100000, guid: cac5b3032b3996445aaf923c3f481909, type: 2}
   - first:

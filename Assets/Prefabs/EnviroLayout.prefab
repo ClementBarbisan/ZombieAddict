@@ -3914,6 +3914,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6278097947182055924}
     m_Modifications:
+    - target: {fileID: 983593622028820048, guid: 627d61aeb3864fd429165a782a0acb06, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 983593622028820048, guid: 627d61aeb3864fd429165a782a0acb06, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d69e7e93fa76db54b8950b0dacdadf24, type: 2}
     - target: {fileID: 7165031433220969970, guid: 627d61aeb3864fd429165a782a0acb06, type: 3}
       propertyPath: m_Name
       value: Floor_00
