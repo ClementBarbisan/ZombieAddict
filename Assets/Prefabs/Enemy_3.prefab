@@ -351,6 +351,7 @@ MonoBehaviour:
   speed: 6
   attackRange: 3.8
   animateHit: 1
+  exploseOnDeath: 1
   target: {fileID: 0}
   renderer: {fileID: 3847484708437689962}
   vfxAttack: {fileID: 0}
