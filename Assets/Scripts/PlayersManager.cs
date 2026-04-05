@@ -59,7 +59,7 @@ public class PlayersManager : MonoBehaviour
                 _playersAvatar.Remove(clientId);
             }
             Destroy(_players[clientId].gameObject);
-            _players.Remove(clientId);
+            //_players.Remove(clientId);
         }
     }
 }
