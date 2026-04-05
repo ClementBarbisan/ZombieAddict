@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     [Header("Events")]
     public UnityEvent<float> OnHit;       
-    public UnityEvent OnDeath;
+    public UnityEvent<EnemyController> OnDeath;
     
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -94,7 +94,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (_isDead) return;
         _isDead = true;
 
-        OnDeath?.Invoke();
+        OnDeath?.Invoke(this);
         _agent.speed = 0f;
         _animator.Play("BAKED_Death");
         Destroy(gameObject, 1.2f);

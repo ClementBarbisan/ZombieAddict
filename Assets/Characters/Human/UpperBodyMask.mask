@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UpperBodyMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Deagle
+    m_Weight: 0
+  - m_Path: Human
+    m_Weight: 0
+  - m_Path: Player_rig_deform
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-foot.L
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-foot.L/DEF-foot.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-foot.R
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-foot.R/DEF-foot.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.L
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.L/DEF-forearm.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.L.001
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.L.001/DEF-forearm.L.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.R
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.R/DEF-forearm.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.R.001
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-forearm.R.001/DEF-forearm.R.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-hand.L
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-hand.L/DEF-hand.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-hand.R
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-hand.R/DEF-hand.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-pelvis.L
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-pelvis.L/DEF-pelvis.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-pelvis.R
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-pelvis.R/DEF-pelvis.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shin.L
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-shin.L/DEF-shin.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shin.L.001
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-shin.L.001/DEF-shin.L.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shin.R
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-shin.R/DEF-shin.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shin.R.001
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-shin.R.001/DEF-shin.R.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shoulder.L
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shoulder.L/DEF-shoulder.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shoulder.R
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-shoulder.R/DEF-shoulder.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-spine/DEF-spine_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.001
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-spine.001/DEF-spine.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.002
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.002/DEF-spine.002_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.003
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.003/DEF-spine.003_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.004
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.004/DEF-spine.004_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.005
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.005/DEF-spine.005_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.006
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-spine.006/DEF-spine.006_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-thigh.L
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-thigh.L/DEF-thigh.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-thigh.L.001
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-thigh.L.001/DEF-thigh.L.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-thigh.R
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-thigh.R/DEF-thigh.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-thigh.R.001
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-thigh.R.001/DEF-thigh.R.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-toe.L
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-toe.L/DEF-toe.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-toe.R
+    m_Weight: 0
+  - m_Path: Player_rig_deform/DEF-toe.R/DEF-toe.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.L
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.L/DEF-upper_arm.L_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.L.001
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.L.001/DEF-upper_arm.L.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.R
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.R/DEF-upper_arm.R_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.R.001
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-upper_arm.R.001/DEF-upper_arm.R.001_end
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-weapon
+    m_Weight: 1
+  - m_Path: Player_rig_deform/DEF-weapon/DEF-weapon_end
+    m_Weight: 1
