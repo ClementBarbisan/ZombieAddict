@@ -152,6 +152,7 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private string _sceneName = "Game";
     [SerializeField] private string _sceneEndName = "EndGame";
     [SerializeField] private TextMeshProUGUI _countDown;
+    [HideInInspector] public bool zombieWin, humansWin;
     //[SerializeField] private Material _fog;
     private GraphicsBuffer _bufferPos;
     private WebSocket _websocket;
@@ -166,7 +167,6 @@ public class WebsocketManager : MonoBehaviour
     private bool _gameLaunched;
     private bool _endGame;
     private float _elapsedTime;
-    private bool _zombieWin, _humansWin;
 
     private void Awake()
     {
@@ -350,13 +350,13 @@ public class WebsocketManager : MonoBehaviour
                 }
             }
             if (_endGame)
-                _zombieWin = true;
+                zombieWin = true;
         }
         _elapsedTime += Time.deltaTime;
         if (_elapsedTime > _timeToWin)
         {
             _endGame = true;
-            _humansWin = true;
+            humansWin = true;
         }
         if (_endGame)
         {

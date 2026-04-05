@@ -27,7 +27,8 @@ public class ZombieManager : MonoBehaviour
         GameObject obj = Instantiate(listZombie[_listNameZombies.IndexOf(name)],
             new Vector3(pos.x * _sizeSpawnZone.x - _sizeSpawnZone.x / 2, 0, (1f - pos.y) * _sizeSpawnZone.y - _sizeSpawnZone.y / 2), Quaternion.identity);
         EnemyController enemy = obj.GetComponent<EnemyController>();
-        enemy.OnDeath.AddListener((EnemyController x) => DeleteZombie(x));
+        enemy.nameEnemy = name;
+        //enemy.OnDeath.AddListener((EnemyController x) => DeleteZombie(x));
         _nbZombie[_listNameZombies.IndexOf(name)]++;
         _zombies[_listNameZombies.IndexOf(name)].Add(enemy);
         WebsocketManager.Zombies infos = new WebsocketManager.Zombies();
@@ -67,8 +68,8 @@ public class ZombieManager : MonoBehaviour
         }
         WebsocketManager.Zombies infos = new WebsocketManager.Zombies();
         infos.type = name;
-        infos.maxZombie = _maxZombie[_listNameZombies.IndexOf(name)];
-        infos.nbZombie = _nbZombie[_listNameZombies.IndexOf(name)];
+        infos.maxZombie = _maxZombie[_listNameZombies.IndexOf(enemy.name)];
+        infos.nbZombie = _nbZombie[_listNameZombies.IndexOf(enemy.name)];
         WebsocketManager.Instance.SendZombieMessage(infos);
     }
 }

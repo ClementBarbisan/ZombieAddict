@@ -35,7 +35,6 @@ Transform:
   m_Children:
   - {fileID: 4998848108686826795}
   - {fileID: 2450884051584423977}
-  - {fileID: 1736597199707339385}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &2005810110770798616
@@ -101,6 +100,12 @@ MonoBehaviour:
   vfxAttack: {fileID: 3491053534424729867}
   _maxHealth: 3
   _detectionRange: 15
+  clipsHit:
+  - {fileID: 8300000, guid: 8de2c242bd1f7c34d861d14f59bd5d55, type: 3}
+  - {fileID: 8300000, guid: 87ea0a5d6c107f44da33e63dd871a98d, type: 3}
+  - {fileID: 8300000, guid: fcc80c34bc1c98240b1260a29724ae09, type: 3}
+  clipsAttack: []
+  clipDeath: {fileID: 8300000, guid: 873c9e1fdf1dc23408975c8a6ba45953, type: 3}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -160,12 +165,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6046922885791070839}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.52, z: -0.2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4921243033748526658}
+  m_Father: {fileID: 6800456247807307684}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &4823934101577930410
 Light:
@@ -178,7 +183,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 0.8860761, g: 0, b: 1, a: 1}
-  m_Intensity: 2.19
+  m_Intensity: 30
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -416,13 +421,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mesh
       objectReference: {fileID: 0}
-    - target: {fileID: 2410570265434229790, guid: 45a5064cd1e7f194184851d1da2e5785, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: bccb6b4120361e249a64182de3fd9a58, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2068790838509950308, guid: 45a5064cd1e7f194184851d1da2e5785, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1736597199707339385}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 45a5064cd1e7f194184851d1da2e5785, type: 3}
       insertIndex: -1
@@ -460,6 +464,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &6800456247807307684 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2068790838509950308, guid: 45a5064cd1e7f194184851d1da2e5785, type: 3}
+  m_PrefabInstance: {fileID: 4815967186391939776}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &7179248261474531038 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2410570265434229790, guid: 45a5064cd1e7f194184851d1da2e5785, type: 3}

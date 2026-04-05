@@ -1,4 +1,5 @@
 
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -25,11 +26,14 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     [Header("Audios")] 
     [SerializeField] private AudioClip[] clipsHit;
+    [SerializeField] private AudioClip[] clipsAttack;
+    [SerializeField] private AudioClip clipDeath;
     
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent<EnemyController> OnDeath;
-    
+
+    public string nameEnemy;
     private NavMeshAgent _agent;
     private Animator _animator;
     private static readonly int Move = Animator.StringToHash("Move");
@@ -59,11 +63,14 @@ public class EnemyController : MonoBehaviour, IDamageable
     }
     void Update()
     {
-        if(target != null)
-            _agent.SetDestination(target.position);
-        else
-            _agent.SetDestination(Vector3.zero);
-
+        if (_agent.enabled)
+        {
+            if(target != null)
+                _agent.SetDestination(target.position);
+            else
+                _agent.SetDestination(Vector3.zero);
+        }
+        
         HandleAnimator();
         
         target = GetClosestPlayer(out float sqrDist);
@@ -106,8 +113,8 @@ public class EnemyController : MonoBehaviour, IDamageable
             Invoke(nameof(ResetMove), .1f);
             _animator.Play("BAKED_Hit");
         }
-        
-        AudioSource.PlayClipAtPoint(clipsHit[Random.Range(0, clipsHit.Length)], transform.position);
+        if(clipsHit.Length > 0)
+            AudioSource.PlayClipAtPoint(clipsHit[Random.Range(0, clipsHit.Length)], transform.position);
     }
     private void ResetMove()
     {
@@ -122,6 +129,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         OnDeath?.Invoke(this);
         _agent.enabled = false;
         _animator.Play("BAKED_Death");
+        if(clipDeath != null)
+            AudioSource.PlayClipAtPoint(clipDeath, transform.position);
         Destroy(gameObject, 1.2f);
     }
     public float GetHealthPercent() => _currentHealth / _maxHealth;
@@ -141,6 +150,8 @@ public class EnemyController : MonoBehaviour, IDamageable
                 target.GetComponent<IDamageable>().TakeDamage(1f, null);
                 _animator.SetTrigger(Shoot);
                 vfxAttack.Play();
+                if(clipsAttack.Length > 0)
+                    AudioSource.PlayClipAtPoint(clipsAttack[Random.Range(0, clipsAttack.Length)], transform.position);
             }
         }
     }

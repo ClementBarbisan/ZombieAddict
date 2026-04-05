@@ -3,7 +3,17 @@ guid: 45a5064cd1e7f194184851d1da2e5785
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Spider
+    second: {fileID: 2100000, guid: 8dd041583083af64abe4f67521c4058e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_SpiderTransparent
+    second: {fileID: 2100000, guid: 8b11ada19671e8a488aa715916f47f59, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
