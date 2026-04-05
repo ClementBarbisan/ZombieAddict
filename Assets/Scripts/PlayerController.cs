@@ -39,7 +39,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool _vfxWalkSmokePlaying;
     private PlayerWeapon _playerWeapon;
     private bool _canMove = true;
-    
+    private static readonly int Shoot = Animator.StringToHash("Shoot");
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -130,6 +131,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         // ATTACK
         _playerWeapon.HandleFire(button1);
+        animator.SetTrigger(Shoot);
         
         // INTERACT 
         
@@ -158,8 +160,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (ctx.action.name == "Attack")
         {
-            if(ctx.started)
+            if (ctx.started)
+            {
+                animator.SetTrigger(Shoot);
                 _playerWeapon.HandleFire(true);
+            }
+                
         }
         else
         {
