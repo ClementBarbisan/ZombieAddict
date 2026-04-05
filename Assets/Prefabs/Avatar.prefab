@@ -285,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvatarImageReference
   imageAvatar: {fileID: 2612525343432268177}
   name: {fileID: 4035486519306367801}
+  healthPlayer: {fileID: 2961099649366960471}
 --- !u!114 &6992308954942645400
 MonoBehaviour:
   m_ObjectHideFlags: 0
