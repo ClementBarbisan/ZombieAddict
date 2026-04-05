@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 {
     [Header("Settings")] 
     public float speed = 3.5f;
+    [SerializeField] private float attackRange = 3.8f;
 
     [Header("References")]
     public Transform target;
@@ -30,6 +31,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     private Material _mat;
     private float  _sqrDetectionRange;
     private float _cooldownAttackTimer;
+    private static readonly int Shoot = Animator.StringToHash("Shoot");
+    private float _initSpeed;
 
     private void OnEnable()
     {
@@ -62,8 +65,13 @@ public class EnemyController : MonoBehaviour, IDamageable
         
         target = GetClosestPlayer(out float sqrDist);
         Debug.Log(sqrDist);
-        if (target != null && sqrDist < .5f)
+        if (target != null && sqrDist < attackRange)
             Attack();
+        else
+        {
+            _cooldownAttackTimer = 0f;
+            _agent.speed = speed;
+        }
     }
 
     private void HandleAnimator()
@@ -112,11 +120,13 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (target != null)
         {
-            _cooldownAttackTimer += Time.deltaTime;
-            if (_cooldownAttackTimer > 1.1f)
+            _agent.speed = 0f;
+            _cooldownAttackTimer -= Time.deltaTime;
+            if (_cooldownAttackTimer < 0f)
             {
-                _cooldownAttackTimer = 0f;
+                _cooldownAttackTimer = 1.1f;
                 target.GetComponent<IDamageable>().TakeDamage(1f);
+                _animator.SetTrigger(Shoot);
             }
         }
     }
@@ -142,7 +152,6 @@ public class EnemyController : MonoBehaviour, IDamageable
                 sqrDistToClosest = sqrDist;
             }
         }
-
         return closest;
     }
 }
