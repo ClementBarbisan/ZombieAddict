@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [Header("VFX")] 
     [SerializeField] private ParticleSystem vfxWalkSmoke;
-    
+
+    [Header("Audios")] [SerializeField] private AudioSource audioRun;
     [Header("Debug")] 
     public bool useInputUnity;
     
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool _canMove = true;
     private static readonly int Shoot = Animator.StringToHash("Shoot");
     private Vector3 _oldPos;
+    
 
     private void Awake()
     {
