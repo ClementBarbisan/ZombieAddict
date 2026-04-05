@@ -64,9 +64,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         HandleAnimator();
         
         target = GetClosestPlayer(out float sqrDist);
-        Debug.Log(sqrDist);
         if (target != null && sqrDist < attackRange)
+        {
             Attack();
+            _agent.speed = 0f;
+        }
         else
         {
             _cooldownAttackTimer = 0f;
@@ -120,7 +122,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (target != null)
         {
-            _agent.speed = 0f;
             _cooldownAttackTimer -= Time.deltaTime;
             if (_cooldownAttackTimer < 0f)
             {
