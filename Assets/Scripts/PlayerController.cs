@@ -145,10 +145,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         _move = move;
 
         // ATTACK
-        _playerWeapon.HandleFire(button1);
         animator.SetTrigger(Shoot);
-        infos.shootFired++;
-
+        _playerWeapon.HandleFire(button1);
+        
         // INTERACT 
         
     }
@@ -182,7 +181,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 _playerWeapon.HandleFire(true);
                 infos.shootFired++;
             }
-                
         }
         else
         {
