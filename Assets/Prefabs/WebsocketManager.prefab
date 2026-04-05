@@ -46,10 +46,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ae6d47a4cfa42fcb0d0f262d4a3d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WebsocketManager
-  _ip: 192.168.1.54
-  _port: 8080
+  _timeToWin: 360
+  address: wss://robotsurvivorback-production.up.railway.app
   _timeToStart: 5
   _sceneName: Game
+  _sceneEndName: EndGame
+  _countDown: {fileID: 0}
+  _prefabStats: {fileID: 790873764070127610, guid: 03dc007580cd24d02b34c68b3ee9005b, type: 3}
+  zombieWin: 0
+  humansWin: 0
+  zombiePlayerInfos:
+    nbZombieSpawn: 
+    nbZombieDead: 0
+    nbPlayerDead: 0
 --- !u!1 &4834246240116264168
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,12 +104,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _sizeSpawnZone: {x: 53, y: 30}
-  _listZombie:
+  listZombie:
   - {fileID: 2000720230508551476, guid: f7c31c909a126ca4d99c435e6d0b2762, type: 3}
   - {fileID: 1188509156255901999, guid: c67096092fe7a49b5bb322df89005c66, type: 3}
   _listNameZombies:
   - zombie_default
   - robot_big
+  _maxZombie: 1400000014000000
 --- !u!1001 &4657371703326298958
 PrefabInstance:
   m_ObjectHideFlags: 0
