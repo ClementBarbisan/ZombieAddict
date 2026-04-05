@@ -18,7 +18,7 @@ public class PlayersManager : MonoBehaviour
         PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
             Quaternion.identity);
         _players.Add(clientId, newPlayer);
-        _players[clientId].OnHit.AddListener(() => _playersAvatar[clientId].GetComponent<HitEffect>().OnHit());
+        _players[clientId].OnHit.AddListener((float x) => _playersAvatar[clientId].GetComponent<HitEffect>().OnHit());
         newPlayer.Init(name);
         return newPlayer;
     }
@@ -51,13 +51,13 @@ public class PlayersManager : MonoBehaviour
     
     public void DeletePlayer(string clientId)
     {
+        if (_playersAvatar.ContainsKey(clientId))
+        {
+            Destroy(_playersAvatar[clientId].gameObject);
+            _playersAvatar.Remove(clientId);
+        }
         if (_players.ContainsKey(clientId))
         {
-            if (_playersAvatar.ContainsKey(clientId))
-            {
-                Destroy(_playersAvatar[clientId].gameObject);
-                _playersAvatar.Remove(clientId);
-            }
             Destroy(_players[clientId].gameObject);
             //_players.Remove(clientId);
         }

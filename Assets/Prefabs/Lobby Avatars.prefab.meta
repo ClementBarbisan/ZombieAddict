@@ -1,7 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Lobby Avatars.prefab.meta
 guid: 893fa415b85e82446b02f3684f519d80
 PrefabImporter:
   externalObjects: {}
+========
+guid: cf6b74534249ff04980f73160e3f41e1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 31900000
+>>>>>>>> e7b29458eccfa7dd688b940c9055fce6c02d26ec:Assets/Characters/Human/UpperBodyMask.mask.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
