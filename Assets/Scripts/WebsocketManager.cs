@@ -396,6 +396,7 @@ public class WebsocketManager : MonoBehaviour
             byte[] tmpBytes = Convert.FromBase64String(base64);
             Texture2D imgTexture = new Texture2D(256, 256);
             imgTexture.LoadImage(tmpBytes);
+            Debug.LogWarning("Name player = " + player.Value.nickname);
             _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
             if (player.Value.role == "survivor" && !_players.ContainsKey(player.Value.clientId))
             {
