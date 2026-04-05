@@ -879,6 +879,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: WebsocketManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: _maxZombie.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: '_maxZombie.Array.data[0]'
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057521028631968909, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
+      propertyPath: '_maxZombie.Array.data[1]'
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6471392178281029520, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
       propertyPath: _countDown
       value: 
