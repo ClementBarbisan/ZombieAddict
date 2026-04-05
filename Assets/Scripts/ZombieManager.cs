@@ -38,9 +38,9 @@ public class ZombieManager : MonoBehaviour
         _nbZombie[_listNameZombies.IndexOf(name)]++;
         _zombies[_listNameZombies.IndexOf(name)].Add(enemy);
         WebsocketManager.Zombies infos = new WebsocketManager.Zombies();
-        infos.type = name;
-        infos.maxZombie = _maxZombie[_listNameZombies.IndexOf(name)];
-        infos.nbZombie = _nbZombie[_listNameZombies.IndexOf(name)];
+        //infos.type = name;
+        //infos.maxZombie = _maxZombie[_listNameZombies.IndexOf(name)];
+        //infos.nbZombie = _nbZombie[_listNameZombies.IndexOf(name)];
         WebsocketManager.Instance.SendZombieMessage(infos);
         WebsocketManager.Instance.zombiePlayerInfos.nbZombieSpawn[_listNameZombies.IndexOf(name)]++;
     }
