@@ -130,9 +130,10 @@ public class WebsocketManager : MonoBehaviour
         [FormerlySerializedAs("zombiePlayer")] public ZombiePlayerInfos zombiePlayerInfos;
     }
     
-    public static WebsocketManager Instance; 
-    [SerializeField] private string _ip = "192.168.1.127";
-    [SerializeField] private string _port = "8080";
+    public static WebsocketManager Instance;
+    [SerializeField] private string address = "wss://robotsurvivorback-production.up.railway.app";
+    //[SerializeField] private string _ip = "192.168.1.127";
+    //[SerializeField] private string _port = "8080";
     [SerializeField] private float _timeToStart = 5;
     [SerializeField] private string _sceneName = "Game";
     //[SerializeField] private Material _fog;
@@ -167,7 +168,7 @@ public class WebsocketManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         Application.runInBackground = true; // Recommended for WebGL
         _playersManager = FindAnyObjectByType<PlayersManager>();
-        _websocket = new WebSocket("ws://" + _ip + ":" + _port);
+        _websocket = new WebSocket(address);
         _zombieManager = FindAnyObjectByType<ZombieManager>();
         zombiePlayerInfos = new ZombiePlayerInfos();
         zombiePlayerInfos.nbZombieSpawn = new List<int>();
