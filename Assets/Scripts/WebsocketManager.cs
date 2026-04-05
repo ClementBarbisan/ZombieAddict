@@ -225,9 +225,15 @@ public class WebsocketManager : MonoBehaviour
                 Texture2D imgTexture = new Texture2D(256, 256);
                 imgTexture.LoadImage(tmpBytes);
                 _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
-                if (player.player.role == "survivor" && !_players.ContainsKey(player.player.clientId))
+                if (player.player.role == "survivor")
                 {
-                    _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
+                    if (!_players.ContainsKey(player.player.clientId))
+                        _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
+                    else
+                    {
+                        _players[player.player.clientId] =
+                            _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname);
+                    }
                 }
             }
         };
