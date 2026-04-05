@@ -108,7 +108,7 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private string _port = "8080";
     [SerializeField] private float _timeToStart = 5;
     [SerializeField] private string _sceneName = "Game";
-    [SerializeField] private Material _fog;
+    //[SerializeField] private Material _fog;
     private GraphicsBuffer _bufferPos;
     private WebSocket _websocket;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
@@ -155,7 +155,7 @@ public class WebsocketManager : MonoBehaviour
                     try
                     {
                         byte[] tmpBytes = Convert.FromBase64String(base64);
-                        Texture2D imgTexture = new Texture2D(64, 64);
+                        Texture2D imgTexture = new Texture2D(256, 256);
                         imgTexture.LoadImage(tmpBytes);
                         _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
                         if (player.player.nickname != "Unity")
@@ -202,7 +202,7 @@ public class WebsocketManager : MonoBehaviour
                 JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
                 string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
                 byte[] tmpBytes = Convert.FromBase64String(base64);
-                Texture2D imgTexture = new Texture2D(64, 64);
+                Texture2D imgTexture = new Texture2D(256, 256);
                 imgTexture.LoadImage(tmpBytes);
                 _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
                 if (player.player.nickname != "Unity")
@@ -214,6 +214,25 @@ public class WebsocketManager : MonoBehaviour
                     else
                     {
                         _playersAbstract[player.player.clientId] = player.player;
+                    }
+                }
+            }
+            else if (message.Contains("player_reconnected"))
+            {
+                JoinLeaveMessage player = JsonUtility.FromJson<JoinLeaveMessage>(message);
+                string base64 = player.player.avatar.Replace("data:image/jpeg;base64,", "");
+                byte[] tmpBytes = Convert.FromBase64String(base64);
+                Texture2D imgTexture = new Texture2D(256, 256);
+                imgTexture.LoadImage(tmpBytes);
+                _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
+                if (player.player.role == "survivor" && SceneManager.GetActiveScene().name == "Game")
+                {
+                    if (!_players.ContainsKey(player.player.clientId))
+                        _players.Add(player.player.clientId, _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname));
+                    else
+                    {
+                        _players[player.player.clientId] =
+                            _playersManager.CreateNewPlayer(player.player.clientId, player.player.nickname);
                     }
                 }
             }
@@ -265,7 +284,7 @@ public class WebsocketManager : MonoBehaviour
         {
             string base64 = player.Value.avatar.Replace("data:image/jpeg;base64,", "");
             byte[] tmpBytes = Convert.FromBase64String(base64);
-            Texture2D imgTexture = new Texture2D(64, 64);
+            Texture2D imgTexture = new Texture2D(256, 256);
             imgTexture.LoadImage(tmpBytes);
             _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
             if (player.Value.role == "survivor")

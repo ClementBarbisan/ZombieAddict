@@ -195,7 +195,6 @@ GameObject:
   - component: {fileID: 9219684038395381033}
   - component: {fileID: 2592370072973616592}
   - component: {fileID: 7037725403869277175}
-  - component: {fileID: 2155393190012577626}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -286,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 10
-  rendererBodyColor: {fileID: 0}
+  rendererBodyColor: {fileID: 1442470205708321455}
   UIPlayerColor: {fileID: 7164428450225556702}
   namePlayer: {fileID: 6478469076235155081}
   vfxWalkSmoke: {fileID: 3735603988578559221}
@@ -394,27 +393,9 @@ MonoBehaviour:
   weaponPos: {fileID: 3664682824857468770}
   hitVFX: {fileID: 8225405635208122073}
   hitLine: {fileID: 6454043605888488922}
---- !u!135 &2155393190012577626
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 836683692081290284}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
+  layer:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 12
-  m_Center: {x: 0, y: 0, z: 0}
+    m_Bits: 55
 --- !u!1 &6047280867740297123
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +421,7 @@ Transform:
   m_GameObject: {fileID: 6047280867740297123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.6}
+  m_LocalPosition: {x: 0, y: 1, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10176,6 +10157,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84de877803412a34a8808ca8f02c11f6, type: 3}
+--- !u!137 &1442470205708321455 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7986814019933463497, guid: 84de877803412a34a8808ca8f02c11f6, type: 3}
+  m_PrefabInstance: {fileID: 8850261611242987878}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9032192760590321293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 84de877803412a34a8808ca8f02c11f6, type: 3}

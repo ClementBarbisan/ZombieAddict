@@ -94,9 +94,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5549bf9528dea4341858b04fcced96a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _sizeSpawnZone: {x: 5.3, y: 3}
-  _listZombie: []
-  _listNameZombies: []
+  _sizeSpawnZone: {x: 53, y: 30}
+  _listZombie:
+  - {fileID: 2000720230508551476, guid: f7c31c909a126ca4d99c435e6d0b2762, type: 3}
+  - {fileID: 1188509156255901999, guid: c67096092fe7a49b5bb322df89005c66, type: 3}
+  _listNameZombies:
+  - zombie_default
+  - robot_big
 --- !u!1001 &4657371703326298958
 PrefabInstance:
   m_ObjectHideFlags: 0
