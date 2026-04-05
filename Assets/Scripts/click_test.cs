@@ -3,11 +3,13 @@ using UnityEngine.InputSystem;
 
 public class HitEffectTester : MonoBehaviour
 {
-    public KillEffect killEffect;
+    public DeathEffect deathEffect;
 
     void Update()
     {
+        if (Mouse.current == null || deathEffect == null) return;
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
-            killEffect.OnKill();
+            deathEffect.OnDeath();
     }
 }

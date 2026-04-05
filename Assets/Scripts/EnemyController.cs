@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     [Header("Settings")] 
     public float speed = 3.5f;
     [SerializeField] private float attackRange = 3.8f;
+    [SerializeField] private bool animateHit = true;
 
     [Header("References")]
     public Transform target;
@@ -68,12 +69,13 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (target != null && sqrDist < attackRange)
         {
             Attack();
-            _agent.speed = 0f;
+            _agent.isStopped = true;
+            _agent.velocity = Vector3.zero;
         }
         else
         {
             _cooldownAttackTimer = 0f;
-            _agent.speed = speed;
+            _agent.isStopped = false;
         }
     }
 
@@ -97,10 +99,19 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (_currentHealth <= 0f)
         {
             Die();
-            player.KillEnemy();
-        }
-        else
+        else if (animateHit)
+        {
+            _agent.isStopped = true;
+            _agent.velocity = Vector3.zero;
+        
+            Invoke(nameof(ResetMove), .1f);
             _animator.Play("BAKED_Hit");
+        }
+    }
+
+    private void ResetMove()
+    {
+        _agent.isStopped = false;
     }
     
     public void Die()
@@ -109,7 +120,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         _isDead = true;
         WebsocketManager.Instance.zombiePlayerInfos.nbZombieDead++;
         OnDeath?.Invoke(this);
-        _agent.speed = 0f;
+        _agent.isStopped = true;
+        _agent.velocity = Vector3.zero;
         _animator.Play("BAKED_Death");
         Destroy(gameObject, 1.2f);
     }
