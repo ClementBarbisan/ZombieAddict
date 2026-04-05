@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
+using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
@@ -150,6 +151,7 @@ public class WebsocketManager : MonoBehaviour
     [SerializeField] private float _timeToStart = 5;
     [SerializeField] private string _sceneName = "Game";
     [SerializeField] private string _sceneEndName = "EndGame";
+    [SerializeField] private TextMeshProUGUI _countDown;
     //[SerializeField] private Material _fog;
     private GraphicsBuffer _bufferPos;
     private WebSocket _websocket;
@@ -182,6 +184,7 @@ public class WebsocketManager : MonoBehaviour
     async void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+        _countDown.gameObject.SetActive(false);
         Application.runInBackground = true; // Recommended for WebGL
         _playersManager = FindAnyObjectByType<PlayersManager>();
         _websocket = new WebSocket(address);
@@ -309,6 +312,7 @@ public class WebsocketManager : MonoBehaviour
                 if (lobby.playerCount == lobby.readyCount && lobby.playerCount > 0)
                 {
                     _gameLaunched = true;
+                    _countDown.gameObject.SetActive(true);
                     StartCoroutine(WaitToLaunch());
                 }
             }
