@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2832720813334882258}
   - component: {fileID: 8076716129823793742}
   - component: {fileID: 4900587296214158731}
+  - component: {fileID: 2655355466635037711}
   m_Layer: 5
   m_Name: Logo
   m_TagString: Untagged
@@ -75,3 +76,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2655355466635037711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042477379777672590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c0d9f3da913364fa34a7434ac1ecb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatAnim
+  amplitude: 20
+  duration: 1.2
+  ease: 4
