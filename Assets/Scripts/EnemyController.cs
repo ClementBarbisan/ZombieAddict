@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     public float speed = 3.5f;
     [SerializeField] private float attackRange = 3.8f;
     [SerializeField] private bool animateHit = true;
+    [SerializeField] private bool exploseOnDeath = false;
 
     [Header("References")]
     public Transform target;
@@ -135,11 +136,21 @@ public class EnemyController : MonoBehaviour, IDamageable
         OnDeath?.Invoke(this);
         _agent.enabled = false;
         _animator.Play("BAKED_Death");
+        
+        Invoke(nameof(DeathVFX), 1.05f);
+        Destroy(gameObject, 1.06f);
+    }
+
+    private void DeathVFX()
+    {
+        if (exploseOnDeath)
+            ExploseOnDeath();
+        
         if (vfxDeath != null)
-            vfxDeath.Play();
+            Instantiate(vfxDeath, transform.position + Vector3.up * 2f, Quaternion.identity);
+        
         if(clipDeath != null)
             AudioSource.PlayClipAtPoint(clipDeath, transform.position);
-        Destroy(gameObject, 1.06f);
     }
     public float GetHealthPercent() => _currentHealth / _maxHealth;
     public bool IsDead() => _isDead;
@@ -161,6 +172,18 @@ public class EnemyController : MonoBehaviour, IDamageable
                     vfxAttack.Play();
                 if(clipsAttack.Length > 0)
                     AudioSource.PlayClipAtPoint(clipsAttack[Random.Range(0, clipsAttack.Length)], transform.position);
+            }
+        }
+    }
+
+    private void ExploseOnDeath()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f);
+        foreach (var hit in hitColliders)
+        {
+            if (hit.GetComponent<IDamageable>() != null) 
+            {
+                hit.GetComponent<IDamageable>().TakeDamage(10f, null);
             }
         }
     }
