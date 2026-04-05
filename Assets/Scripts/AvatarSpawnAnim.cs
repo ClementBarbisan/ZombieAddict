@@ -9,7 +9,7 @@ public class AvatarSpawnAnim : MonoBehaviour
     void OnEnable()
     {
         transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, duration).SetEase(ease);
+        transform.DOScale(Vector3.one * 0.5f, duration).SetEase(ease);
     }
 
     void OnDestroy() => DOTween.Kill(transform);
