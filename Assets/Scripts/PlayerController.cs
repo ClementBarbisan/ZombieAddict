@@ -187,7 +187,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (_isDead) return;
         
         _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
-
         OnHit?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0f)

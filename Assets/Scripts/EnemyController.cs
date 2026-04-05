@@ -19,7 +19,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     [Header("Detection")]
     [SerializeField] private float _detectionRange = 15f;
-    [SerializeField] private float _refreshRate    = 0.2f;
 
     [Header("Events")]
     public UnityEvent<float> OnHit;       
@@ -30,6 +29,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     private static readonly int Move = Animator.StringToHash("Move");
     private Material _mat;
     private float  _sqrDetectionRange;
+    private float _cooldownAttackTimer;
 
     private void OnEnable()
     {
@@ -44,7 +44,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void Start()
     {
         _sqrDetectionRange = _detectionRange * _detectionRange;
-        InvokeRepeating(nameof(UpdateTarget), 0f, _refreshRate);
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
         _mat = renderer.material;
@@ -60,7 +59,11 @@ public class EnemyController : MonoBehaviour, IDamageable
             _agent.SetDestination(Vector3.zero);
 
         HandleAnimator();
-        target = GetClosestPlayer();
+        
+        target = GetClosestPlayer(out float sqrDist);
+        Debug.Log(sqrDist);
+        if (target != null && sqrDist < .5f)
+            Attack();
     }
 
     private void HandleAnimator()
@@ -83,7 +86,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (_currentHealth <= 0f)
             Die();
         else
-            _animator.Play("BAKED_Spider_Hit");
+            _animator.Play("BAKED_Hit");
     }
     
     public void Die()
@@ -93,7 +96,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         OnDeath?.Invoke();
         _agent.speed = 0f;
-        _animator.Play("BAKED_Spider_Death");
+        _animator.Play("BAKED_Death");
         Destroy(gameObject, 1.2f);
     }
 
@@ -105,17 +108,26 @@ public class EnemyController : MonoBehaviour, IDamageable
         _mat.DisableKeyword("_EMISSION");
     }
     
-    private void UpdateTarget()
+    private void Attack()
     {
-        target = GetClosestPlayer();
+        if (target != null)
+        {
+            _cooldownAttackTimer += Time.deltaTime;
+            if (_cooldownAttackTimer > 1.1f)
+            {
+                _cooldownAttackTimer = 0f;
+                target.GetComponent<IDamageable>().TakeDamage(1f);
+            }
+        }
     }
     
-    private Transform GetClosestPlayer()
+    private Transform GetClosestPlayer(out float sqrDistToClosest)
     {
         var players = PlayerTracker.Instance.Players;
 
         Transform closest      = null;
         float closestSqrDist   = _sqrDetectionRange;
+        sqrDistToClosest       = float.MaxValue; 
 
         foreach (var player in players)
         {
@@ -125,12 +137,13 @@ public class EnemyController : MonoBehaviour, IDamageable
 
             if (sqrDist < closestSqrDist)
             {
-                closestSqrDist = sqrDist;
-                closest        = player;
+                closestSqrDist   = sqrDist;
+                closest          = player;
+                sqrDistToClosest = sqrDist;
             }
         }
 
-        return closest; 
+        return closest;
     }
 }
 
