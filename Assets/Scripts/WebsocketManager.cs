@@ -129,6 +129,18 @@ public class WebsocketManager : MonoBehaviour
         public List<InfosPlayer> infosPlayer;
         [FormerlySerializedAs("zombiePlayer")] public ZombiePlayerInfos zombiePlayerInfos;
     }
+
+    [Serializable]
+    private struct LobbyState
+    {
+        public string type;
+        public string phase;
+        public int countdownEndsAt;
+        public int playerCount;
+        public int readyCount;
+        public string zombieClientId;
+        public List<Player> players;
+    }
     
     public static WebsocketManager Instance;
     [SerializeField] private string address = "wss://robotsurvivorback-production.up.railway.app";
@@ -286,6 +298,15 @@ public class WebsocketManager : MonoBehaviour
                     }
                 }
             }
+            else if (message.Contains("lobby_state"))
+            {
+                LobbyState lobby = JsonUtility.FromJson<LobbyState>(message);
+                if (lobby.playerCount == lobby.playerCount)
+                {
+                    _gameLaunched = true;
+                    StartCoroutine(WaitToLaunch());
+                }
+            }
         };
 
         //InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
@@ -329,7 +350,7 @@ public class WebsocketManager : MonoBehaviour
                 SendStatsPlayers();
             }
         }
-        if (_gameLaunched || _playersAbstract.Count == 0)
+        /*if (_gameLaunched || _playersAbstract.Count == 0)
             return;
         bool allReady = true;
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
@@ -344,7 +365,7 @@ public class WebsocketManager : MonoBehaviour
         {
             _gameLaunched = true;
             StartCoroutine(WaitToLaunch());
-        }
+        }*/
     }
 
     private IEnumerator WaitToLaunch()
