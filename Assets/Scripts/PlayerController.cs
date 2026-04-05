@@ -24,7 +24,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("VFX")] 
     [SerializeField] private ParticleSystem vfxWalkSmoke;
 
-    [Header("Audios")] [SerializeField] private AudioSource audioRun;
+    [Header("Audios")] 
+    [SerializeField] private AudioSource audioRun;
+    [SerializeField] private AudioClip clipHit;
+    
     [Header("Debug")] 
     public bool useInputUnity;
     
@@ -125,6 +128,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         bool isMoving = _rb.linearVelocity.sqrMagnitude > 0.01f;
         animator.SetBool(Move, isMoving);
+
+        if (isMoving && !audioRun.isPlaying)
+            audioRun.Play();
+        else if(!isMoving && audioRun.isPlaying)
+            audioRun.Stop();
     }
     private void TextNamePosition()
     {
@@ -215,7 +223,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         else
             animator.Play("BAKED_Hit");
         
-        
+        AudioSource.PlayClipAtPoint(clipHit, transform.position);
     }
 
     public void Die()
