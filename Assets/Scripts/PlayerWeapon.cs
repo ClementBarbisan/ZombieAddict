@@ -9,6 +9,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private Transform weaponPos;
     [SerializeField] private ParticleSystem hitVFX;
     [SerializeField] private LineRenderer hitLine;
+    [SerializeField] private LayerMask layer;
     
     private float _cooldownTimer;
     private bool _isFiring;
@@ -19,6 +20,7 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Start()
     {
+        
         _hitLineMat = hitLine.material;
     }
 
@@ -29,7 +31,7 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
-        target = GetClosestEnemy();
+        //target = GetClosestEnemy();
         _cooldownTimer -= Time.deltaTime;
 
         if (_isFiring && _cooldownTimer <= 0f)
@@ -50,7 +52,7 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Shoot()
     {
-        if (Physics.Raycast(weaponPos.position, weaponPos.forward, out RaycastHit hit))
+        if (Physics.Raycast(weaponPos.position, weaponPos.forward, out RaycastHit hit, layer))
         {
             // VFX impact
             hitVFX.transform.position = hit.point;
@@ -68,24 +70,23 @@ public class PlayerWeapon : MonoBehaviour
     
     private Transform GetClosestEnemy()
     {
+        float closestSqrDist = float.MaxValue;
         var enemies = EnemiesTracker.Instance.Enemies;
 
         Transform closest      = null;
-        float closestSqrDist   = _sqrDetectionRange;
 
         foreach (var enemy in enemies)
         {
             if (enemy == null) continue;
 
             float sqrDist = (transform.position - enemy.position).sqrMagnitude;
-
+            
             if (sqrDist < closestSqrDist)
             {
                 closestSqrDist = sqrDist;
                 closest        = enemy;
             }
         }
-        Debug.Log(closest);
         return closest; 
     }
 }

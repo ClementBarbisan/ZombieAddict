@@ -63,21 +63,23 @@ public class PlayerController : MonoBehaviour
 
         // Rotation only if moving
         Vector3 horizontalMove = new Vector3(move.x, 0f, move.z);
-
-        Debug.Log(_playerWeapon.target);
+        
+        if (horizontalMove.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(horizontalMove);
+            _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, 0.2f));
+        }
+        /*
         if (_playerWeapon.target == null)
         {
-            if (horizontalMove.sqrMagnitude > 0.01f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(horizontalMove);
-                _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, 0.2f));
-            }
+           
         }
         else
         {
             Quaternion targetRotation = Quaternion.LookRotation(_playerWeapon.target.position);
             _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, 0.2f));
         }
+        */
     }
     private void Update()
     {

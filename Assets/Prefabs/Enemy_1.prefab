@@ -94,7 +94,7 @@ MonoBehaviour:
   speed: 3.5
   target: {fileID: 0}
   renderer: {fileID: 7179248261474531038}
-  _maxHealth: 5
+  _maxHealth: 3
   _detectionRange: 15
   _refreshRate: 0.2
   OnHit:
