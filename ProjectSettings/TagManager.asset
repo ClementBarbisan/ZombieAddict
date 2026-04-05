@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Stats
+  - Timer
   layers:
   - Default
   - TransparentFX
