@@ -143,11 +143,13 @@ public class WebsocketManager : MonoBehaviour
     }
     
     public static WebsocketManager Instance;
+    [SerializeField] private float _timeToWin = 360;
     [SerializeField] private string address = "wss://robotsurvivorback-production.up.railway.app";
     //[SerializeField] private string _ip = "192.168.1.127";
     //[SerializeField] private string _port = "8080";
     [SerializeField] private float _timeToStart = 5;
     [SerializeField] private string _sceneName = "Game";
+    [SerializeField] private string _sceneEndName = "EndGame";
     //[SerializeField] private Material _fog;
     private GraphicsBuffer _bufferPos;
     private WebSocket _websocket;
@@ -161,7 +163,8 @@ public class WebsocketManager : MonoBehaviour
     [FormerlySerializedAs("zombiePlayer")] public ZombiePlayerInfos zombiePlayerInfos;
     private bool _gameLaunched;
     private bool _endGame;
-    
+    private float _elapsedTime;
+
     private void Awake()
     {
         if (Instance == null)
@@ -326,6 +329,9 @@ public class WebsocketManager : MonoBehaviour
             }
             _bufferPos.SetData(_positionsPlayer);
         }*/
+        if (_endGame)
+            return;
+        
         if (_players.Count > 0)
         {
             _endGame = true;
@@ -337,18 +343,23 @@ public class WebsocketManager : MonoBehaviour
                     break;
                 }
             }
-            if (_endGame)
+        }
+        _elapsedTime += Time.deltaTime;
+        if (_elapsedTime > _timeToWin)
+        {
+            _endGame = true;
+        }
+        if (_endGame)
+        {
+            _statsEndGame = new StatsEndGame();
+            _statsEndGame.type = "end_game";
+            _statsEndGame.endGame = true;
+            foreach (KeyValuePair<string, InfosPlayer> infos in _playersInfos)
             {
-                _statsEndGame = new StatsEndGame();
-                _statsEndGame.type = "end_game";
-                _statsEndGame.endGame = true;
-                foreach (KeyValuePair<string, InfosPlayer> infos in _playersInfos)
-                {
-                    _statsEndGame.infosPlayer.Add(infos.Value);
-                }
-                _statsEndGame.zombiePlayerInfos = zombiePlayerInfos;
-                SendStatsPlayers();
+                _statsEndGame.infosPlayer.Add(infos.Value);
             }
+            _statsEndGame.zombiePlayerInfos = zombiePlayerInfos;
+            SendStatsPlayers();
         }
         /*if (_gameLaunched || _playersAbstract.Count == 0)
             return;
@@ -399,6 +410,7 @@ public class WebsocketManager : MonoBehaviour
         {
             string infosText = JsonUtility.ToJson(_statsEndGame);
             await _websocket.SendText(infosText);
+            SceneManager.LoadScene(_sceneEndName);
         }
     }
     
