@@ -31,7 +31,7 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
-        //target = GetClosestEnemy();
+        target = GetClosestEnemy(10f);
         _cooldownTimer -= Time.deltaTime;
 
         if (_isFiring && _cooldownTimer <= 0f)
@@ -68,25 +68,27 @@ public class PlayerWeapon : MonoBehaviour
         }
     }
     
-    private Transform GetClosestEnemy()
+    private Transform GetClosestEnemy(float maxDistance)
     {
-        float closestSqrDist = float.MaxValue;
-        var enemies = EnemiesTracker.Instance.Enemies;
+        float maxSqrDist    = maxDistance * maxDistance; 
+        float closestSqrDist = maxSqrDist;               
+        var   enemies        = EnemiesTracker.Instance.Enemies;
 
-        Transform closest      = null;
+        Transform closest = null;
 
         foreach (var enemy in enemies)
         {
             if (enemy == null) continue;
 
             float sqrDist = (transform.position - enemy.position).sqrMagnitude;
-            
+
             if (sqrDist < closestSqrDist)
             {
                 closestSqrDist = sqrDist;
                 closest        = enemy;
             }
         }
+
         return closest; 
     }
 }
