@@ -35,17 +35,16 @@ public class EnemyController : MonoBehaviour, IDamageable
     private float _cooldownAttackTimer;
     private static readonly int Shoot = Animator.StringToHash("Shoot");
     private float _initSpeed;
+    
 
     private void OnEnable()
     {
         EnemiesTracker.Instance.Register(transform);
     }
-
     private void OnDisable()
     {
         EnemiesTracker.Instance.Unregister(transform);
     }
-
     private void Start()
     {
         _sqrDetectionRange = _detectionRange * _detectionRange;
@@ -55,7 +54,6 @@ public class EnemyController : MonoBehaviour, IDamageable
         _agent.speed = speed;
         _currentHealth = _maxHealth;
     }
-
     void Update()
     {
         if(target != null)
@@ -78,13 +76,11 @@ public class EnemyController : MonoBehaviour, IDamageable
             _agent.isStopped = false;
         }
     }
-
     private void HandleAnimator()
     {
         bool isMoving = _agent.velocity.sqrMagnitude > 0.01f;
         _animator.SetBool(Move, isMoving);
     }
-    
     public void TakeDamage(float amount, PlayerController player)
     {
         _mat.EnableKeyword("_EMISSION");
@@ -99,41 +95,37 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (_currentHealth <= 0f)
         {
             Die();
+            player.KillEnemy();
+        }
         else if (animateHit)
         {
-            _agent.isStopped = true;
-            _agent.velocity = Vector3.zero;
+            _agent.enabled = false;
         
             Invoke(nameof(ResetMove), .1f);
             _animator.Play("BAKED_Hit");
         }
     }
-
     private void ResetMove()
     {
-        _agent.isStopped = false;
+        _agent.enabled = true;
     }
-    
     public void Die()
     {
         if (_isDead) return;
         _isDead = true;
-        WebsocketManager.Instance.zombiePlayerInfos.nbZombieDead++;
+        if(WebsocketManager.Instance != null)
+            WebsocketManager.Instance.zombiePlayerInfos.nbZombieDead++;
         OnDeath?.Invoke(this);
-        _agent.isStopped = true;
-        _agent.velocity = Vector3.zero;
+        _agent.enabled = false;
         _animator.Play("BAKED_Death");
         Destroy(gameObject, 1.2f);
     }
-
     public float GetHealthPercent() => _currentHealth / _maxHealth;
     public bool IsDead() => _isDead;
-
     private void ResetMaterial()
     {
         _mat.DisableKeyword("_EMISSION");
     }
-    
     private void Attack()
     {
         if (target != null)
@@ -148,7 +140,6 @@ public class EnemyController : MonoBehaviour, IDamageable
             }
         }
     }
-    
     private Transform GetClosestPlayer(out float sqrDistToClosest)
     {
         var players = PlayerTracker.Instance.Players;
