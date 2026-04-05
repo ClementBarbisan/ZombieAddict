@@ -51,13 +51,13 @@ public class PlayersManager : MonoBehaviour
     
     public void DeletePlayer(string clientId)
     {
+        if (_playersAvatar.ContainsKey(clientId))
+        {
+            Destroy(_playersAvatar[clientId].gameObject);
+            _playersAvatar.Remove(clientId);
+        }
         if (_players.ContainsKey(clientId))
         {
-            if (_playersAvatar.ContainsKey(clientId))
-            {
-                Destroy(_playersAvatar[clientId].gameObject);
-                _playersAvatar.Remove(clientId);
-            }
             Destroy(_players[clientId].gameObject);
             //_players.Remove(clientId);
         }
