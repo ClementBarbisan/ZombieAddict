@@ -1003,7 +1003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6471392178281029520, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
       propertyPath: _timeToWinPerPlayer
-      value: 45
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7377068152422722157, guid: 7ab18d476c40e4540b4ba23c69790463, type: 3}
       propertyPath: m_LocalPosition.x

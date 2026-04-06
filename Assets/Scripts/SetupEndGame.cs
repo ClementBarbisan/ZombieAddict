@@ -14,7 +14,7 @@ public class SetupEndGame : MonoBehaviour
         }
         else
         {
-            _textMesh.text = "Aliens win!";
+            _textMesh.text = "Robots win!";
         }
     }
 
