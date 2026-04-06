@@ -417,7 +417,7 @@ public class WebsocketManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToStart);
         SceneManager.LoadScene(_sceneName);
         yield return new WaitForSeconds(1f);
-        _timeToWin = _timeToWinPerPlayer * (_playersAbstract.Count - 1);
+        _timeToWin = _timeToWinPerPlayer * (_playersAbstract.Count - 1) + 30;
         _timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<TextMeshProUGUI>();
         _zombieManager.fog = GameObject.FindGameObjectWithTag("Fog").GetComponent<ParticleSystem>();
         _playersManager.ClearAvatar();
