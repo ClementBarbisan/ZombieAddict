@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     public float moveSpeed = 5f;
     [SerializeField] private Animator animator;
     
-    [Header("Stats")]
-    [SerializeField] private float _maxHealth = 100f;
+    [FormerlySerializedAs("_maxHealth")] [Header("Stats")]
+    public float maxHealth = 100f;
 
     [FormerlySerializedAs("_currentHealth")] public float currentHealth;
     public bool isDead = false;
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         _playerWeapon = GetComponent<PlayerWeapon>();
         _playerWeapon.OnHitEnemy?.AddListener((int x) => HitEnemy(x));
         namePlayer.transform.SetParent(null);
-        currentHealth = _maxHealth;
+        currentHealth = maxHealth;
     }
     public void Init(string name, Color color)
     {
@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         
         if (isDead) return;
         
-        currentHealth = Mathf.Clamp(currentHealth - amount, 0f, _maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
         infos.damages += (int)amount;
         OnHit?.Invoke(currentHealth);
 

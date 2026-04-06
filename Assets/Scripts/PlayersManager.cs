@@ -47,6 +47,8 @@ public class PlayersManager : MonoBehaviour
         {
             _players[clientId] = newPlayer;
         }
+
+        _playersAvatar[clientId].healthPlayer.maxValue = newPlayer.maxHealth;
         _playersAvatar[clientId].healthPlayer.value = newPlayer.currentHealth;
         _players[clientId].OnHit.AddListener((float x) => _playersAvatar[clientId].GetComponent<HitEffect>()
             .OnHit(x, _playersAvatar[clientId].healthPlayer));
@@ -59,12 +61,16 @@ public class PlayersManager : MonoBehaviour
         return newPlayer;
     }
 
-    public void SetupAvatar(Texture2D avatar, string name, string clientId)
+    public void SetupAvatar(Texture2D avatar, string name, string clientId, WebsocketManager.Player infos)
     {
         if (SceneManager.GetActiveScene().name == "EndGame")
             return;
         if(_avatars == null)
             _avatars = FindAnyObjectByType<Avatars>().gameObject;
+        if (SceneManager.GetActiveScene().name == "Game" && infos.role == "zombie")
+        {
+            return;
+        }
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);

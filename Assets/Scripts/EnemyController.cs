@@ -91,11 +91,13 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         bool isMoving = _agent.velocity.sqrMagnitude > 0.01f;
         _animator.SetBool(Move, isMoving);
-        
-        if(isMoving && !audioRun.isPlaying)
-            audioRun.Play();
-        else if(!isMoving && audioRun.isPlaying)
-            audioRun.Stop();
+        if (audioRun)
+        {
+            if(isMoving && !audioRun.isPlaying)
+                audioRun.Play();
+            else if(!isMoving && audioRun.isPlaying)
+                audioRun.Stop();
+        }
     }
     public void TakeDamage(float amount, PlayerController player)
     {

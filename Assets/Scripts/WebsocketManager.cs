@@ -66,7 +66,7 @@ public class WebsocketManager : MonoBehaviour
     }
     
     [Serializable]
-    struct Player
+    public struct Player
     {
         public string clientId;
         public string clientType;
@@ -238,7 +238,7 @@ public class WebsocketManager : MonoBehaviour
                         byte[] tmpBytes = Convert.FromBase64String(base64);
                         Texture2D imgTexture = new Texture2D(256, 256);
                         imgTexture.LoadImage(tmpBytes);
-                        _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
+                        _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId, player.player);
                         if (player.player.nickname != "Unity")
                         {
                             if (!_playersAbstract.ContainsKey(player.player.clientId))
@@ -291,7 +291,7 @@ public class WebsocketManager : MonoBehaviour
                 byte[] tmpBytes = Convert.FromBase64String(base64);
                 Texture2D imgTexture = new Texture2D(256, 256);
                 imgTexture.LoadImage(tmpBytes);
-                _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
+                _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId, player.player);
                 if (player.player.nickname != "Unity")
                 {
                     if (!_playersAbstract.ContainsKey(player.player.clientId))
@@ -311,7 +311,7 @@ public class WebsocketManager : MonoBehaviour
                 byte[] tmpBytes = Convert.FromBase64String(base64);
                 Texture2D imgTexture = new Texture2D(256, 256);
                 imgTexture.LoadImage(tmpBytes);
-                _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId);
+                _playersManager.SetupAvatar(imgTexture, player.player.nickname, player.player.clientId, player.player);
                 if (player.player.role == "survivor" && SceneManager.GetActiveScene().name == "Game")
                 {
                     if (!_players.ContainsKey(player.player.clientId))
@@ -425,7 +425,7 @@ public class WebsocketManager : MonoBehaviour
             byte[] tmpBytes = Convert.FromBase64String(base64);
             Texture2D imgTexture = new Texture2D(256, 256);
             imgTexture.LoadImage(tmpBytes);
-            _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId);
+            _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId, player.Value);
             if (player.Value.role == "survivor" && !_players.ContainsKey(player.Value.clientId))
             {
                 _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
