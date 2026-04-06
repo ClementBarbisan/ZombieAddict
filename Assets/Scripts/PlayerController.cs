@@ -151,8 +151,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         // ATTACK
         animator.SetTrigger(Shoot);
-        _playerWeapon.HandleFire(button1);
-        infos.shootFired++;
+        _playerWeapon.HandleFire(button1, infos);
+       
 
         // INTERACT 
         
@@ -184,13 +184,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (ctx.started)
             {
                 animator.SetTrigger(Shoot);
-                _playerWeapon.HandleFire(true);
+                _playerWeapon.HandleFire(true, infos);
                 infos.shootFired++;
             }
         }
         else
         {
-            _playerWeapon.HandleFire(false);
+            _playerWeapon.HandleFire(false, infos);
         }
         
         if (ctx.action.name == "Interact")

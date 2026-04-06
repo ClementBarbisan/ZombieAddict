@@ -28,9 +28,11 @@ public class PlayerWeapon : MonoBehaviour
         _player = GetComponent<PlayerController>();
     }
 
-    public void HandleFire(bool isPressed)
+    public void HandleFire(bool isPressed, WebsocketManager.InfosPlayer infos)
     {
         _isFiring = isPressed;
+        if (isPressed)
+            infos.shootFired++;
     }
 
     private void Update()
