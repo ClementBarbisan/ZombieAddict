@@ -111,7 +111,8 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (_currentHealth <= 0f)
         {
             Die();
-            player.KillEnemy();
+            if (player)
+                player.KillEnemy();
         }
         else if (animateHit)
         {

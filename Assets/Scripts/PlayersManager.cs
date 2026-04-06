@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -60,6 +61,8 @@ public class PlayersManager : MonoBehaviour
 
     public void SetupAvatar(Texture2D avatar, string name, string clientId)
     {
+        if (SceneManager.GetActiveScene().name == "EndGame")
+            return;
         if(_avatars == null)
             _avatars = FindAnyObjectByType<Avatars>().gameObject;
         if (!_playersAvatar.ContainsKey(clientId))

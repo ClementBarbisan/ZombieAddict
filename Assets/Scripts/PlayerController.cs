@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void Init(string name, Color color)
     {
         namePlayer.text = name;
+        infos.name = name;
         namePlayer.color = color;
         rendererBodyColor.material.color = color;
         UIPlayerColor.color = color;
