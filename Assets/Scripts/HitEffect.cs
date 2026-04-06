@@ -75,7 +75,7 @@ public class HitEffect : MonoBehaviour
     public void OnHit(float damages, Slider health)
     { 
         PlayHit();
-        health.value -= damages;
+        health.value -= (int)damages;
     } 
 
     void OnDestroy() => _hitSequence?.Kill();

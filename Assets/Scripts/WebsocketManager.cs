@@ -392,13 +392,13 @@ public class WebsocketManager : MonoBehaviour
         _statsEndGame.type = "end_game";
         _statsEndGame.endGame = true;
         GameObject layout = GameObject.FindGameObjectWithTag("Stats");
-        foreach (KeyValuePair<string, InfosPlayer> infos in _playersInfos)
+        foreach (KeyValuePair<string, PlayerController> player in _players)
         {
             GameObject stats = Instantiate(_prefabStats, layout.transform);
             StatsPlayers playerStat = stats.GetComponent<StatsPlayers>();
-            playerStat.stats = infos.Value;
+            playerStat.stats = player.Value.infos;
             _statsEndGame.infosPlayer = new List<InfosPlayer>();
-            _statsEndGame.infosPlayer.Add(infos.Value);
+            _statsEndGame.infosPlayer.Add(player.Value.infos);
         }
         _statsEndGame.zombiePlayerInfos = zombiePlayerInfos;
         SendStatsPlayers();
