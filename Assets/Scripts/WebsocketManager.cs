@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using NativeWebSocket;
 using TMPro;
@@ -144,6 +145,13 @@ public class WebsocketManager : MonoBehaviour
         public List<Player> players;
     }
     
+    [Serializable]
+    struct EndGame
+    {
+        public string type;
+        public string reason;
+    }
+
     public static WebsocketManager Instance;
     [SerializeField] private float _timeToWin = 360;
     [SerializeField] private string address = "wss://robotsurvivorback-production.up.railway.app";
@@ -366,6 +374,7 @@ public class WebsocketManager : MonoBehaviour
         if (_endGame)
         {
             SceneManager.LoadScene(_sceneEndName);
+            SendWinMessage();
             StartCoroutine(AppearStats());
             
         }
@@ -444,6 +453,36 @@ public class WebsocketManager : MonoBehaviour
     
     private async void OnApplicationQuit()
     {
+        await SendQuitMessage();
         await _websocket.Close();
+    }
+    
+    private async Task SendWinMessage()
+    {
+        if (_websocket.State == WebSocketState.Open)
+        {
+            EndGame infos = new EndGame();
+            infos.type = "close_game";
+            if (humansWin)
+                infos.reason = "survivor_win";
+            else
+            {
+                infos.reason = "zombie_win";
+            }
+            string infosText = JsonUtility.ToJson(infos);
+            await _websocket.SendText(infosText);
+        }
+    }
+
+    private async Task SendQuitMessage()
+    {
+        if (_websocket.State == WebSocketState.Open)
+        {
+            EndGame infos = new EndGame();
+            infos.type = "close_game";
+            infos.reason = "server_quit";
+            string infosText = JsonUtility.ToJson(infos);
+            await _websocket.SendText(infosText);
+        }
     }
 }
