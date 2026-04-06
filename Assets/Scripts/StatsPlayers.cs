@@ -8,7 +8,7 @@ public class StatsPlayers : MonoBehaviour
     public WebsocketManager.InfosPlayer stats;
     [FormerlySerializedAs("textMesh")] public TextMeshProUGUI nameText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    public void SetStats()
     {
         nameText.text = stats.name + Environment.NewLine + "Accuracy : " + stats.accuracy + Environment.NewLine + "Damages taken : " + stats.damages +
                         Environment.NewLine

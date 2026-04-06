@@ -230,7 +230,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 836683692081290284}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3fe521019f8b42440b8748b96b747f9c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -288,6 +288,7 @@ MonoBehaviour:
   moveSpeed: 10
   animator: {fileID: 1079113121295746441}
   _maxHealth: 100
+  currentHealth: 0
   isDead: 0
   infos:
     clientId: 
@@ -592,7 +593,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4650552839592620124}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
@@ -644,7 +645,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0.025
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
