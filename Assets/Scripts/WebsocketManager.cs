@@ -342,7 +342,12 @@ public class WebsocketManager : MonoBehaviour
     {
         if (_endGame)
             return;
-        
+        if (_gameStart && _players.Count <= 0)
+        {
+            SendQuitMessage();
+            return;
+        }
+
         if (_players.Count > 0)
         {
             _endGame = true;
@@ -410,7 +415,6 @@ public class WebsocketManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToStart);
         SceneManager.LoadScene(_sceneName);
         yield return new WaitForSeconds(1f);
-        _gameStart = true;
         _timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<TextMeshProUGUI>();
         _zombieManager.fog = GameObject.FindGameObjectWithTag("Fog").GetComponent<ParticleSystem>();
         _playersManager.ClearAvatar();
@@ -430,6 +434,7 @@ public class WebsocketManager : MonoBehaviour
                 _playersInfos[player.Value.clientId] = playersInfo;
             }
         }
+        _gameStart = true;
     }
 
     
