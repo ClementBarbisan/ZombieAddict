@@ -326,24 +326,12 @@ public class WebsocketManager : MonoBehaviour
                 }
             }
         };
-
-        //InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
-
+        
         await _websocket.Connect();
     }
 
     private void Update()
     {
-        /*if (_bufferPos.IsValid())
-        {
-            int index = 0;
-            foreach (KeyValuePair<string, PlayerController> player in _players)
-            {
-                _positionsPlayer[index] = player.Value.transform.position;
-                index++;
-            }
-            _bufferPos.SetData(_positionsPlayer);
-        }*/
         if (_endGame)
             return;
         
@@ -377,37 +365,35 @@ public class WebsocketManager : MonoBehaviour
         }
         if (_endGame)
         {
-            _statsEndGame = new StatsEndGame();
-            _statsEndGame.type = "end_game";
-            _statsEndGame.endGame = true;
-            GameObject layout = GameObject.FindGameObjectWithTag("Stats");
-            foreach (KeyValuePair<string, InfosPlayer> infos in _playersInfos)
-            {
-                GameObject stats = Instantiate(_prefabStats, layout.transform);
-                StatsPlayers playerStat = stats.GetComponent<StatsPlayers>();
-                playerStat.stats = infos.Value;
-                playerStat.nameText.text = infos.Value.name;
-                _statsEndGame.infosPlayer.Add(infos.Value);
-            }
-            _statsEndGame.zombiePlayerInfos = zombiePlayerInfos;
-            SendStatsPlayers();
+            SceneManager.LoadScene(_sceneEndName);
+            StartCoroutine(AppearStats());
+            
         }
-        /*if (_gameLaunched || _playersAbstract.Count == 0)
-            return;
-        bool allReady = true;
-        foreach (KeyValuePair<string, Player> player in _playersAbstract)
-        {
-            if (!bool.Parse(player.Value.ready))
-            {
-                allReady = false;
-            }
-        }
+    }
 
-        if (allReady)
+    private IEnumerator AppearStats()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _statsEndGame = new StatsEndGame();
+        _statsEndGame.type = "end_game";
+        _statsEndGame.endGame = true;
+        GameObject layout = GameObject.FindGameObjectWithTag("Stats");
+        foreach (KeyValuePair<string, InfosPlayer> infos in _playersInfos)
         {
-            _gameLaunched = true;
-            StartCoroutine(WaitToLaunch());
-        }*/
+            GameObject stats = Instantiate(_prefabStats, layout.transform);
+            StatsPlayers playerStat = stats.GetComponent<StatsPlayers>();
+            playerStat.stats = infos.Value;
+            playerStat.nameText.text = infos.Value.name;
+            _statsEndGame.infosPlayer = new List<InfosPlayer>();
+            _statsEndGame.infosPlayer.Add(infos.Value);
+        }
+        _statsEndGame.zombiePlayerInfos = zombiePlayerInfos;
+        SendStatsPlayers();
+    }
+
+    public void LaunchGame()
+    {
+        StartCoroutine(WaitToLaunch());
     }
 
     private IEnumerator WaitToLaunch()
@@ -435,9 +421,6 @@ public class WebsocketManager : MonoBehaviour
                 _playersInfos[player.Value.clientId] = playersInfo;
             }
         }
-        /*_bufferPos = new GraphicsBuffer(GraphicsBuffer.Target.Structured, _players.Count, 3 * sizeof(float));
-        _fog.SetBuffer("_posPlayers", _bufferPos);
-        _positionsPlayer = new Vector3[_players.Count];*/
     }
 
     
@@ -447,7 +430,6 @@ public class WebsocketManager : MonoBehaviour
         {
             string infosText = JsonUtility.ToJson(_statsEndGame);
             await _websocket.SendText(infosText);
-            SceneManager.LoadScene(_sceneEndName);
         }
     }
     

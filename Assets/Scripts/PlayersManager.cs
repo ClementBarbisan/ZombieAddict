@@ -46,6 +46,7 @@ public class PlayersManager : MonoBehaviour
         {
             _players[clientId] = newPlayer;
         }
+        _playersAvatar[clientId].healthPlayer.value = newPlayer.currentHealth;
         _players[clientId].OnHit.AddListener((float x) => _playersAvatar[clientId].GetComponent<HitEffect>()
             .OnHit(x, _playersAvatar[clientId].healthPlayer));
         _players[clientId].OnKillEnemy.AddListener(() => _playersAvatar[clientId].GetComponent<KillEffect>()
@@ -70,6 +71,7 @@ public class PlayersManager : MonoBehaviour
             AvatarImageReference imageRef = imageObj.GetComponent<AvatarImageReference>();
             Image image = imageRef.imageAvatar;
             imageRef.name.text = name;
+            imageRef.healthPlayer.value = imageRef.healthPlayer.maxValue;
             image.sprite = Sprite.Create(avatar, new Rect(0, 0, avatar.width, avatar.height), new Vector2(1.0f, 1.0f));
             _playersAvatar.Add(clientId, imageRef);
         }

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
@@ -12,7 +13,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     
     [Header("Stats")]
     [SerializeField] private float _maxHealth = 100f;
-    private float _currentHealth;
+
+    [FormerlySerializedAs("_currentHealth")] public float currentHealth;
     public bool isDead = false;
     public WebsocketManager.InfosPlayer infos = new WebsocketManager.InfosPlayer();
 
@@ -58,7 +60,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         _playerWeapon = GetComponent<PlayerWeapon>();
         _playerWeapon.OnHitEnemy?.AddListener((int x) => HitEnemy(x));
         namePlayer.transform.SetParent(null);
-        _currentHealth = _maxHealth;
+        currentHealth = _maxHealth;
     }
     public void Init(string name, Color color)
     {
@@ -216,11 +218,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         
         if (isDead) return;
         
-        _currentHealth = Mathf.Clamp(_currentHealth - amount, 0f, _maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0f, _maxHealth);
         infos.damages += (int)amount;
-        OnHit?.Invoke(_currentHealth);
+        OnHit?.Invoke(currentHealth);
 
-        if (_currentHealth <= 0f)
+        if (currentHealth <= 0f)
             Die();
         else
             animator.Play("BAKED_Hit");
