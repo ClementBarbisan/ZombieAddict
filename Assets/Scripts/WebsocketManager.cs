@@ -153,7 +153,7 @@ public class WebsocketManager : MonoBehaviour
     }
 
     public static WebsocketManager Instance;
-    [SerializeField] private float _timeToWin = 360;
+    [SerializeField] private float _timeToWinPerPlayer = 30;
     [SerializeField] private string address = "wss://robotsurvivorback-production.up.railway.app";
     //[SerializeField] private string _ip = "192.168.1.127";
     //[SerializeField] private string _port = "8080";
@@ -179,6 +179,7 @@ public class WebsocketManager : MonoBehaviour
     private bool _endGame;
     private float _elapsedTime;
     private bool _gameStart;
+    private float _timeToWin;
 
     private void Awake()
     {
@@ -416,18 +417,19 @@ public class WebsocketManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToStart);
         SceneManager.LoadScene(_sceneName);
         yield return new WaitForSeconds(1f);
+        _timeToWin = _timeToWinPerPlayer * (_playersAbstract.Count - 1);
         _timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<TextMeshProUGUI>();
         _zombieManager.fog = GameObject.FindGameObjectWithTag("Fog").GetComponent<ParticleSystem>();
         _playersManager.ClearAvatar();
         foreach (KeyValuePair<string, Player> player in _playersAbstract)
         {
-            string base64 = player.Value.avatar.Replace("data:image/jpeg;base64,", "");
-            byte[] tmpBytes = Convert.FromBase64String(base64);
-            Texture2D imgTexture = new Texture2D(256, 256);
-            imgTexture.LoadImage(tmpBytes);
-            _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId, player.Value);
             if (player.Value.role == "survivor" && !_players.ContainsKey(player.Value.clientId))
             {
+                string base64 = player.Value.avatar.Replace("data:image/jpeg;base64,", "");
+                byte[] tmpBytes = Convert.FromBase64String(base64);
+                Texture2D imgTexture = new Texture2D(256, 256);
+                imgTexture.LoadImage(tmpBytes);
+                _playersManager.SetupAvatar(imgTexture, player.Value.nickname, player.Value.clientId, player.Value);
                 _players.Add(player.Value.clientId, _playersManager.CreateNewPlayer(player.Value.clientId, player.Value.nickname));
                 _playersInfos.Add(player.Value.clientId, _players[player.Value.clientId].infos);
                 InfosPlayer playersInfo = _playersInfos[player.Value.clientId];

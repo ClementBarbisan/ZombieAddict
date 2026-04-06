@@ -67,10 +67,6 @@ public class PlayersManager : MonoBehaviour
             return;
         if(_avatars == null)
             _avatars = FindAnyObjectByType<Avatars>().gameObject;
-        if (SceneManager.GetActiveScene().name == "Game" && infos.role == "zombie")
-        {
-            return;
-        }
         if (!_playersAvatar.ContainsKey(clientId))
         {
             GameObject imageObj = Instantiate(_prefabAvatar, _avatars.transform);
