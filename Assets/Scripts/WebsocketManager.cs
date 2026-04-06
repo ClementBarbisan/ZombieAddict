@@ -397,7 +397,6 @@ public class WebsocketManager : MonoBehaviour
             GameObject stats = Instantiate(_prefabStats, layout.transform);
             StatsPlayers playerStat = stats.GetComponent<StatsPlayers>();
             playerStat.stats = infos.Value;
-            playerStat.nameText.text = infos.Value.name;
             _statsEndGame.infosPlayer = new List<InfosPlayer>();
             _statsEndGame.infosPlayer.Add(infos.Value);
         }
