@@ -170,7 +170,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6144081081821448979}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.2688679, b: 0.2688679, a: 1}
   m_Intensity: 5
@@ -222,7 +222,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0.025
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -356,7 +356,7 @@ MonoBehaviour:
   renderer: {fileID: 3847484708437689962}
   vfxAttack: {fileID: 0}
   vfxDeath: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
-  _maxHealth: 3
+  _maxHealth: 1
   _detectionRange: 15
   clipsHit:
   - {fileID: 8300000, guid: 8de2c242bd1f7c34d861d14f59bd5d55, type: 3}

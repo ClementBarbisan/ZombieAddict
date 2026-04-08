@@ -229,7 +229,7 @@ MonoBehaviour:
   renderer: {fileID: 2356967146371323114}
   vfxAttack: {fileID: 27372083802209749}
   vfxDeath: {fileID: 0}
-  _maxHealth: 100
+  _maxHealth: 50
   _detectionRange: 15
   clipsHit:
   - {fileID: 8300000, guid: a8b2f70c041fae24cac3bae5aeb57096, type: 3}

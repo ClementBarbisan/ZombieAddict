@@ -72,7 +72,7 @@ public class PlayerWeapon : MonoBehaviour
             if (hit.transform.TryGetComponent<IDamageable>(out var target))
             {
                 hit.transform.GetComponent<IDamageable>().TakeDamage(hitDamage, _player);
-                OnHitEnemy?.Invoke((int)hitDamage);
+                //OnHitEnemy?.Invoke((int)hitDamage);
             }
         }
     }

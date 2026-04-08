@@ -34,6 +34,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     [Header("Events")]
     public UnityEvent<float> OnHit;       
     public UnityEvent<EnemyController> OnDeath;
+    public UnityEvent<float> OnAttack;
 
     public string nameEnemy;
     private NavMeshAgent _agent;
@@ -156,7 +157,7 @@ public class EnemyController : MonoBehaviour, IDamageable
             AudioSource.PlayClipAtPoint(clipDeath, transform.position);
     }
     public float GetHealthPercent() => _currentHealth / _maxHealth;
-    public bool IsDead() => _isDead;
+
     private void ResetMaterial()
     {
         _mat.DisableKeyword("_EMISSION");

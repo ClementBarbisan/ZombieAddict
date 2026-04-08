@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool _canMove = true;
     private static readonly int Shoot = Animator.StringToHash("Shoot");
     private Vector3 _oldPos;
-    
+    private Material _mat;
 
     private void Awake()
     {
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         _playerWeapon.OnHitEnemy?.AddListener((int x) => HitEnemy(x));
         namePlayer.transform.SetParent(null);
         currentHealth = maxHealth;
+        _mat = rendererBodyColor.material;
     }
     public void Init(string name, Color color)
     {
@@ -214,8 +215,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     
     public void TakeDamage(float amount, PlayerController player)
     {
-        //_mat.EnableKeyword("_EMISSION");
-        //Invoke(nameof(ResetMaterial), .05f);
+        _mat.EnableKeyword("_EMISSION");
+        Invoke(nameof(ResetMaterial), .05f);
         
         if (isDead) return;
         
@@ -240,11 +241,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         _canMove = false;
         animator.Play("BAKED_Death");
         WebsocketManager.Instance.zombiePlayerInfos.nbPlayerDead++;
-        //Destroy(gameObject, 1.2f);
+        this.enabled = false;
     }
     
     private void ResetMaterial()
     {
-        //_mat.DisableKeyword("_EMISSION");
+        _mat.DisableKeyword("_EMISSION");
     }
 }

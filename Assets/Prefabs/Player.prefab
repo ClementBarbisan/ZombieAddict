@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 10
   animator: {fileID: 1079113121295746441}
-  _maxHealth: 100
+  maxHealth: 100
   currentHealth: 0
   isDead: 0
   infos:
