@@ -40,12 +40,11 @@ public class PlayersManager : MonoBehaviour
     public PlayerController CreateNewPlayer( string clientId, string name)
     {
         PlayerController newPlayer = Instantiate(playerPrefab, transform.GetChild(_index).position, Quaternion.identity);
+        
         if (!_players.ContainsKey(clientId))
             _players.Add(clientId, newPlayer);
         else
-        {
             _players[clientId] = newPlayer;
-        }
 
         _playersAvatar[clientId].healthPlayer.maxValue = newPlayer.maxHealth;
         _playersAvatar[clientId].healthPlayer.value = newPlayer.currentHealth;
@@ -55,8 +54,14 @@ public class PlayersManager : MonoBehaviour
             .OnKill());
         _players[clientId].OnDeath.AddListener(() => _playersAvatar[clientId].GetComponent<DeathEffect>()
             .OnDeath());
+        
         newPlayer.Init(name, Palette[_index]);
+        
         _index++;
+
+        if (_index > Palette.Length - 1)
+            _index = 0;
+        
         return newPlayer;
     }
 
