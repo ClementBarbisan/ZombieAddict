@@ -13,7 +13,7 @@ public class PlayersManager : MonoBehaviour
     private GameObject _avatars;
     private Dictionary<string, PlayerController> _players = new Dictionary<string, PlayerController>();
     private Dictionary<string, AvatarImageReference> _playersAvatar = new Dictionary<string, AvatarImageReference>();
-    
+
     #region COLOR
     private int _index;
     private static readonly Color[] Palette = new Color[]
@@ -39,8 +39,7 @@ public class PlayersManager : MonoBehaviour
 
     public PlayerController CreateNewPlayer( string clientId, string name)
     {
-        PlayerController newPlayer = Instantiate(playerPrefab, new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f)),
-            Quaternion.identity);
+        PlayerController newPlayer = Instantiate(playerPrefab, transform.GetChild(_index).position, Quaternion.identity);
         if (!_players.ContainsKey(clientId))
             _players.Add(clientId, newPlayer);
         else
