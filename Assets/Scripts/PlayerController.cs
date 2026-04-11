@@ -204,12 +204,14 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void KillEnemy()
     {
         OnKillEnemy?.Invoke();
+        infos.enemyKilled += 1;
     }
     
     public void HitEnemy(int damages)
     {
         infos.shootSuccessfull++;
-        infos.accuracy = infos.shootSuccessfull / infos.shootFired;
+        if (infos.shootFired > 0)
+            infos.accuracy = infos.shootSuccessfull / infos.shootFired;
         infos.damagesEnemy += damages;
     }
     
